@@ -3,6 +3,10 @@ import "bootstrap/dist/css/bootstrap.min.css"
 import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
 import './App.css';
 import MainPage from "./components/mainPage";
+import { GameContextProvider } from "./context/gameContext";
+import UpdatePage from "./routes/updatePage";
+
+
 
 class App extends Component {
  
@@ -15,14 +19,20 @@ class App extends Component {
   };
 
     return (    
+      <GameContextProvider>
         <div style = {myStyle}>
         <Router>
           <Routes>
                 <Route path="/" element={<MainPage/>}/>        
-
+                <Route
+              path="/games/:id/update"
+              element={<UpdatePage/>}
+            />
             </Routes> 
           </Router>       
         </div>
+      </GameContextProvider>
+
  
     );
   }
