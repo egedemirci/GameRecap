@@ -50,8 +50,7 @@ export default class gameController{
     static async createGame(req, res, next){
         try {         
             const newGame = await db.query("INSERT INTO game_recap.Games (game_name,release_date) values ($1, $2) returning *"
-            , [req.body.game_name, "2001-12-30"])
-            console.log(newGame)
+            , [req.body.game_name, req.body.release_date])
             res.status(200).json({
               data: newGame.rows[0]
             })

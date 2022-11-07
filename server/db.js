@@ -6,6 +6,9 @@ dotenv.config({
 })
 const { Pool } = pg.default
 
+pg.default.types.setTypeParser(1082, value => value);
+
+
 const pool = new Pool({
     connectionString : process.env.DATABASE_URL,
     ssl: {
