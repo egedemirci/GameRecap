@@ -1,18 +1,9 @@
-import AppBar from '@mui/material/AppBar';
 import Button from '@mui/material/Button';
-import CameraIcon from '@mui/icons-material/PhotoCamera';
-import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
 import CssBaseline from '@mui/material/CssBaseline';
-import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';
 import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import Link from '@mui/material/Link';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import ResponsiveAppBar from './appbarGame';
 import React, { useEffect, useContext } from "react";
@@ -57,8 +48,8 @@ const theme = createTheme({
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
-      backgroundColor: theme.palette.common.black,
-      color: theme.palette.common.white,
+      backgroundColor: "#1d3557",
+      color: "#f1faee",
     },
     [`&.${tableCellClasses.body}`]: {
       fontSize: 14,
@@ -151,7 +142,8 @@ export default function MainPage(props) {
               <StyledTableCell align="right">
               <button
                       onClick={(e) => handleUpdate(e, game.game_id)}
-                      className="btn btn-danger"
+                      className="btn btn-secondary"
+                      backgroundColor= "#00000"
                     >
                       Update
                     </button>
@@ -168,26 +160,6 @@ export default function MainPage(props) {
       </Table>
     </TableContainer>
 
-            <Typography
-              variant="h6"
-              align="center"
-              color="#70798C"
-              gutterBottom
-            >
-                Mail
-            </Typography>
-            <Typography variant="h6" align="center" color="text.secondary" paragraph>
-                GameRecap
-            </Typography>
-            <Stack
-              sx={{ pt: 4 }}
-              direction="row"
-              spacing={2}
-              justifyContent="center"
-            >
-              <Button color = 'fourth' variant="contained">UPDATE ACCOUNT</Button>
-              <Button color = 'error' variant="contained">DELETE ACCOUNT</Button>
-            </Stack>
           </Container>
         </Box>
 
