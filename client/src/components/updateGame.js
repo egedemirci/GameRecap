@@ -2,14 +2,14 @@ import React, { useState, useContext, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import GameFinder from "../apis/GameFinder";
 import { GameContext } from "../context/gameContext";
- 
+
 const UpdateGame = (props) => {
   const { id } = useParams();
-  let history = useNavigate();
+  const navigate = useNavigate();
   const { games } = useContext(GameContext);
   const [name, setName] = useState("");
   const [date, setDate] = useState("");
- 
+
   useEffect(() => {
     const fetchData = async () => {
       const response = await GameFinder.get(`/${id}`);
@@ -17,19 +17,18 @@ const UpdateGame = (props) => {
       setName(response.data.data.game.game_name);
       setDate(response.data.data.game.release_date);
     };
- 
     fetchData();
-  }, []);
- 
+  }, [id]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const updatedGame = await GameFinder.patch(`/${id}`, {
-      game_name:name,
-      release_date:date
+      game_name: name,
+      release_date: date,
     });
-    history("/");
+    navigate("/");
   };
- 
+
   return (
     <div>
       <form action="">
@@ -43,7 +42,6 @@ const UpdateGame = (props) => {
             type="text"
           />
         </div>
- 
         <div className="form-group">
           <label htmlFor="date">Date</label>
           <input
@@ -65,8 +63,5 @@ const UpdateGame = (props) => {
     </div>
   );
 };
- 
-export default UpdateGame;
- 
- 
 
+export default UpdateGame;
