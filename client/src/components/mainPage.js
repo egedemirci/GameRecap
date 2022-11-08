@@ -6,7 +6,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import ResponsiveAppBar from './appbarGame';
-import React, { useEffect, useContext } from "react";
+import React, { useEffect, useContext, useState } from "react";
 import GameFinder from "../apis/GameFinder";
 import { GameContext } from "../context/gameContext";
 import { styled } from '@mui/material/styles';
@@ -18,6 +18,8 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { useNavigate } from 'react-router-dom';
+import TextField from '@mui/material/TextField';
+import Grid from '@mui/material/Grid';
 
 const theme = createTheme({
     palette: {
@@ -70,6 +72,9 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
 export default function MainPage(props) {
     const { games, setGames } = useContext(GameContext);
     const navigate = useNavigate();
+    const [start_date, setStartDate] = useState("");
+    const [end_date, setEndDate] = useState("");
+
     useEffect(() => {
       const fetchData = async () => {
         try {
@@ -100,7 +105,22 @@ export default function MainPage(props) {
           console.log(err);
         }
       };
-    
+
+      const handleSubmit = async (e) => {
+        e.preventDefault();
+        let response = []
+        if ((start_date == " " || start_date == "") && (end_date == " " || end_date == "")){
+          response = await GameFinder.get(`/`);
+        }
+        else{
+          response = await GameFinder.post(`/date`, {
+            start_date:start_date,
+            end_date: end_date
+          });
+       }
+        console.log(response);
+        setGames(response.data.data.games);
+      };
 
   
   return (
@@ -118,11 +138,52 @@ export default function MainPage(props) {
           }}
         >
           <Container maxWidth="sm">
+          <Typography variant = "h6" component="h4">
+          Filter Release Date
+        </Typography>
+          <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+          <Typography variant = "h6" component="h10">
+          Start Date
+        </Typography>
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            value={start_date}
+            onChange={(e) => setStartDate(e.target.value)}
+            id="date"
+            className="form-control"
+            type="date"
+          />
+          <Typography variant = "h6" component="h10">
+          End Date
+        </Typography>
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            value={end_date}
+            onChange={(e) => setEndDate(e.target.value)}
+            id="date"
+            className="form-control"
+            type="date"
+          />
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            sx={{ mt: 3, mb: 2 }}
+          >
+            Filter Date
+          </Button>
+          <Grid container>
+
+          </Grid>
+        </Box>
           <TableContainer component={Paper}>
       <Table sx={{ minWidth: 100 }} aria-label="customized table">
         <TableHead>
           <TableRow>
-            <StyledTableCell>Games</StyledTableCell>
             <StyledTableCell align="right">Game ID</StyledTableCell>
             <StyledTableCell align="right">Game Name</StyledTableCell>
             <StyledTableCell align="right">Release Date</StyledTableCell>
@@ -133,9 +194,6 @@ export default function MainPage(props) {
         <TableBody>
           {games.map((game) => (
             <StyledTableRow key={game.game_id}>
-              <StyledTableCell component="th" scope="row">
-                {game.game_id}
-              </StyledTableCell>
               <StyledTableCell align="right">{game.game_id}</StyledTableCell>
               <StyledTableCell align="right">{game.game_name}</StyledTableCell>
               <StyledTableCell align="right">{game.release_date}</StyledTableCell>

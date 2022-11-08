@@ -16,6 +16,44 @@ export default class gameController {
     }
   }
 
+  static async getGamesByDate(req, res, next) {
+    try {
+      let results = []
+      const start_date = req.body.start_date;
+      const end_date = req.body.end_date;
+      if ((start_date == " " || start_date == "") && (end_date != " " && end_date != "")){
+        results = await db.query(
+          "SELECT * FROM game_recap.Games WHERE release_date <= $1",
+          [end_date]
+        );
+      }
+
+      else if ((start_date != " " && start_date != "") && (end_date == " " || end_date == "")){
+        results = await db.query(
+          "SELECT * FROM game_recap.Games WHERE release_date >= $1",
+          [start_date]
+        );
+      }
+
+      else{
+        results = await db.query(
+          "SELECT * FROM game_recap.Games WHERE release_date >= $1 and release_date <= $2",
+          [start_date, end_date]
+        );
+      }
+      
+      res.status(200).json({
+        lenght: results.rows.length,
+        data: {
+          games: results.rows,
+        },
+      });
+    } catch (error) {
+      console.log(`Error when getting games by date filter ${error}`);
+      res.status(400).json({ error: error, data: { games: [] } });
+    }
+  }
+
   static async getGameById(req, res, next) {
     try {
       const results = await db.query(
