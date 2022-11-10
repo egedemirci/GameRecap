@@ -20,6 +20,7 @@ import { useNavigate } from "react-router-dom";
 import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
 import AddNewGameComponent from "./AddNewGame";
+import { colors } from "@mui/material";
 
 const theme = createTheme({
   palette: {
@@ -50,8 +51,8 @@ const myStyle = {
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
-    backgroundcolor: "#1d3557",
-    color: "#f1faee",
+    backgroundcolor: "#000000",
+    color: "#000000",
   },
   [`&.${tableCellClasses.body}`]: {
     fontSize: 14,
@@ -135,7 +136,7 @@ export default function MainPage(props) {
           }}
         >
           <Container maxWidth="sm">
-            <Typography variant="h6" component="h4">
+            <Typography variant="h4" component="h1">
               Filter Release Date
             </Typography>
             <Box
@@ -180,6 +181,10 @@ export default function MainPage(props) {
               </Button>
               <Grid container></Grid>
             </Box>
+            <Box sx={{ mt: 3 }}></Box>
+            <Typography sx={{ mb: 2 }} variant="h4" component="h1">
+              Games
+            </Typography>
             <TableContainer component={Paper}>
               <Table sx={{ minWidth: 100 }} aria-label="customized table">
                 <TableHead>
@@ -228,27 +233,28 @@ export default function MainPage(props) {
                 </TableBody>
               </Table>
             </TableContainer>
-            <Box>
-              <AddNewGameComponent />
-            </Box>
           </Container>
+          <Box sx={{ mt: 3 }}></Box>
+          <AddNewGameComponent />
         </Box>
       </main>
       {/* Footer */}
-      <Box sx={{ bgcolor: "primary", p: 6 }} component="footer">
-        <center>
-          <img
-            src="https://i.hizliresim.com/kti4lvy.png"
-            height="100"
-            width="100"
-          />{" "}
-        </center>
-        <Typography
-          variant="subtitle1"
-          align="center"
-          color="text.secondary"
-          component="p"
-        ></Typography>
+      <Box sx={{ bgcolor: "#D3EDEE" }} component="footer">
+        <Box sx={{ pt: 3 }}>
+          <center>
+            <img
+              src="https://i.hizliresim.com/kti4lvy.png"
+              height="100"
+              width="100"
+            />{" "}
+          </center>
+          <Typography
+            variant="subtitle1"
+            align="center"
+            color="text.secondary"
+            component="p"
+          ></Typography>
+        </Box>
       </Box>
       {/* End footer */}
     </ThemeProvider>
