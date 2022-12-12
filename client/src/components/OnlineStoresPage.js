@@ -20,7 +20,7 @@ import Paper from "@mui/material/Paper";
 import { useNavigate } from "react-router-dom";
 import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
-import AddNewGameComponent from "./AddNewCategory";
+import AddNewGameComponent from "./AddNewStore";
 import { colors } from "@mui/material";
 
 const theme = createTheme({
@@ -79,7 +79,7 @@ export default function MainPage(props) {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await GameFinder.get("/categories");
+        const response = await GameFinder.get("/onlinestores");
         setGames(response.data.data.games);
       } catch (err) {}
     };
@@ -94,10 +94,10 @@ export default function MainPage(props) {
   const handleDelete = async (e, id) => {
     e.stopPropagation();
     try {
-      const response = await GameFinder.delete(`/categories/${id}`);
+      const response = await GameFinder.delete(`/onlinestores/${id}`);
       setGames(
         games.filter((game) => {
-          return games.c_id !== id;
+          return games.store_id !== id;
         })
       );
       window.location.reload();
@@ -112,9 +112,9 @@ export default function MainPage(props) {
     if (
       (start_date === " " || start_date === "") 
     ) {
-      response = await GameFinder.get(`/categories`);
+      response = await GameFinder.get(`/onlinestores`);
     } else {
-      response = await GameFinder.post(`/categories/date`, {
+      response = await GameFinder.post(`/onlinestores/date`, {
         filter: start_date,
       });
     }
@@ -169,14 +169,14 @@ export default function MainPage(props) {
             </Box>
             <Box sx={{ mt: 3 }}></Box>
             <Typography sx={{ mb: 2 }} variant="h4" component="h1">
-              Categories
+              Stores
             </Typography>
             <TableContainer component={Paper}>
               <Table sx={{ minWidth: 100 }} aria-label="customized table">
                 <TableHead>
                   <TableRow>
-                    <StyledTableCell align="right">Category ID</StyledTableCell>
-                    <StyledTableCell align="right">Category Name</StyledTableCell>
+                    <StyledTableCell align="right">Store ID</StyledTableCell>
+                    <StyledTableCell align="right">Store Name</StyledTableCell>
 
 
                     <StyledTableCell align="right">Update</StyledTableCell>
@@ -185,12 +185,12 @@ export default function MainPage(props) {
                 </TableHead>
                 <TableBody>
                   {games.map((game) => (
-                    <StyledTableRow key={game.c_id}>
+                    <StyledTableRow key={game.store_id}>
                       <StyledTableCell align="right">
-                        {game.c_id}
+                        {game.store_id}
                       </StyledTableCell>
                       <StyledTableCell align="right">
-                        {game.category_name}
+                        {game.store_name}
                       </StyledTableCell>
                       <StyledTableCell align="right">
                         <button
@@ -204,7 +204,7 @@ export default function MainPage(props) {
                       <StyledTableCell align="right">
                         {" "}
                         <button
-                          onClick={(e) => handleDelete(e, game.c_id)}
+                          onClick={(e) => handleDelete(e, game.store_id)}
                           className="btn btn-danger"
                         >
                           Delete

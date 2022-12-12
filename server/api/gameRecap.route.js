@@ -1,12 +1,14 @@
 import express from "express";
 import gameController from "./gameController.js";
-import platformController from "./platformController.js";
 import developmentStudioController from "./developmentStudioController.js";
 import dlcController from "./dlcController.js";
 import categoryController from "./categoryController.js";
 import languageController from "./languageController.js";
 import userAdmin from "./adminUser.js";
 import subserviceController from "./subserviceController.js";
+import onlinestoreController from "./onlinestoreController.js";
+import platformController from "./platformController.js";
+
 
 //Api calls are done through uri and router routes uri correct functions
 //get request send through uri > router makes correct controllerCall > controller makes DBOcall > DBO returns results from db to controller > controller adds json to response of the request
@@ -25,13 +27,37 @@ router
   .post(gameController.createGame);
 
 router
+  .route("/categories/date")
+  .post(categoryController.getGamesByDate);
+
+router
+  .route("/onlinestores/date")
+  .post(onlinestoreController.getGamesByDate);
+
+router
+  .route("/platforms/date")
+  .post(platformController.getGamesByDate);
+
+router
+  .route("/languages/date")
+  .post(languageController.getGamesByDate);
+
+router
+  .route("/developmentstudios/date")
+  .post(developmentStudioController.getGamesByDate);
+
+
+router
+  .route("/dlc/date")
+  .post(dlcController.getGamesByDate);
+
+router
   .route("/categories")
   .get(categoryController.getAllGames)
   .post(categoryController.createGame);
 
 router
   .route("/categories/:id")
-  .get(categoryController.getGameById)
   .patch(categoryController.updateGame)
   .delete(categoryController.deleteById);
 
@@ -46,6 +72,30 @@ router
   .get(languageController.getGameById)
   .patch(languageController.updateGame)
   .delete(languageController.deleteById);
+
+router
+  .route("/onlinestores")
+  .get(onlinestoreController.getAllGames)
+  .post(onlinestoreController.createGame);
+
+router
+  .route("/onlinestores/:id")
+  .get(onlinestoreController.getGameById)
+  .patch(onlinestoreController.updateGame)
+  .delete(onlinestoreController.deleteById);
+
+  
+  router
+  .route("/platforms")
+  .get(platformController.getAllGames)
+  .post(platformController.createGame);
+
+router
+  .route("/platforms/:id")
+  .patch(platformController.updateGame)
+  .delete(platformController.deleteById);
+
+
 
 
 router
@@ -79,7 +129,7 @@ router
 router
   .route("/games/date")
   .post(gameController.getGamesByDate);
-
+/*
 router
   .route("/platforms")
   .get(platformController.getAllPlatforms)

@@ -152,6 +152,14 @@ export default function AdminPage(props) {
                           backgroundcolor="#00000"
                           onClick={()=> navigate("/languagepage")}
                           >Languages</button>
+<button className="btn btn-secondary"
+                          backgroundcolor="#00000"
+                          onClick={()=> navigate("/onlinestorepage")}
+                          >Online Stores</button>
+<button className="btn btn-secondary"
+                          backgroundcolor="#00000"
+                          onClick={()=> navigate("/platformpage")}
+                          >Platforms</button>
           
          
         </Box>

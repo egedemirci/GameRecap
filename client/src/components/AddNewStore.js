@@ -18,8 +18,8 @@ export default function AddNewGame() {
     e.preventDefault();
     console.log(name, date);
     try {
-      const response = await GameFinder.post("/categories", {
-        category_name: name,
+      const response = await GameFinder.post("/onlinestores", {
+        store_name: name,
       });
       alert("Success! Refreshing...");
       window.location.reload();
@@ -32,10 +32,10 @@ export default function AddNewGame() {
       <Container maxWidth="sm">
         <Box component="form"  sx={{ mt: 6 }} onSubmit={handleSubmit}>
           <Typography variant="h4" component="h1" gutterBottom>
-            Add New Category
+            Add New Store
           </Typography>
           <Typography variant="h6" component="h10">
-            Name of the Category
+            Store Name
           </Typography>
           <TextField
             margin="normal"

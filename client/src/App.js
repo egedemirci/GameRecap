@@ -13,6 +13,10 @@ import DevelopmentStudioPage from "./components/DevelopmentStudioPage";
 import LanguagePage from "./components/LanguagePage";
 import UserAdmin from "./components/UserAdminPage";
 import SubService from "./components/subServices";
+import OnlineStoresPage from "./components/OnlineStoresPage";
+import PlatformPage from "./components/PlatformPage";
+
+
 class App extends Component {
   render() {
     const myStyle = {
@@ -36,6 +40,9 @@ class App extends Component {
               <Route path="/languagepage" element={<LanguagePage></LanguagePage>} />
               <Route path="/useradminpage" element={<UserAdmin></UserAdmin>} />
               <Route path="/subservice" element={<SubService></SubService>} />
+              <Route path="/onlinestorepage" element={<OnlineStoresPage></OnlineStoresPage>} />
+              <Route path="/platformpage" element={<PlatformPage></PlatformPage>} />
+           
 
 
 

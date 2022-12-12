@@ -31,7 +31,7 @@ export default function AddNewGame() {
   const content = (
     <>
       <Container maxWidth="sm">
-        <Box component="form" noValidate sx={{ mt: 6 }} onSubmit={handleSubmit}>
+        <Box component="form"  sx={{ mt: 6 }} onSubmit={handleSubmit}>
           <Typography variant="h4" component="h1" gutterBottom>
             Add New Game
           </Typography>
