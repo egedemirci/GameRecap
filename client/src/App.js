@@ -5,8 +5,11 @@ import "./App.css";
 import MainPage from "./components/mainPage";
 import { GameContextProvider } from "./context/gameContext";
 import UpdatePage from "./routes/updatePage";
+import UserProfile from "./components/profilePage";
+import Playlists from "./components/playlists";
+import Playlist from "./components/playlist";
+import Discover from "./components/discover";
 import AdminPage from "./components/AdminPage";
-
 import CategoryPage from "./components/CategoryPage";
 import DlcPage from "./components/DlcPage";
 import DevelopmentStudioPage from "./components/DevelopmentStudioPage";
@@ -15,8 +18,6 @@ import UserAdmin from "./components/UserAdminPage";
 import SubService from "./components/subServices";
 import OnlineStoresPage from "./components/OnlineStoresPage";
 import PlatformPage from "./components/PlatformPage";
-
-
 class App extends Component {
   render() {
     const myStyle = {
@@ -47,6 +48,11 @@ class App extends Component {
 
 
               <Route path="/games/:id/update" element={<UpdatePage />} />
+              <Route path="/users/:id" element={<UserProfile/>} />
+              <Route path="/playlists/:id" element={<Playlists/>} />
+              <Route path="/playlist/:id" element={<Playlist/>} />
+              <Route path="/discover" element={<Discover/>} />
+
             </Routes>
           </Router>
         </div>
