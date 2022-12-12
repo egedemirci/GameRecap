@@ -1,0 +1,245 @@
+import Button from "@mui/material/Button";
+import CssBaseline from "@mui/material/CssBaseline";
+import Stack from "@mui/material/Stack";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import Container from "@mui/material/Container";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import ResponsiveAppBar from "./appbarGame";
+import React, { useEffect, useContext, useState } from "react";
+import GameFinder from "../apis/GameFinder";
+import { GameContext } from "../context/gameContext";
+import { styled } from "@mui/material/styles";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell, { tableCellClasses } from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import Paper from "@mui/material/Paper";
+import { useNavigate } from "react-router-dom";
+import TextField from "@mui/material/TextField";
+import Grid from "@mui/material/Grid";
+import AddNewGameComponent from "./AddNewDlc";
+import { colors } from "@mui/material";
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: "#D3EDEE",
+    },
+    secondary: {
+      main: "#a8dadc",
+    },
+    third: {
+      main: "#457b9d",
+    },
+    fourth: {
+      main: "#e63946",
+    },
+    fifth: {
+      main: "#a8dadc",
+    },
+  },
+});
+
+const myStyle = {
+  background: "#D3EDEE",
+  height: "100vh",
+  fontSize: "24px",
+  backgroundSize: "cover",
+};
+
+const StyledTableCell = styled(TableCell)(({ theme }) => ({
+  [`&.${tableCellClasses.head}`]: {
+    backgroundColor: theme.palette.common.black,
+    color: theme.palette.common.white,
+  },
+  [`&.${tableCellClasses.body}`]: {
+    fontSize: 14,
+  },
+}));
+
+const StyledTableRow = styled(TableRow)(({ theme }) => ({
+  "&:nth-of-type(odd)": {
+    backgroundColor: theme.palette.action.hover,
+  },
+  // hide last border
+  "&:last-child td, &:last-child th": {
+    border: 0,
+  },
+}));
+
+export default function UserAdmin(props) {
+  const { games, setGames } = useContext(GameContext);
+  const navigate = useNavigate();
+  const [start_date, setStartDate] = useState("");
+  const [end_date, setEndDate] = useState("");
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await GameFinder.get("/useradmin");
+        setGames(response.data.data.games);
+      } catch (err) {}
+    };
+    fetchData();
+  }, [setGames]);
+
+  const handleDelete = async (e, id) => {
+    e.stopPropagation();
+    try {
+      const response = await GameFinder.delete(`/useradmin/${id}`);
+      setGames(
+        games.filter((game) => {
+          return games.dlc_id !== id;
+        })
+      );
+      window.location.reload();
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    let response = [];
+    if (
+      (start_date === " " || start_date === "") &&
+      (end_date === " " || end_date === "")
+    ) {
+      response = await GameFinder.get(`/useradmin`);
+    } else {
+      response = await GameFinder.post(`/useradmin/date`, {
+        start_date: start_date,
+        end_date: end_date,
+      });
+    }
+    setGames(response.data.data.games);
+  };
+
+  return (
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <ResponsiveAppBar />
+      <main>
+        {/* Hero unit */}
+        <Box
+          sx={{
+            bgcolor: "background.paper",
+            pt: 8,
+            pb: 6,
+          }}
+        >
+          <Container maxWidth="sm">
+            <Typography variant="h4" component="h1">
+              Filter
+            </Typography>
+            <Box
+              component="form"
+              onSubmit={handleSubmit}
+              noValidate
+              sx={{ mt: 1 }}
+            >
+              <Typography variant="h6" component="h10">
+               Created After
+              </Typography>
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                value={start_date}
+                onChange={(e) => setStartDate(e.target.value)}
+                id="date"
+                className="form-control"
+                type="date"
+              />
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                sx={{ mt: 3, mb: 2 }}
+              >
+                Filter 
+              </Button>
+              <Grid container></Grid>
+            </Box>
+            <Box sx={{ mt: 3 }}></Box>
+            <Typography sx={{ mb: 2 }} variant="h4" component="h1">
+              Categories
+            </Typography>
+            <TableContainer component={Paper}>
+              <Table sx={{ minWidth: 100 }} aria-label="customized table">
+                <TableHead>
+                  <TableRow>
+                    <StyledTableCell align="right">User ID</StyledTableCell>
+                    <StyledTableCell align="right">Username</StyledTableCell>
+                    <StyledTableCell align="right">Email</StyledTableCell>
+                    <StyledTableCell align="right">Create Date</StyledTableCell>
+
+                    <StyledTableCell align="right">Delete</StyledTableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {games.map((game) => (
+                    <StyledTableRow key={game.user_id}>
+                      <StyledTableCell align="right">
+                        {game.user_id}
+                      </StyledTableCell>
+                      <StyledTableCell align="right">
+                        {game.username}
+                      </StyledTableCell>
+                      <StyledTableCell align="right">
+                        {game.email}
+                      </StyledTableCell>
+                      <StyledTableCell align="right">
+                        {game.created_at}
+                      </StyledTableCell>
+                    
+                      <StyledTableCell align="right">
+                        {" "}
+                        <button
+                          onClick={(e) => handleDelete(e, game.user_id)}
+                          className="btn btn-danger"
+                        >
+                          Delete
+                        </button>
+                      </StyledTableCell>
+                    </StyledTableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+            
+          </Container>
+          <Box sx={{ mt: 3 }}></Box>
+          <button className="btn btn-secondary"
+                          backgroundcolor="#00000"
+                          onClick={()=> navigate("/adminpage")}
+                          >Admin Page</button>
+          
+         
+        </Box>
+      </main>
+      {/* Footer */}
+      <Box sx={{ bgcolor: "#D3EDEE" }} component="footer">
+        <Box sx={{ pt: 3 }}>
+          <center>
+            <img
+              src="https://i.hizliresim.com/kti4lvy.png"
+              height="100"
+              width="100"
+            />{" "}
+          </center>
+          <Typography
+            variant="subtitle1"
+            align="center"
+            color="text.secondary"
+            component="p"
+          ></Typography>
+        </Box>
+      </Box>
+      {/* End footer */}
+    </ThemeProvider>
+  );
+}

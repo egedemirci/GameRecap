@@ -5,6 +5,7 @@ import developmentStudioController from "./developmentStudioController.js";
 import dlcController from "./dlcController.js";
 import categoryController from "./categoryController.js";
 import languageController from "./languageController.js";
+import userAdmin from "./adminUser.js";
 
 //Api calls are done through uri and router routes uri correct functions
 //get request send through uri > router makes correct controllerCall > controller makes DBOcall > DBO returns results from db to controller > controller adds json to response of the request
@@ -88,6 +89,21 @@ router
   .get(platformController.getPlatformById)
   .patch(platformController.updatePlatform)
   .delete(platformController.deleteById);
+
+
+  router
+  .route("/useradmin")
+  .get(userAdmin.getAllGames)
+
+  router
+  .route("/useradmin/:id")
+  .delete(userAdmin.deleteById);
+
+  router
+  .route("/useradmin/date")
+  .post(userAdmin.getGamesByDate);
+
+
 /*
 router
   .route("/developmentStudios")
