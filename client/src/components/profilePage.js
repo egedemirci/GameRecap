@@ -70,7 +70,13 @@ export const UserProfile = () => {
   function onPlaylist(){
     navigate(`/playlists/${id}`)
   }
+  function onDiscover(){
+    navigate(`/discover`)
+  }
 
+  function onGames(){
+    navigate(`/games`)
+  }
   return (
     user !== null ? 
     <ThemeProvider theme={theme}>
@@ -121,8 +127,8 @@ export const UserProfile = () => {
                 justifyContent="center"
           	>
             	<Button  onClick={onPlaylist} color = 'error' variant="contained">Playlists</Button>
-            	<Button color = 'sixth' variant="contained">Games</Button>
-              <Button color = 'fourth' variant="contained">Discover</Button>
+            	<Button onClick={onGames} color = 'sixth' variant="contained">Games</Button>
+              <Button onClick={onDiscover}  color = 'fourth' variant="contained">Discover</Button>
 
           	</Stack>
           	<Divider variant="middle" />
