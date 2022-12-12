@@ -41,7 +41,6 @@ class App extends Component {
                 <Route index element={<GamesPage />} />
                 <Route path=":id" element={<IndividualGameComponent />} />
               </Route>
-              <Route path="/" element={<MainPage />} />
               <Route path="/adminpage" element={<AdminPage />} />
               <Route
                 path="/categorypage"
@@ -67,7 +66,7 @@ class App extends Component {
                 element={<PlatformPage></PlatformPage>}
               />
               <Route path="/games/:id/update" element={<UpdatePage />} />
-              <Route path="/users/:id" element={<UserProfile />} />
+              <Route path="/profile" element={<UserProfile />} />
               <Route path="/playlists/:id" element={<Playlists />} />
               <Route path="/playlist/:id" element={<Playlist />} />
               <Route path="/discover" element={<Discover />} />

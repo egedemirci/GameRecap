@@ -9,7 +9,7 @@ import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import Alert from "@mui/material/Alert";
-import GameRecap_API from "../apis/GameRecap_API";
+import GameFinder from "../apis/GameFinder";
 
 const SignUpComponent = () => {
   const navigate = useNavigate();
@@ -45,13 +45,13 @@ const SignUpComponent = () => {
       if (username.length === 0)
         throw { fmessage: "Please fill all the fields." };
       // TODO: Update these methods
-      const response = await GameRecap_API.post("/users/", {
+      const response = await GameFinder.post("/users/", {
         mail: mail,
         username: username,
         password: password,
       });
       if (response.status === 200) {
-        localStorage.setItem("user", JSON.stringify(response.data.user));
+        localStorage.setItem("user", JSON.stringify(response.data.data));
         navigate("/profile/");
       }
     } catch (err) {

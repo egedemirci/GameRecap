@@ -9,7 +9,7 @@ import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import Alert from "@mui/material/Alert";
-import GameRecap_API from "../apis/GameRecap_API";
+import GameFinder from "../apis/GameFinder";
 
 const LoginComponent = () => {
   const navigate = useNavigate();
@@ -41,13 +41,13 @@ const LoginComponent = () => {
           fmessage:
             "Password is invalid. Make sure your password is at least eight characters long.",
         };
-      const response = await GameRecap_API.post("/auth/", {
+      const response = await GameFinder.post("/auth/", {
         mail: mail,
         password: password,
       });
       //auth user first
       if (response.status === 200) {
-        localStorage.setItem("user", response.data.user);
+        localStorage.setItem("user", JSON.stringify(response.data.data));
         navigate("/profile");
       } else throw { fmessage: "There was an unknown problem" };
     } catch (err) {

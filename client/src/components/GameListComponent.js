@@ -5,7 +5,7 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import React, { useEffect, useContext, useState } from "react";
-import GameFinder from "../apis/GameRecap_API";
+import GameFinder from "../apis/GameFinder";
 import { GameContext } from "../context/gameContext";
 import { styled } from "@mui/material/styles";
 import Table from "@mui/material/Table";

@@ -2,15 +2,17 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Grid, Typography } from "@mui/material";
 import SmallCard from "./SmallCard";
-import GameRecap_API from "../apis/GameRecap_API";
+import GameFinder from "../apis/GameFinder";
 import ResponsiveAppBar from "./appbarGame";
+import RateCard from "./RateCard";
 
 export default function IndividualGameComponent() {
   const { id } = useParams();
+  const user = JSON.parse(localStorage.getItem("user"));
   const [game, setGame] = useState(null);
   useEffect(() => {
     const fetchData = async () => {
-      const result = await GameRecap_API.get(`/games/${id}`);
+      const result = await GameFinder.get(`/games/${id}`);
       setGame(result.data.data);
     };
     fetchData();
@@ -68,11 +70,14 @@ export default function IndividualGameComponent() {
           md={8}
           sx={{ display: { sm: "none", md: "block", lg: "none" } }}
         />
-        <Grid item xs={3} />
-        <Grid item xs={6} align="center">
+        <Grid item xs={1} />
+        <Grid item xs={5} align="center">
           <SmallCard title="Synopsis" subtitle={game.synopsis} />
         </Grid>
-        <Grid item xs={3} />
+        <Grid item xs={5} align="center">
+          <RateCard user_id={user.user_id} game_id={id} />
+        </Grid>
+        <Grid item xs={1} />
         <Grid
           item
           md={8}

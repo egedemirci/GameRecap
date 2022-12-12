@@ -4,7 +4,7 @@ import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import Container from "@mui/material/Container";
 import Alert from "@mui/material/Alert";
-import GameFinder from "../apis/GameRecap_API";
+import GameFinder from "../apis/GameFinder";
 import { useState } from "react";
 
 export default function AddNewGame() {
