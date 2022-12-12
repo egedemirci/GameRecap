@@ -11,6 +11,9 @@ import CategoryPage from "./components/CategoryPage";
 import DlcPage from "./components/DlcPage";
 import DevelopmentStudioPage from "./components/DevelopmentStudioPage";
 import LanguagePage from "./components/LanguagePage";
+import OnlineStoresPage from "./components/OnlineStoresPage";
+import PlatformPage from "./components/PlatformPage";
+
 class App extends Component {
   render() {
     const myStyle = {
@@ -32,6 +35,9 @@ class App extends Component {
               <Route path="/developmentstudiopage" element={<DevelopmentStudioPage></DevelopmentStudioPage>} />
               <Route path="/dlcpage" element={<DlcPage></DlcPage>} />
               <Route path="/languagepage" element={<LanguagePage></LanguagePage>} />
+              <Route path="/onlinestorepage" element={<OnlineStoresPage></OnlineStoresPage>} />
+              <Route path="/platformpage" element={<PlatformPage></PlatformPage>} />
+           
 
 
 

@@ -32,7 +32,7 @@ export default function AddNewGame() {
       <Container maxWidth="sm">
         <Box component="form"  sx={{ mt: 6 }} onSubmit={handleSubmit}>
           <Typography variant="h4" component="h1" gutterBottom>
-            Add New Studio
+            Add New Language
           </Typography>
           <Typography variant="h6" component="h10">
             Language Name

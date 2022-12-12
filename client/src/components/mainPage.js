@@ -143,7 +143,6 @@ export default function MainPage(props) {
             <Box
               component="form"
               onSubmit={handleSubmit}
-              noValidate
               sx={{ mt: 1 }}
             >
               <Typography variant="h6" component="h10">

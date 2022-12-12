@@ -57,66 +57,19 @@ export default class gameController {
 
   static async getGamesByDate(req, res, next) {
     try {
-        
-      let results = []
-      const start_date = req.body.start_date;
-      const end_date = req.body.end_date;
-      if ((start_date == " " || start_date == "") && (end_date != " " && end_date != "")){
-        results = await db.query(
-          "SELECT * FROM game_recap.Games WHERE release_date <= $1",
-          [end_date]
-        );
-      }
+        const result = await db.query(
+          `SELECT * FROM game_recap.CATEGORIES `
 
-      else if ((start_date != " " && start_date != "") && (end_date == " " || end_date == "")){
-        results = await db.query(
-          "SELECT * FROM game_recap.Games WHERE release_date >= $1",
-          [start_date]
-        );
-      }
-
-      else{
-        results = await db.query(
-          "SELECT * FROM game_recap.Games WHERE release_date >= $1 and release_date <= $2",
-          [start_date, end_date]
-        );
-      }
-      
-      res.status(200).json({
-        lenght: results.rows.length,
-        data: {
-          games: results.rows,
-        },
-      });
+        )
+        const filteredRows = result.rows.filter(row => row.category_name.toLowerCase().startsWith(req.body.filter.toLowerCase()));
+        console.log(filteredRows);
+        console.log(result.rows);
+        res.status(200).json({
+          data: filteredRows,
+        });
+  
     } catch (error) {
-      console.log(`Error when getting games by date filter ${error}`);
-      res.status(400).json({ error: error, data: { games: [] } });
-    }
-  }
-
-  static async getGameById(req, res, next) {
-    try {
-      const results = await db.query(
-        "SELECT * FROM game_recap.CATEGORIES WHERE c_id = $1",
-        [req.params.c_id]
-      );
-      if (results.rows.length == 0) {
-        throw {
-          detail: "Category not found.",
-          code: 1,
-          error: new Error(),
-        };
-      }
-
-      res.status(200).json({
-        lenght: results.rows.length,
-        data: results.rows[0],
-      });
-    } catch (error) {
-      if (err.code == 1) {
-        res.status(404).json({ detail: err.detail, data: [] });
-        return;
-      }
+     
       console.log(`Error when getting game by id ${error}`);
       res.status(400).json({ error: error, data: [] });
     }

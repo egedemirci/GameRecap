@@ -110,17 +110,15 @@ export default function MainPage(props) {
     e.preventDefault();
     let response = [];
     if (
-      (start_date === " " || start_date === "") &&
-      (end_date === " " || end_date === "")
+      (start_date === " " || start_date === "") 
     ) {
-      response = await GameFinder.get(`/games`);
+      response = await GameFinder.get(`/dlc`);
     } else {
-      response = await GameFinder.post(`/games/date`, {
-        start_date: start_date,
-        end_date: end_date,
+      response = await GameFinder.post(`/dlc/date`, {
+        filter: start_date,
       });
     }
-    setGames(response.data.data.games);
+    setGames(response.data.data);
   };
 
   return (
@@ -143,7 +141,7 @@ export default function MainPage(props) {
             <Box
               component="form"
               onSubmit={handleSubmit}
-              noValidate
+              
               sx={{ mt: 1 }}
             >
               <Typography variant="h6" component="h10">
@@ -157,7 +155,7 @@ export default function MainPage(props) {
                 onChange={(e) => setStartDate(e.target.value)}
                 id="date"
                 className="form-control"
-                type="date"
+                type="text"
               />
               <Button
                 type="submit"
@@ -171,7 +169,7 @@ export default function MainPage(props) {
             </Box>
             <Box sx={{ mt: 3 }}></Box>
             <Typography sx={{ mb: 2 }} variant="h4" component="h1">
-              Categories
+              DLC
             </Typography>
             <TableContainer component={Paper}>
               <Table sx={{ minWidth: 100 }} aria-label="customized table">
