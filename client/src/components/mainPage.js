@@ -22,6 +22,7 @@ import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
 import AddNewGameComponent from "./AddNewGame";
 import { colors } from "@mui/material";
+import RateCard from "./RateCard";
 
 const theme = createTheme({
   palette: {
@@ -241,8 +242,6 @@ export default function MainPage(props) {
                           backgroundcolor="#00000"
                           onClick={()=> navigate("/adminpage")}
                           >Admin Page</button>
-          
-         
         </Box>
       </main>
       {/* Footer */}
