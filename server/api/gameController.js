@@ -16,6 +16,83 @@ export default class gameController {
     }
   }
 
+  static async getAllPlaylists(req, res, next) {
+    try {
+      const results = await db.query("SELECT * FROM game_recap.playlists WHERE user_id = $1" , [req.params.id]);
+      res.status(200).json({
+        lenght: results.rows.length,
+        data: {
+          games: results.rows,
+        },
+      });
+    } catch (error) {
+      console.log(`Error when getting all games ${error}`);
+      res.status(400).json({ error: error, data: { games: [] } });
+    }
+  }
+
+  static async getPlaylistsGenres(req, res, next) {
+    try {
+      const results = await db.query("with temp as (select gp.playlist_id, playlist_name, category_name, count(*) as count from game_recap.gamesplaylists gp left join game_recap.gamescategories gc using(game_id) left join game_recap.categories c on gc.c_id = c.c_id left join game_recap.playlists p on gp.playlist_id = p.playlist_id group by gp.playlist_id, playlist_name, category_name), max as (select playlist_id, max(count) as count from temp group by 1) select playlist_id, playlist_name, string_agg(category_name, ', ') from temp right join max using (playlist_id, count) group by 1,2");
+      console.log(results);
+      res.status(200).json({
+        lenght: results.rows.length,
+        data: {
+          games: results.rows,
+        },
+      });
+    } catch (error) {
+      console.log(`Error when getting all games ${error}`);
+      res.status(400).json({ error: error, data: { games: [] } });
+    }
+  }
+
+
+
+  static async getPlaylistById(req, res, next) {
+    try {
+      const results = await db.query("SELECT g.game_name, g.game_id FROM game_recap.games g, game_recap.gamesplaylists p WHERE g.game_id = p.game_id AND p.playlist_id = $1;" , [req.params.id]);
+      res.status(200).json({
+        lenght: results.rows.length,
+        data: {
+          games: results.rows,
+        },
+      });
+    } catch (error) {
+      console.log(`Error when getting all games ${error}`);
+      res.status(400).json({ error: error, data: { games: [] } });
+    }
+  }
+
+
+  static async getUserById(req, res, next){
+    console.log(`here`);
+    try {
+
+      const result = await db.query('SELECT * FROM game_recap.users WHERE user_id = $1', [req.params.id])
+      console.log("aaa");
+      if(result.rows.length == 0)
+      {
+        throw {
+          detail: "User not found.",
+          code: 1,
+          error: new Error()
+        };
+      }
+
+      res.status(200).json({
+      data: result.rows[0]
+      })
+    } catch (err) {
+      console.log(`Error when getting one user ${err}`)
+      if(err.code == 1)
+      {
+        res.status(404).json({detail:err.detail, data:[]})
+        return
+      }
+      res.status(400).json({detail:err, data:[]})
+    }   
+  }
   static async getGamesByDate(req, res, next) {
     try {
       let results = [];
@@ -161,6 +238,9 @@ group by 1, 2, 3`,
     }
   }
 
+
+
+  
   static async deleteById(req, res, next) {
     try {
       const results = await db.query(

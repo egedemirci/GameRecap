@@ -1,11 +1,13 @@
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
+import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import ResponsiveAppBar from "./appbarGame";
 import React, { useEffect, useContext, useState } from "react";
-import GameFinder from "../apis/GameRecap_API";
+import GameFinder from "../apis/GameFinder";
 import { GameContext } from "../context/gameContext";
 import { styled } from "@mui/material/styles";
 import Table from "@mui/material/Table";
@@ -15,12 +17,11 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
-import AddNewGameComponent from "./AddNewGame";
+import AddNewGameComponent from "./AddNewDlc";
 import { colors } from "@mui/material";
-import RateCard from "./RateCard";
 
 const theme = createTheme({
   palette: {
@@ -69,7 +70,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-export default function GameListComponent() {
+export default function UserAdmin(props) {
   const { games, setGames } = useContext(GameContext);
   const navigate = useNavigate();
   const [start_date, setStartDate] = useState("");
@@ -78,25 +79,20 @@ export default function GameListComponent() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await GameFinder.get("/games");
+        const response = await GameFinder.get("/useradmin");
         setGames(response.data.data.games);
       } catch (err) {}
     };
     fetchData();
   }, [setGames]);
 
-  const handleUpdate = (e, id) => {
-    e.stopPropagation();
-    navigate(`/games/${id}/update`);
-  };
-
   const handleDelete = async (e, id) => {
     e.stopPropagation();
     try {
-      const response = await GameFinder.delete(`/games/${id}`);
+      const response = await GameFinder.delete(`/useradmin/${id}`);
       setGames(
         games.filter((game) => {
-          return games.game_id !== id;
+          return games.dlc_id !== id;
         })
       );
       window.location.reload();
@@ -112,9 +108,9 @@ export default function GameListComponent() {
       (start_date === " " || start_date === "") &&
       (end_date === " " || end_date === "")
     ) {
-      response = await GameFinder.get(`/games`);
+      response = await GameFinder.get(`/useradmin`);
     } else {
-      response = await GameFinder.post(`/games/date`, {
+      response = await GameFinder.post(`/useradmin/date`, {
         start_date: start_date,
         end_date: end_date,
       });
@@ -125,7 +121,9 @@ export default function GameListComponent() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
+      <ResponsiveAppBar />
       <main>
+        {/* Hero unit */}
         <Box
           sx={{
             bgcolor: "background.paper",
@@ -135,11 +133,16 @@ export default function GameListComponent() {
         >
           <Container maxWidth="sm">
             <Typography variant="h4" component="h1">
-              Filter Release Date
+              Filter
             </Typography>
-            <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
+            <Box
+              component="form"
+              onSubmit={handleSubmit}
+              noValidate
+              sx={{ mt: 1 }}
+            >
               <Typography variant="h6" component="h10">
-                Start Date
+               Created After
               </Typography>
               <TextField
                 margin="normal"
@@ -151,71 +154,52 @@ export default function GameListComponent() {
                 className="form-control"
                 type="date"
               />
-              <Typography variant="h6" component="h10">
-                End Date
-              </Typography>
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                value={end_date}
-                onChange={(e) => setEndDate(e.target.value)}
-                id="date"
-                className="form-control"
-                type="date"
-              />
               <Button
                 type="submit"
                 fullWidth
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
               >
-                Filter Date
+                Filter 
               </Button>
               <Grid container></Grid>
             </Box>
             <Box sx={{ mt: 3 }}></Box>
             <Typography sx={{ mb: 2 }} variant="h4" component="h1">
-              Games
+              Categories
             </Typography>
             <TableContainer component={Paper}>
               <Table sx={{ minWidth: 100 }} aria-label="customized table">
                 <TableHead>
                   <TableRow>
-                    <StyledTableCell align="right">Game Name</StyledTableCell>
-                    <StyledTableCell align="right">
-                      Release Date
-                    </StyledTableCell>
-                    <StyledTableCell align="right">Update</StyledTableCell>
+                    <StyledTableCell align="right">User ID</StyledTableCell>
+                    <StyledTableCell align="right">Username</StyledTableCell>
+                    <StyledTableCell align="right">Email</StyledTableCell>
+                    <StyledTableCell align="right">Create Date</StyledTableCell>
+
                     <StyledTableCell align="right">Delete</StyledTableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
                   {games.map((game) => (
-                    <StyledTableRow key={game.game_id}>
-                      <StyledTableCell align="left">
-                        <Button>
-                          <Link color="#D3EDEE" to={`/games/${game.game_id}`}>
-                            {game.game_name}
-                          </Link>
-                        </Button>
+                    <StyledTableRow key={game.user_id}>
+                      <StyledTableCell align="right">
+                        {game.user_id}
                       </StyledTableCell>
                       <StyledTableCell align="right">
-                        {game.release_date}
+                        {game.username}
                       </StyledTableCell>
                       <StyledTableCell align="right">
-                        <button
-                          onClick={(e) => handleUpdate(e, game.game_id)}
-                          className="btn btn-secondary"
-                          backgroundcolor="#00000"
-                        >
-                          Update
-                        </button>
+                        {game.email}
                       </StyledTableCell>
+                      <StyledTableCell align="right">
+                        {game.created_at}
+                      </StyledTableCell>
+                    
                       <StyledTableCell align="right">
                         {" "}
                         <button
-                          onClick={(e) => handleDelete(e, game.game_id)}
+                          onClick={(e) => handleDelete(e, game.user_id)}
                           className="btn btn-danger"
                         >
                           Delete
@@ -226,18 +210,18 @@ export default function GameListComponent() {
                 </TableBody>
               </Table>
             </TableContainer>
+            
           </Container>
           <Box sx={{ mt: 3 }}></Box>
-          <AddNewGameComponent />
-          <button
-            className="btn btn-secondary"
-            backgroundcolor="#00000"
-            onClick={() => navigate("/adminpage")}
-          >
-            Admin Page
-          </button>
+          <button className="btn btn-secondary"
+                          backgroundcolor="#00000"
+                          onClick={()=> navigate("/adminpage")}
+                          >Admin Page</button>
+          
+         
         </Box>
       </main>
+      {/* Footer */}
       <Box sx={{ bgcolor: "#D3EDEE" }} component="footer">
         <Box sx={{ pt: 3 }}>
           <center>
@@ -255,6 +239,7 @@ export default function GameListComponent() {
           ></Typography>
         </Box>
       </Box>
+      {/* End footer */}
     </ThemeProvider>
   );
 }
