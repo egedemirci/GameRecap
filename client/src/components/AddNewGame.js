@@ -3,7 +3,7 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import Container from "@mui/material/Container";
-import GameFinder from "../apis/GameFinder";
+import GameFinder from "../apis/GameRecap_API";
 import { GameContext } from "../context/gameContext";
 import { useNavigate } from "react-router-dom";
 import { useContext, useState, useEffect } from "react";

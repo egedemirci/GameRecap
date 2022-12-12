@@ -5,6 +5,8 @@ import "./App.css";
 import MainPage from "./components/mainPage";
 import { GameContextProvider } from "./context/gameContext";
 import UpdatePage from "./routes/updatePage";
+import SignUpPage from "./routes/signUpPage";
+import LoginPage from "./routes/LoginPage"
 
 class App extends Component {
   render() {
@@ -14,7 +16,6 @@ class App extends Component {
       fontSize: "24px",
       backgroundSize: "cover",
     };
-
     return (
       <GameContextProvider>
         <div style={myStyle}>
@@ -22,7 +23,9 @@ class App extends Component {
             <Routes>
               <Route path="/" element={<MainPage />} />
               <Route path="/games/:id/update" element={<UpdatePage />} />
-            </Routes>
+              <Route path="/signup" element={<SignUpPage />} />
+              <Route path="/login" element={<LoginPage />}/>
+            </Routes> 
           </Router>
         </div>
       </GameContextProvider>
