@@ -129,17 +129,6 @@ router
 router
   .route("/games/date")
   .post(gameController.getGamesByDate);
-/*
-router
-  .route("/platforms")
-  .get(platformController.getAllPlatforms)
-  .post(platformController.createPlatform);
-
-router
-  .route("/platforms/:id")
-  .get(platformController.getPlatformById)
-  .patch(platformController.updatePlatform)
-  .delete(platformController.deleteById);
 
   router
   .route("/subservice")
@@ -155,18 +144,30 @@ router
   .route("/subservice/:id")
   .delete(subserviceController.deleteById)
 
-
-  router
+router
   .route("/useradmin")
   .get(userAdmin.getAllGames)
 
-  router
+router
   .route("/useradmin/:id")
   .delete(userAdmin.deleteById);
 
-  router
+router
   .route("/useradmin/date")
   .post(userAdmin.getGamesByDate);
+/*
+router
+  .route("/platforms")
+  .get(platformController.getAllPlatforms)
+  .post(platformController.createPlatform);
+
+router
+  .route("/platforms/:id")
+  .get(platformController.getPlatformById)
+  .patch(platformController.updatePlatform)
+  .delete(platformController.deleteById);
+
+  
 
 
 /*

@@ -160,6 +160,14 @@ export default function AdminPage(props) {
                           backgroundcolor="#00000"
                           onClick={()=> navigate("/platformpage")}
                           >Platforms</button>
+<button className="btn btn-secondary"
+                          backgroundcolor="#00000"
+                          onClick={()=> navigate("/subservice")}
+                          >Subscription</button>
+<button className="btn btn-secondary"
+                          backgroundcolor="#00000"
+                          onClick={()=> navigate("/useradminpage")}
+                          >Users</button>
           
          
         </Box>
