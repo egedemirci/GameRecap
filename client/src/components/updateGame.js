@@ -1,5 +1,5 @@
 import { CssBaseline } from "@mui/material";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import GameFinder from "../apis/GameFinder";
 import ResponsiveAppBar from "./appbarGame";
@@ -10,6 +10,7 @@ import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { GameContext } from "../context/gameContext";
 
 const theme = createTheme({
   palette: {

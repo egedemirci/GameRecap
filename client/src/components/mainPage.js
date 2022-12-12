@@ -6,7 +6,6 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import ResponsiveAppBar from "./appbarGame";
-import React, { useEffect, useContext } from "react";
 import React, { useEffect, useContext, useState } from "react";
 import GameFinder from "../apis/GameFinder";
 import { GameContext } from "../context/gameContext";
