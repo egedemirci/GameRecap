@@ -22,6 +22,7 @@ import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
 import AddNewGameComponent from "./AddNewGame";
 import { colors } from "@mui/material";
+import RateCard from "./RateCard";
 
 const theme = createTheme({
   palette: {
@@ -236,7 +237,6 @@ export default function MainPage(props) {
             </TableContainer>
           </Container>
           <Box sx={{ mt: 3 }}></Box>
-          <AddNewGameComponent />
         </Box>
       </main>
       {/* Footer */}

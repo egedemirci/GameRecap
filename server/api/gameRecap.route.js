@@ -2,6 +2,8 @@ import express from "express";
 import gameController from "./gameController.js";
 import platformController from "./platformController.js";
 import developmentStudioController from "./developmentStudioController.js";
+import reviewController from "./reviewController.js";
+import rateController from "./reviewController.js";
 
 //Api calls are done through uri and router routes uri correct functions
 //get request send through uri > router makes correct controllerCall > controller makes DBOcall > DBO returns results from db to controller > controller adds json to response of the request
@@ -50,5 +52,10 @@ router
   .get(developmentStudioController.getDevelopmentStudioById)
   .patch(developmentStudioController.updateDevelopmentStudio)
   .delete(developmentStudioController.deleteById);
+
+router
+  .route("/rate/")
+  .post(rateController.rateGame)
+  .get(rateController.getRate)
 
 export default router;
