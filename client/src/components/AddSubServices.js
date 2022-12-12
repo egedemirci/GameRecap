@@ -8,7 +8,7 @@ import { GameContext } from "../context/gameContext";
 import { useNavigate } from "react-router-dom";
 import { useContext, useState, useEffect } from "react";
 
-export default function AddNewGame() {
+export default function AddSubService() {
   const [name, setName] = useState("");
   const [date, setDate] = useState("");
   const navigate = useNavigate();
@@ -18,9 +18,8 @@ export default function AddNewGame() {
     e.preventDefault();
     console.log(name, date);
     try {
-      const response = await GameFinder.post("/dlc", {
-        game_name: name,
-        release_date: date,
+      const response = await GameFinder.post("/subservice", {
+        service_name: name,
       });
       alert("Success! Refreshing...");
       window.location.reload();
@@ -33,10 +32,10 @@ export default function AddNewGame() {
       <Container maxWidth="sm">
         <Box component="form"  sx={{ mt: 6 }} onSubmit={handleSubmit}>
           <Typography variant="h4" component="h1" gutterBottom>
-            Add New Game
+            Add New Subscription Service
           </Typography>
           <Typography variant="h6" component="h10">
-            Name of the Game
+            Service Name
           </Typography>
           <TextField
             margin="normal"
@@ -48,20 +47,6 @@ export default function AddNewGame() {
             name="name"
             className="form-control"
             type="text"
-          />
-          <Typography variant="h6" component="h10">
-            Release Date
-          </Typography>
-          <TextField
-            margin="normal"
-            required
-            value={date}
-            onChange={(e) => setDate(e.target.value)}
-            fullWidth
-            id="date"
-            name="date"
-            className="form-control"
-            type="date"
           />
           <Button
             type="submit"
