@@ -7,6 +7,7 @@ import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import ResponsiveAppBar from "./appbarGame";
 import React, { useEffect, useContext } from "react";
+import React, { useEffect, useContext, useState } from "react";
 import GameFinder from "../apis/GameFinder";
 import { GameContext } from "../context/gameContext";
 import { styled } from "@mui/material/styles";
@@ -18,6 +19,10 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { useNavigate } from "react-router-dom";
+import TextField from "@mui/material/TextField";
+import Grid from "@mui/material/Grid";
+import AddNewGameComponent from "./AddNewGame";
+import { colors } from "@mui/material";
 
 const theme = createTheme({
   palette: {
@@ -69,11 +74,13 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 export default function MainPage(props) {
   const { games, setGames } = useContext(GameContext);
   const navigate = useNavigate();
+  const [start_date, setStartDate] = useState("");
+  const [end_date, setEndDate] = useState("");
+
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await GameFinder.get("/");
-        console.log(response);
+        const response = await GameFinder.get("/games");
         setGames(response.data.data.games);
       } catch (err) {}
     };
@@ -84,18 +91,37 @@ export default function MainPage(props) {
     e.stopPropagation();
     navigate(`/games/${id}/update`);
   };
+
   const handleDelete = async (e, id) => {
     e.stopPropagation();
     try {
-      const response = await GameFinder.delete(`/${id}`);
+      const response = await GameFinder.delete(`/games/${id}`);
       setGames(
         games.filter((game) => {
           return games.game_id !== id;
         })
       );
+      window.location.reload();
     } catch (err) {
       console.log(err);
     }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    let response = [];
+    if (
+      (start_date === " " || start_date === "") &&
+      (end_date === " " || end_date === "")
+    ) {
+      response = await GameFinder.get(`/games`);
+    } else {
+      response = await GameFinder.post(`/games/date`, {
+        start_date: start_date,
+        end_date: end_date,
+      });
+    }
+    setGames(response.data.data.games);
   };
 
   return (
@@ -112,11 +138,59 @@ export default function MainPage(props) {
           }}
         >
           <Container maxWidth="sm">
+            <Typography variant="h4" component="h1">
+              Filter Release Date
+            </Typography>
+            <Box
+              component="form"
+              onSubmit={handleSubmit}
+              noValidate
+              sx={{ mt: 1 }}
+            >
+              <Typography variant="h6" component="h10">
+                Start Date
+              </Typography>
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                value={start_date}
+                onChange={(e) => setStartDate(e.target.value)}
+                id="date"
+                className="form-control"
+                type="date"
+              />
+              <Typography variant="h6" component="h10">
+                End Date
+              </Typography>
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                value={end_date}
+                onChange={(e) => setEndDate(e.target.value)}
+                id="date"
+                className="form-control"
+                type="date"
+              />
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                sx={{ mt: 3, mb: 2 }}
+              >
+                Filter Date
+              </Button>
+              <Grid container></Grid>
+            </Box>
+            <Box sx={{ mt: 3 }}></Box>
+            <Typography sx={{ mb: 2 }} variant="h4" component="h1">
+              Games
+            </Typography>
             <TableContainer component={Paper}>
               <Table sx={{ minWidth: 100 }} aria-label="customized table">
                 <TableHead>
                   <TableRow>
-                    <StyledTableCell>Games</StyledTableCell>
                     <StyledTableCell align="right">Game ID</StyledTableCell>
                     <StyledTableCell align="right">Game Name</StyledTableCell>
                     <StyledTableCell align="right">
@@ -129,9 +203,6 @@ export default function MainPage(props) {
                 <TableBody>
                   {games.map((game) => (
                     <StyledTableRow key={game.game_id}>
-                      <StyledTableCell component="th" scope="row">
-                        {game.game_id}
-                      </StyledTableCell>
                       <StyledTableCell align="right">
                         {game.game_id}
                       </StyledTableCell>
@@ -144,7 +215,8 @@ export default function MainPage(props) {
                       <StyledTableCell align="right">
                         <button
                           onClick={(e) => handleUpdate(e, game.game_id)}
-                          className="btn btn-danger"
+                          className="btn btn-secondary"
+                          backgroundcolor="#00000"
                         >
                           Update
                         </button>
@@ -163,47 +235,28 @@ export default function MainPage(props) {
                 </TableBody>
               </Table>
             </TableContainer>
-
-            <Typography
-              variant="h6"
-              align="center"
-              color="#70798C"
-              gutterBottom
-            >
-              Mail
-            </Typography>
-            <Typography
-              variant="h6"
-              align="center"
-              color="text.secondary"
-              paragraph
-            >
-              GameRecap
-            </Typography>
-            <Stack
-              sx={{ pt: 4 }}
-              direction="row"
-              spacing={2}
-              justifyContent="center"
-            ></Stack>
           </Container>
+          <Box sx={{ mt: 3 }}></Box>
+          <AddNewGameComponent />
         </Box>
       </main>
       {/* Footer */}
-      <Box sx={{ bgcolor: "primary", p: 6 }} component="footer">
-        <center>
-          <img
-            src="https://i.hizliresim.com/kti4lvy.png"
-            height="100"
-            width="100"
-          />{" "}
-        </center>
-        <Typography
-          variant="subtitle1"
-          align="center"
-          color="text.secondary"
-          component="p"
-        ></Typography>
+      <Box sx={{ bgcolor: "#D3EDEE" }} component="footer">
+        <Box sx={{ pt: 3 }}>
+          <center>
+            <img
+              src="https://i.hizliresim.com/kti4lvy.png"
+              height="100"
+              width="100"
+            />{" "}
+          </center>
+          <Typography
+            variant="subtitle1"
+            align="center"
+            color="text.secondary"
+            component="p"
+          ></Typography>
+        </Box>
       </Box>
       {/* End footer */}
     </ThemeProvider>

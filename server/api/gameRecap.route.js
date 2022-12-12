@@ -26,6 +26,10 @@ router
   .delete(gameController.deleteById);
 
 router
+  .route("/games/date")
+  .post(gameController.getGamesByDate);
+
+router
   .route("/platforms")
   .get(platformController.getAllPlatforms)
   .post(platformController.createPlatform);
