@@ -20,9 +20,8 @@ import Paper from "@mui/material/Paper";
 import { useNavigate } from "react-router-dom";
 import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
-import AddNewGameComponent from "./AddNewGame";
+import AddNewGameComponent from "./AddNewPlatform";
 import { colors } from "@mui/material";
-import RateCard from "./RateCard";
 
 const theme = createTheme({
   palette: {
@@ -80,7 +79,7 @@ export default function MainPage(props) {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await GameFinder.get("/games");
+        const response = await GameFinder.get("/platforms");
         setGames(response.data.data.games);
       } catch (err) {}
     };
@@ -95,10 +94,10 @@ export default function MainPage(props) {
   const handleDelete = async (e, id) => {
     e.stopPropagation();
     try {
-      const response = await GameFinder.delete(`/games/${id}`);
+      const response = await GameFinder.delete(`/platforms/${id}`);
       setGames(
         games.filter((game) => {
-          return games.game_id !== id;
+          return games.platform_id !== id;
         })
       );
       window.location.reload();
@@ -111,17 +110,15 @@ export default function MainPage(props) {
     e.preventDefault();
     let response = [];
     if (
-      (start_date === " " || start_date === "") &&
-      (end_date === " " || end_date === "")
+      (start_date === " " || start_date === "") 
     ) {
-      response = await GameFinder.get(`/games`);
+      response = await GameFinder.get(`/platforms`);
     } else {
-      response = await GameFinder.post(`/games/date`, {
-        start_date: start_date,
-        end_date: end_date,
+      response = await GameFinder.post(`/platforms/date`, {
+        filter: start_date,
       });
     }
-    setGames(response.data.data.games);
+    setGames(response.data.data);
   };
 
   return (
@@ -139,15 +136,16 @@ export default function MainPage(props) {
         >
           <Container maxWidth="sm">
             <Typography variant="h4" component="h1">
-              Filter Release Date
+              Filter
             </Typography>
             <Box
               component="form"
               onSubmit={handleSubmit}
+              
               sx={{ mt: 1 }}
             >
               <Typography variant="h6" component="h10">
-                Start Date
+                Name
               </Typography>
               <TextField
                 margin="normal"
@@ -157,20 +155,7 @@ export default function MainPage(props) {
                 onChange={(e) => setStartDate(e.target.value)}
                 id="date"
                 className="form-control"
-                type="date"
-              />
-              <Typography variant="h6" component="h10">
-                End Date
-              </Typography>
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                value={end_date}
-                onChange={(e) => setEndDate(e.target.value)}
-                id="date"
-                className="form-control"
-                type="date"
+                type="text"
               />
               <Button
                 type="submit"
@@ -178,42 +163,38 @@ export default function MainPage(props) {
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
               >
-                Filter Date
+                Filter 
               </Button>
               <Grid container></Grid>
             </Box>
             <Box sx={{ mt: 3 }}></Box>
             <Typography sx={{ mb: 2 }} variant="h4" component="h1">
-              Games
+              Platforms
             </Typography>
             <TableContainer component={Paper}>
               <Table sx={{ minWidth: 100 }} aria-label="customized table">
                 <TableHead>
                   <TableRow>
-                    <StyledTableCell align="right">Game ID</StyledTableCell>
-                    <StyledTableCell align="right">Game Name</StyledTableCell>
-                    <StyledTableCell align="right">
-                      Release Date
-                    </StyledTableCell>
+                    <StyledTableCell align="right">Platform ID</StyledTableCell>
+                    <StyledTableCell align="right">Platform Name</StyledTableCell>
+
+
                     <StyledTableCell align="right">Update</StyledTableCell>
                     <StyledTableCell align="right">Delete</StyledTableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
                   {games.map((game) => (
-                    <StyledTableRow key={game.game_id}>
+                    <StyledTableRow key={game.platform_id}>
                       <StyledTableCell align="right">
-                        {game.game_id}
+                        {game.platform_id}
                       </StyledTableCell>
                       <StyledTableCell align="right">
-                        {game.game_name}
-                      </StyledTableCell>
-                      <StyledTableCell align="right">
-                        {game.release_date}
+                        {game.platform_name}
                       </StyledTableCell>
                       <StyledTableCell align="right">
                         <button
-                          onClick={(e) => handleUpdate(e, game.game_id)}
+                          onClick={(e) => handleUpdate(e, game.c_id)}
                           className="btn btn-secondary"
                           backgroundcolor="#00000"
                         >
@@ -223,7 +204,7 @@ export default function MainPage(props) {
                       <StyledTableCell align="right">
                         {" "}
                         <button
-                          onClick={(e) => handleDelete(e, game.game_id)}
+                          onClick={(e) => handleDelete(e, game.platform_id)}
                           className="btn btn-danger"
                         >
                           Delete
@@ -242,6 +223,8 @@ export default function MainPage(props) {
                           backgroundcolor="#00000"
                           onClick={()=> navigate("/adminpage")}
                           >Admin Page</button>
+          
+         
         </Box>
       </main>
       {/* Footer */}
