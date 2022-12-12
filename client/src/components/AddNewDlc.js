@@ -10,6 +10,7 @@ import { useContext, useState, useEffect } from "react";
 
 export default function AddNewGame() {
   const [name, setName] = useState("");
+  const [game_id, setGame_id] = useState();
   const [date, setDate] = useState("");
   const navigate = useNavigate();
   const { addGame } = useContext(GameContext);
@@ -19,8 +20,9 @@ export default function AddNewGame() {
     console.log(name, date);
     try {
       const response = await GameFinder.post("/dlc", {
-        game_name: name,
+        dlc_name: name,
         release_date: date,
+        game_id: game_id
       });
       alert("Success! Refreshing...");
       window.location.reload();
@@ -33,10 +35,10 @@ export default function AddNewGame() {
       <Container maxWidth="sm">
         <Box component="form" noValidate sx={{ mt: 6 }} onSubmit={handleSubmit}>
           <Typography variant="h4" component="h1" gutterBottom>
-            Add New Game
+            Add New Dlc
           </Typography>
           <Typography variant="h6" component="h10">
-            Name of the Game
+            Name of the DLC
           </Typography>
           <TextField
             margin="normal"
@@ -46,6 +48,21 @@ export default function AddNewGame() {
             fullWidth
             id="name"
             name="name"
+            className="form-control"
+            type="text"
+          />
+          
+          <Typography variant="h6" component="h10">
+            Game ID
+          </Typography>
+          <TextField
+            margin="normal"
+            required
+            value={game_id}
+            onChange={(e) => setGame_id(e.target.value)}
+            fullWidth
+            id="game_id"
+            name="game_id"
             className="form-control"
             type="text"
           />

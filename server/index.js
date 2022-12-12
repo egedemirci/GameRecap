@@ -13,6 +13,6 @@ dotenv.config({
 //: "http://localhost:5000";
 // Serve static files from the React frontend app
 
-app.listen(process.env.PORT || 5000, () => {
-  console.log(`Server has started on port ${process.env.PORT || 5000}`);
+app.listen(process.env.PORT || 3500, () => {
+  console.log(`Server has started on port ${process.env.PORT || 3500}`);
 });

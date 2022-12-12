@@ -70,7 +70,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-export default function MainPage(props) {
+export default function AdminPage(props) {
   const { games, setGames } = useContext(GameContext);
   const navigate = useNavigate();
   const [start_date, setStartDate] = useState("");
@@ -136,112 +136,22 @@ export default function MainPage(props) {
             pb: 6,
           }}
         >
-          <Container maxWidth="sm">
-            <Typography variant="h4" component="h1">
-              Filter Release Date
-            </Typography>
-            <Box
-              component="form"
-              onSubmit={handleSubmit}
-              noValidate
-              sx={{ mt: 1 }}
-            >
-              <Typography variant="h6" component="h10">
-                Start Date
-              </Typography>
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                value={start_date}
-                onChange={(e) => setStartDate(e.target.value)}
-                id="date"
-                className="form-control"
-                type="date"
-              />
-              <Typography variant="h6" component="h10">
-                End Date
-              </Typography>
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                value={end_date}
-                onChange={(e) => setEndDate(e.target.value)}
-                id="date"
-                className="form-control"
-                type="date"
-              />
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                sx={{ mt: 3, mb: 2 }}
-              >
-                Filter Date
-              </Button>
-              <Grid container></Grid>
-            </Box>
-            <Box sx={{ mt: 3 }}></Box>
-            <Typography sx={{ mb: 2 }} variant="h4" component="h1">
-              Games
-            </Typography>
-            <TableContainer component={Paper}>
-              <Table sx={{ minWidth: 100 }} aria-label="customized table">
-                <TableHead>
-                  <TableRow>
-                    <StyledTableCell align="right">Game ID</StyledTableCell>
-                    <StyledTableCell align="right">Game Name</StyledTableCell>
-                    <StyledTableCell align="right">
-                      Release Date
-                    </StyledTableCell>
-                    <StyledTableCell align="right">Update</StyledTableCell>
-                    <StyledTableCell align="right">Delete</StyledTableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {games.map((game) => (
-                    <StyledTableRow key={game.game_id}>
-                      <StyledTableCell align="right">
-                        {game.game_id}
-                      </StyledTableCell>
-                      <StyledTableCell align="right">
-                        {game.game_name}
-                      </StyledTableCell>
-                      <StyledTableCell align="right">
-                        {game.release_date}
-                      </StyledTableCell>
-                      <StyledTableCell align="right">
-                        <button
-                          onClick={(e) => handleUpdate(e, game.game_id)}
-                          className="btn btn-secondary"
+ <button className="btn btn-secondary"
                           backgroundcolor="#00000"
-                        >
-                          Update
-                        </button>
-                      </StyledTableCell>
-                      <StyledTableCell align="right">
-                        {" "}
-                        <button
-                          onClick={(e) => handleDelete(e, game.game_id)}
-                          className="btn btn-danger"
-                        >
-                          Delete
-                        </button>
-                      </StyledTableCell>
-                    </StyledTableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </TableContainer>
-            
-          </Container>
-          <Box sx={{ mt: 3 }}></Box>
-          <AddNewGameComponent />
-          <button className="btn btn-secondary"
+                          onClick={()=> navigate("/categorypage")}
+                          >Categories</button>
+<button className="btn btn-secondary"
                           backgroundcolor="#00000"
-                          onClick={()=> navigate("/adminpage")}
-                          >Admin Page</button>
+                          onClick={()=> navigate("/developmentstudiopage")}
+                          >Development Studios</button>
+<button className="btn btn-secondary"
+                          backgroundcolor="#00000"
+                          onClick={()=> navigate("/dlcpage")}
+                          >DLC</button>
+<button className="btn btn-secondary"
+                          backgroundcolor="#00000"
+                          onClick={()=> navigate("/languagepage")}
+                          >Languages</button>
           
          
         </Box>

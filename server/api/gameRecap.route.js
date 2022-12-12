@@ -2,6 +2,9 @@ import express from "express";
 import gameController from "./gameController.js";
 import platformController from "./platformController.js";
 import developmentStudioController from "./developmentStudioController.js";
+import dlcController from "./dlcController.js";
+import categoryController from "./categoryController.js";
+import languageController from "./languageController.js";
 
 //Api calls are done through uri and router routes uri correct functions
 //get request send through uri > router makes correct controllerCall > controller makes DBOcall > DBO returns results from db to controller > controller adds json to response of the request
@@ -19,6 +22,52 @@ router
   .get(gameController.getAllGames)
   .post(gameController.createGame);
 
+router
+  .route("/categories")
+  .get(categoryController.getAllGames)
+  .post(categoryController.createGame);
+
+router
+  .route("/categories/:id")
+  .get(categoryController.getGameById)
+  .patch(categoryController.updateGame)
+  .delete(categoryController.deleteById);
+
+
+router
+  .route("/languages")
+  .get(languageController.getAllGames)
+  .post(languageController.createGame);
+
+router
+  .route("/languages/:id")
+  .get(languageController.getGameById)
+  .patch(languageController.updateGame)
+  .delete(languageController.deleteById);
+
+
+router
+  .route("/developmentstudios")
+  .get(developmentStudioController.getAllGames)
+  .post(developmentStudioController.createGame);
+
+router
+  .route("/developmentstudios/:id")
+  .get(developmentStudioController.getGameById)
+  .patch(developmentStudioController.updateGame)
+  .delete(developmentStudioController.deleteById);
+
+router
+  .route("/dlc")
+  .get(dlcController.getAllGames)
+  .post(dlcController.createGame);
+
+router
+  .route("/dlc/:id")
+  .get(dlcController.getGameById)
+  .patch(dlcController.updateGame)
+  .delete(dlcController.deleteById);
+  
 router
   .route("/games/:id")
   .get(gameController.getGameById)
@@ -39,16 +88,19 @@ router
   .get(platformController.getPlatformById)
   .patch(platformController.updatePlatform)
   .delete(platformController.deleteById);
-
+/*
 router
   .route("/developmentStudios")
   .get(developmentStudioController.getAllDevelopmentStudios)
   .post(developmentStudioController.createDevelopmentStudio);
+
+  
 
 router
   .route("/developmentStudios/:id")
   .get(developmentStudioController.getDevelopmentStudioById)
   .patch(developmentStudioController.updateDevelopmentStudio)
   .delete(developmentStudioController.deleteById);
+*/
 
 export default router;

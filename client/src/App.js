@@ -5,7 +5,12 @@ import "./App.css";
 import MainPage from "./components/mainPage";
 import { GameContextProvider } from "./context/gameContext";
 import UpdatePage from "./routes/updatePage";
+import AdminPage from "./components/AdminPage";
 
+import CategoryPage from "./components/CategoryPage";
+import DlcPage from "./components/DlcPage";
+import DevelopmentStudioPage from "./components/DevelopmentStudioPage";
+import LanguagePage from "./components/LanguagePage";
 class App extends Component {
   render() {
     const myStyle = {
@@ -21,6 +26,15 @@ class App extends Component {
           <Router>
             <Routes>
               <Route path="/" element={<MainPage />} />
+              <Route path="/adminpage" element={<AdminPage />} />
+
+              <Route path="/categorypage" element={<CategoryPage></CategoryPage>} />
+              <Route path="/developmentstudiopage" element={<DevelopmentStudioPage></DevelopmentStudioPage>} />
+              <Route path="/dlcpage" element={<DlcPage></DlcPage>} />
+              <Route path="/languagepage" element={<LanguagePage></LanguagePage>} />
+
+
+
               <Route path="/games/:id/update" element={<UpdatePage />} />
             </Routes>
           </Router>
