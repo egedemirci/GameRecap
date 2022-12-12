@@ -7,7 +7,7 @@ export default class platformController {
       res.status(200).json({
         lenght: results.rows.length,
         data: {
-          games: results.rows,
+          platforms: results.rows,
         },
       });
     } catch (error) {
@@ -32,7 +32,7 @@ export default class platformController {
       }
       res.status(200).json({
         lenght: results.rows.length,
-        data: results.rows,
+        data: results.rows[0],
       });
     } catch (error) {
       if (error.code == 1) {

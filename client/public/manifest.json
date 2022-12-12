@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "GameRecap",
+  "name": "GameRecap for CS 306",
   "icons": [
     {
       "src": "favicon.ico",

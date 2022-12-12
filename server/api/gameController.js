@@ -60,7 +60,6 @@ export default class gameController {
         "SELECT * FROM game_recap.Games WHERE game_id = $1",
         [req.params.id]
       );
-
       if (results.rows.length == 0) {
         throw {
           detail: "Game not found.",
@@ -71,7 +70,7 @@ export default class gameController {
 
       res.status(200).json({
         lenght: results.rows.length,
-        data: results.rows,
+        data: results.rows[0],
       });
     } catch (error) {
       if (err.code == 1) {
@@ -100,12 +99,11 @@ export default class gameController {
 
   static async updateGame(req, res, next) {
     try {
-      const updatedGame = await db.query(
+      const result = await db.query(
         "UPDATE game_recap.Games SET game_name = $2 ,release_date = $3 WHERE game_id = $1 returning *",
         [req.params.id, req.body.game_name, req.body.release_date]
       );
-
-      if (updatedGame.rows.length == 0) {
+      if (result.rows.length == 0) {
         throw {
           detail: "Game not found.",
           code: 1,
@@ -113,7 +111,7 @@ export default class gameController {
         };
       }
       res.status(200).json({
-        data: updatedGame.rows[0],
+        data: result.rows[0],
       });
     } catch (err) {
       console.log(`Error when updating game ${err}`);

@@ -25,6 +25,7 @@ const theme = createTheme({
 const UpdateGame = (props) => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const { games } = useContext(GameContext);
   const [name, setName] = useState("");
   const [date, setDate] = useState("");
 

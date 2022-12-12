@@ -1,10 +1,12 @@
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
+import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import ResponsiveAppBar from "./appbarGame";
+import React, { useEffect, useContext } from "react";
 import React, { useEffect, useContext, useState } from "react";
 import GameFinder from "../apis/GameFinder";
 import { GameContext } from "../context/gameContext";
@@ -51,8 +53,8 @@ const myStyle = {
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
-    backgroundcolor: "#000000",
-    color: "#000000",
+    backgroundColor: theme.palette.common.black,
+    color: theme.palette.common.white,
   },
   [`&.${tableCellClasses.body}`]: {
     fontSize: 14,
@@ -61,7 +63,7 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
 
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
   "&:nth-of-type(odd)": {
-    backgroundcolor: theme.palette.action.hover,
+    backgroundColor: theme.palette.action.hover,
   },
   // hide last border
   "&:last-child td, &:last-child th": {
