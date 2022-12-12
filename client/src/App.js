@@ -5,7 +5,10 @@ import "./App.css";
 import MainPage from "./components/mainPage";
 import { GameContextProvider } from "./context/gameContext";
 import UpdatePage from "./routes/updatePage";
-
+import UserProfile from "./components/profilePage";
+import Playlists from "./components/playlists";
+import Playlist from "./components/playlist";
+import Discover from "./components/discover";
 class App extends Component {
   render() {
     const myStyle = {
@@ -22,6 +25,11 @@ class App extends Component {
             <Routes>
               <Route path="/" element={<MainPage />} />
               <Route path="/games/:id/update" element={<UpdatePage />} />
+              <Route path="/users/:id" element={<UserProfile/>} />
+              <Route path="/playlists/:id" element={<Playlists/>} />
+              <Route path="/playlist/:id" element={<Playlist/>} />
+              <Route path="/discover" element={<Discover/>} />
+
             </Routes>
           </Router>
         </div>
