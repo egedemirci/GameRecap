@@ -1,6 +1,8 @@
 import express from "express";
 import gameController from "./gameController.js";
 import developmentStudioController from "./developmentStudioController.js";
+import authController from "./authController.js";
+import usersController from "./usersController.js";
 import dlcController from "./dlcController.js";
 import categoryController from "./categoryController.js";
 import languageController from "./languageController.js";
@@ -26,45 +28,25 @@ router
   .route("/games")
   .get(gameController.getAllGames)
   .post(gameController.createGame);
-  router
-  .route("/playlists/:id")
-  .get(gameController.getAllPlaylists)
+router.route("/playlists/:id").get(gameController.getAllPlaylists);
 
+router.route("/playlist/:id").get(gameController.getPlaylistById);
+router.route("/users/:id").get(gameController.getUserById);
+router.route("/discover").get(gameController.getPlaylistsGenres);
 
-  router
-  .route("/playlist/:id")
-  .get(gameController.getPlaylistById)
-router
-  .route("/users/:id")
-  .get(gameController.getUserById);
-router
-  .route("/discover")
-  .get(gameController.getPlaylistsGenres);
+router.route("/categories/date").post(categoryController.getGamesByDate);
 
-router
-  .route("/categories/date")
-  .post(categoryController.getGamesByDate);
+router.route("/onlinestores/date").post(onlinestoreController.getGamesByDate);
 
-router
-  .route("/onlinestores/date")
-  .post(onlinestoreController.getGamesByDate);
+router.route("/platforms/date").post(platformController.getGamesByDate);
 
-router
-  .route("/platforms/date")
-  .post(platformController.getGamesByDate);
-
-router
-  .route("/languages/date")
-  .post(languageController.getGamesByDate);
+router.route("/languages/date").post(languageController.getGamesByDate);
 
 router
   .route("/developmentstudios/date")
   .post(developmentStudioController.getGamesByDate);
 
-
-router
-  .route("/dlc/date")
-  .post(dlcController.getGamesByDate);
+router.route("/dlc/date").post(dlcController.getGamesByDate);
 
 router
   .route("/categories")
@@ -75,7 +57,6 @@ router
   .route("/categories/:id")
   .patch(categoryController.updateGame)
   .delete(categoryController.deleteById);
-
 
 router
   .route("/languages")
@@ -99,8 +80,7 @@ router
   .patch(onlinestoreController.updateGame)
   .delete(onlinestoreController.deleteById);
 
-  
-  router
+router
   .route("/platforms")
   .get(platformController.getAllGames)
   .post(platformController.createGame);
@@ -109,9 +89,6 @@ router
   .route("/platforms/:id")
   .patch(platformController.updateGame)
   .delete(platformController.deleteById);
-
-
-
 
 router
   .route("/developmentstudios")
@@ -134,42 +111,30 @@ router
   .get(dlcController.getGameById)
   .patch(dlcController.updateGame)
   .delete(dlcController.deleteById);
-  
+
 router
   .route("/games/:id")
   .get(gameController.getGameById)
   .patch(gameController.updateGame)
   .delete(gameController.deleteById);
 
-router
-  .route("/games/date")
-  .post(gameController.getGamesByDate);
+router.route("/games/date").post(gameController.getGamesByDate);
 
-  router
+router
   .route("/subservice")
   .get(subserviceController.getAllGames)
   .post(subserviceController.createGame);
 
-  router
-  .route("/subservice/date")
-  .post(subserviceController.getGamesByDate);
-  
+router.route("/subservice/date").post(subserviceController.getGamesByDate);
 
-router
-  .route("/subservice/:id")
-  .delete(subserviceController.deleteById)
+router.route("/subservice/:id").delete(subserviceController.deleteById);
 
-router
-  .route("/useradmin")
-  .get(userAdmin.getAllGames)
+router.route("/useradmin").get(userAdmin.getAllGames);
 
-router
-  .route("/useradmin/:id")
-  .delete(userAdmin.deleteById);
+router.route("/useradmin/:id").delete(userAdmin.deleteById);
 
-router
-  .route("/useradmin/date")
-  .post(userAdmin.getGamesByDate);
+router.route("/useradmin/date").post(userAdmin.getGamesByDate);
+
 /*
 router
   .route("/platforms")
@@ -182,16 +147,11 @@ router
   .patch(platformController.updatePlatform)
   .delete(platformController.deleteById);
 
-  
-
-
 /*
 router
   .route("/developmentStudios")
   .get(developmentStudioController.getAllDevelopmentStudios)
   .post(developmentStudioController.createDevelopmentStudio);
-
-  
 
 router
   .route("/developmentStudios/:id")
@@ -203,6 +163,10 @@ router
 router
   .route("/rate/")
   .post(rateController.rateGame)
-  .get(rateController.getRate)
+  .get(rateController.getRate);
+
+router.route("/auth").post(authController.login);
+
+router.route("/users").post(usersController.createUser);
 
 export default router;

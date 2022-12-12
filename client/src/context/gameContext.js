@@ -1,11 +1,11 @@
 import React, { useState, createContext } from "react";
- 
+
 export const GameContext = createContext();
- 
+
 export const GameContextProvider = (props) => {
   const [games, setGames] = useState([]);
   const [selectedGames, setSelectedGames] = useState(null);
- 
+
   const addGames = (game) => {
     setGames([...games, game]);
   };
@@ -18,7 +18,6 @@ export const GameContextProvider = (props) => {
         addGames,
         selectedGames,
         setSelectedGames,
-
       }}
     >
       {props.children}
