@@ -1,11 +1,9 @@
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
-import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import ResponsiveAppBar from "./appbarGame";
 import React, { useEffect, useContext, useState } from "react";
 import GameFinder from "../apis/GameRecap_API";
 import { GameContext } from "../context/gameContext";
@@ -17,11 +15,10 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
 import AddNewGameComponent from "./AddNewGame";
-import { colors } from "@mui/material";
 
 const theme = createTheme({
   palette: {
@@ -70,7 +67,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-export default function MainPage(props) {
+export default function GameListComponent() {
   const { games, setGames } = useContext(GameContext);
   const navigate = useNavigate();
   const [start_date, setStartDate] = useState("");
@@ -126,9 +123,7 @@ export default function MainPage(props) {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <ResponsiveAppBar />
       <main>
-        {/* Hero unit */}
         <Box
           sx={{
             bgcolor: "background.paper",
@@ -190,7 +185,6 @@ export default function MainPage(props) {
               <Table sx={{ minWidth: 100 }} aria-label="customized table">
                 <TableHead>
                   <TableRow>
-                    <StyledTableCell align="right">Game ID</StyledTableCell>
                     <StyledTableCell align="right">Game Name</StyledTableCell>
                     <StyledTableCell align="right">
                       Release Date
@@ -202,11 +196,12 @@ export default function MainPage(props) {
                 <TableBody>
                   {games.map((game) => (
                     <StyledTableRow key={game.game_id}>
-                      <StyledTableCell align="right">
-                        {game.game_id}
-                      </StyledTableCell>
-                      <StyledTableCell align="right">
-                        {game.game_name}
+                      <StyledTableCell align="left">
+                        <Button>
+                          <Link color="#D3EDEE" to={`/games/${game.game_id}`}>
+                            {game.game_name}
+                          </Link>
+                        </Button>
                       </StyledTableCell>
                       <StyledTableCell align="right">
                         {game.release_date}
@@ -239,7 +234,6 @@ export default function MainPage(props) {
           <AddNewGameComponent />
         </Box>
       </main>
-      {/* Footer */}
       <Box sx={{ bgcolor: "#D3EDEE" }} component="footer">
         <Box sx={{ pt: 3 }}>
           <center>
@@ -257,7 +251,6 @@ export default function MainPage(props) {
           ></Typography>
         </Box>
       </Box>
-      {/* End footer */}
     </ThemeProvider>
   );
 }

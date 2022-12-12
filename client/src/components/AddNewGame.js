@@ -3,27 +3,28 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import Container from "@mui/material/Container";
+import Alert from "@mui/material/Alert";
 import GameFinder from "../apis/GameRecap_API";
-import { GameContext } from "../context/gameContext";
-import { useNavigate } from "react-router-dom";
-import { useContext, useState, useEffect } from "react";
+import { useState } from "react";
 
 export default function AddNewGame() {
-  const [name, setName] = useState("");
-  const [date, setDate] = useState("");
-  const navigate = useNavigate();
-  const { addGame } = useContext(GameContext);
-
+  const [error, setError] = useState(null);
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(name, date);
+    const data = new FormData(e.currentTarget);
+    const sy = data.get("synopsis");
+    if (sy?.length > 255) {
+      setError("You cannot enter more than 255 characters!");
+    }
     try {
-      const response = await GameFinder.post("/games", {
-        game_name: name,
-        release_date: date,
+      await GameFinder.post("/games", {
+        game_name: data.get("name"),
+        release_date: data.get("date"),
+        synopsis: data.get("synopsis"),
+      }).then((res) => {
+        alert("Success! Refreshing...");
+        window.location.reload();
       });
-      alert("Success! Refreshing...");
-      window.location.reload();
     } catch (err) {
       console.log(err);
     }
@@ -31,7 +32,7 @@ export default function AddNewGame() {
   const content = (
     <>
       <Container maxWidth="sm">
-        <Box component="form" noValidate sx={{ mt: 6 }} onSubmit={handleSubmit}>
+        <Box component="form" sx={{ mt: 6 }} onSubmit={handleSubmit}>
           <Typography variant="h4" component="h1" gutterBottom>
             Add New Game
           </Typography>
@@ -41,8 +42,6 @@ export default function AddNewGame() {
           <TextField
             margin="normal"
             required
-            value={name}
-            onChange={(e) => setName(e.target.value)}
             fullWidth
             id="name"
             name="name"
@@ -55,14 +54,31 @@ export default function AddNewGame() {
           <TextField
             margin="normal"
             required
-            value={date}
-            onChange={(e) => setDate(e.target.value)}
             fullWidth
             id="date"
             name="date"
             className="form-control"
             type="date"
           />
+          <Typography variant="h6" component="h10">
+            Synopsis
+          </Typography>
+          <TextField
+            margin="normal"
+            fullWidth
+            id="synopsis"
+            name="synopsis"
+            className="form-control"
+            type="text"
+            multiline
+            rows={4}
+          />
+          {error && (
+            <Alert variant="filled" severity="error">
+              {" "}
+              {error}{" "}
+            </Alert>
+          )}
           <Button
             type="submit"
             fullWidth

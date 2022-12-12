@@ -1,5 +1,5 @@
 import { CssBaseline } from "@mui/material";
-import React, { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import GameFinder from "../apis/GameRecap_API";
 import ResponsiveAppBar from "./appbarGame";
