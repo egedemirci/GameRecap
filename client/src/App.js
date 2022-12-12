@@ -11,8 +11,11 @@ import CategoryPage from "./components/CategoryPage";
 import DlcPage from "./components/DlcPage";
 import DevelopmentStudioPage from "./components/DevelopmentStudioPage";
 import LanguagePage from "./components/LanguagePage";
+import UserAdmin from "./components/UserAdminPage";
+import SubService from "./components/subServices";
 import OnlineStoresPage from "./components/OnlineStoresPage";
 import PlatformPage from "./components/PlatformPage";
+
 
 class App extends Component {
   render() {
@@ -35,6 +38,8 @@ class App extends Component {
               <Route path="/developmentstudiopage" element={<DevelopmentStudioPage></DevelopmentStudioPage>} />
               <Route path="/dlcpage" element={<DlcPage></DlcPage>} />
               <Route path="/languagepage" element={<LanguagePage></LanguagePage>} />
+              <Route path="/useradminpage" element={<UserAdmin></UserAdmin>} />
+              <Route path="/subservice" element={<SubService></SubService>} />
               <Route path="/onlinestorepage" element={<OnlineStoresPage></OnlineStoresPage>} />
               <Route path="/platformpage" element={<PlatformPage></PlatformPage>} />
            

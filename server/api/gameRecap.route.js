@@ -4,6 +4,8 @@ import developmentStudioController from "./developmentStudioController.js";
 import dlcController from "./dlcController.js";
 import categoryController from "./categoryController.js";
 import languageController from "./languageController.js";
+import userAdmin from "./adminUser.js";
+import subserviceController from "./subserviceController.js";
 import onlinestoreController from "./onlinestoreController.js";
 import platformController from "./platformController.js";
 
@@ -138,7 +140,35 @@ router
   .get(platformController.getPlatformById)
   .patch(platformController.updatePlatform)
   .delete(platformController.deleteById);
-  */
+
+  router
+  .route("/subservice")
+  .get(subserviceController.getAllGames)
+  .post(subserviceController.createGame);
+
+  router
+  .route("/subservice/date")
+  .post(subserviceController.getGamesByDate);
+  
+
+router
+  .route("/subservice/:id")
+  .delete(subserviceController.deleteById)
+
+
+  router
+  .route("/useradmin")
+  .get(userAdmin.getAllGames)
+
+  router
+  .route("/useradmin/:id")
+  .delete(userAdmin.deleteById);
+
+  router
+  .route("/useradmin/date")
+  .post(userAdmin.getGamesByDate);
+
+
 /*
 router
   .route("/developmentStudios")
