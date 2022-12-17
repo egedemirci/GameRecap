@@ -1,4 +1,4 @@
-import SignUpComponent from "../../components/signUpComponent";
+import SignUpComponent from "../../components/SignUpComponent";
 import ResponsiveAppBar from "../../components/appbarGame";
 
 export default function SignUpPage() {

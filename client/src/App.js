@@ -5,7 +5,7 @@ import "./App.css";
 import { GameContextProvider } from "./context/gameContext";
 import { UsersContextProvider } from "./context/userContext";
 import UpdateGamePage from "./routes/game/updateGamePage";
-import SignUpPage from "./routes/user/signUpPage";
+import SignUpPage from "./routes/user/SignUpPage";
 import LoginPage from "./routes/user/LoginPage";
 import GamesPage from "./routes/game/GamesPage";
 import IndividualGameComponent from "./components/game/IndividualGameComponent";
@@ -23,6 +23,8 @@ import SubServicePage from "./routes/subservice/SubServicePage";
 import OnlineStoresPage from "./routes/store/OnlineStorePage";
 import PlatformPage from "./routes/platform/PlatformPage";
 import CheckLogin from "./components/CheckLogin";
+import { ROLES } from "./config/roles";
+import RequireAuthorization from "./components/RequireAuthorization";
 
 class App extends Component {
   render() {
@@ -44,11 +46,11 @@ class App extends Component {
                 <Route path="/login" element={<LoginPage />} />
                 {/* Logged In Routes */}
                 <Route element={<CheckLogin />}>
-                  <Route path="/profile" element={<UserProfile />} />
                   <Route path="/games">
                     <Route index element={<GamesPage />} />
                     <Route path=":id" element={<IndividualGameComponent />} />
                   </Route>
+                  <Route path="/profile" element={<UserProfile />} />
                 </Route>
                 <Route path="/adminpage" element={<AdminPage />} />
                 <Route

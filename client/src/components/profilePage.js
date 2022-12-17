@@ -4,8 +4,7 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { useNavigate } from "react-router-dom";
-import React, { useContext, useState, useEffect } from "react";
-import GameFinder from "../apis/GameFinder";
+import { useState } from "react";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import ResponsiveAppBar from "./appbarGame";
 import Divider from "@mui/material/Divider/Divider";
@@ -108,11 +107,9 @@ export const UserProfile = () => {
                   icon={<EmailIcon />}
                 />
               </center>
-
               <Box m={4} pt={0}>
                 {" "}
               </Box>
-
               <Typography variant="h6" align="center" color="#1d3557" paragraph>
                 Welcome to GameRecap {user.username}, The ultimate platform for
                 game enthusiasts! As a member of our community, you'll be able
@@ -135,6 +132,15 @@ export const UserProfile = () => {
                 <Button onClick={onDiscover} color="fourth" variant="contained">
                   Discover
                 </Button>
+                {user.role === "admin" ? (
+                  <Button
+                    onClick={() => navigate("/adminpage")}
+                    color="primary"
+                    variant="contained"
+                  >
+                    Admin Pages
+                  </Button>
+                ) : null}
               </Stack>
               <Divider variant="middle" />
             </Container>
