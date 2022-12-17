@@ -1,14 +1,12 @@
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
-import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import ResponsiveAppBar from "./appbarGame";
-import React, { useEffect, useContext, useState } from "react";
-import GameFinder from "../apis/GameFinder";
-import { GameContext } from "../context/gameContext";
+import { useEffect, useContext, useState } from "react";
+import GameFinder from "../../apis/GameFinder";
+import { GameContext } from "../../context/gameContext";
 import { styled } from "@mui/material/styles";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -20,6 +18,7 @@ import Paper from "@mui/material/Paper";
 import { useNavigate } from "react-router-dom";
 import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
+import AddNewCategoryComponent from "./AddNewCategoryComponent";
 
 const theme = createTheme({
   palette: {
@@ -68,32 +67,39 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-export default function UserAdmin(props) {
-  const { games, setGames } = useContext(GameContext);
+export default function CategoryComponent() {
+  const [categories, setCategories] = useState([]);
   const navigate = useNavigate();
   const [start_date, setStartDate] = useState("");
-  const [end_date, setEndDate] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await GameFinder.get("/useradmin");
-        setGames(response.data.data.games);
-      } catch (err) {}
+        const response = await GameFinder.get("/categories");
+        setCategories(response.data.data.games);
+      } catch (err) {
+        console.log(err);
+      }
     };
     fetchData();
-  }, [setGames]);
+  }, [setCategories]);
+
+  const handleUpdate = (e, id) => {
+    e.stopPropagation();
+    navigate(`/games/${id}/update`);
+  };
 
   const handleDelete = async (e, id) => {
     e.stopPropagation();
     try {
-      const response = await GameFinder.delete(`/useradmin/${id}`);
-      setGames(
-        games.filter((game) => {
-          return games.dlc_id !== id;
-        })
-      );
-      window.location.reload();
+      await GameFinder.delete(`/categories/${id}`).then(() => {
+        categories(
+          categories.filter((game) => {
+            return categories.c_id !== id;
+          })
+        );
+        window.location.reload();
+      });
     } catch (err) {
       console.log(err);
     }
@@ -102,24 +108,19 @@ export default function UserAdmin(props) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     let response = [];
-    if (
-      (start_date === " " || start_date === "") &&
-      (end_date === " " || end_date === "")
-    ) {
-      response = await GameFinder.get(`/useradmin`);
+    if (start_date === " " || start_date === "") {
+      response = await GameFinder.get(`/categories`);
     } else {
-      response = await GameFinder.post(`/useradmin/date`, {
-        start_date: start_date,
-        end_date: end_date,
+      response = await GameFinder.post(`/categories/date`, {
+        filter: start_date,
       });
     }
-    setGames(response.data.data.games);
+    setCategories(response.data.data);
   };
 
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <ResponsiveAppBar />
       <main>
         {/* Hero unit */}
         <Box
@@ -133,14 +134,9 @@ export default function UserAdmin(props) {
             <Typography variant="h4" component="h1">
               Filter
             </Typography>
-            <Box
-              component="form"
-              onSubmit={handleSubmit}
-              noValidate
-              sx={{ mt: 1 }}
-            >
+            <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
               <Typography variant="h6" component="h10">
-                Created After
+                Name
               </Typography>
               <TextField
                 margin="normal"
@@ -150,7 +146,7 @@ export default function UserAdmin(props) {
                 onChange={(e) => setStartDate(e.target.value)}
                 id="date"
                 className="form-control"
-                type="date"
+                type="text"
               />
               <Button
                 type="submit"
@@ -170,34 +166,37 @@ export default function UserAdmin(props) {
               <Table sx={{ minWidth: 100 }} aria-label="customized table">
                 <TableHead>
                   <TableRow>
-                    <StyledTableCell align="right">User ID</StyledTableCell>
-                    <StyledTableCell align="right">Username</StyledTableCell>
-                    <StyledTableCell align="right">Email</StyledTableCell>
-                    <StyledTableCell align="right">Create Date</StyledTableCell>
+                    <StyledTableCell align="right">Category ID</StyledTableCell>
+                    <StyledTableCell align="right">
+                      Category Name
+                    </StyledTableCell>
 
+                    <StyledTableCell align="right">Update</StyledTableCell>
                     <StyledTableCell align="right">Delete</StyledTableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {games.map((game) => (
-                    <StyledTableRow key={game.user_id}>
+                  {categories.map((category) => (
+                    <StyledTableRow key={category.c_id}>
                       <StyledTableCell align="right">
-                        {game.user_id}
+                        {category.c_id}
                       </StyledTableCell>
                       <StyledTableCell align="right">
-                        {game.username}
+                        {category.category_name}
                       </StyledTableCell>
                       <StyledTableCell align="right">
-                        {game.email}
+                        <button
+                          onClick={(e) => handleUpdate(e, category.c_id)}
+                          className="btn btn-secondary"
+                          backgroundcolor="#00000"
+                        >
+                          Update
+                        </button>
                       </StyledTableCell>
-                      <StyledTableCell align="right">
-                        {game.created_at}
-                      </StyledTableCell>
-
                       <StyledTableCell align="right">
                         {" "}
                         <button
-                          onClick={(e) => handleDelete(e, game.user_id)}
+                          onClick={(e) => handleDelete(e, category.c_id)}
                           className="btn btn-danger"
                         >
                           Delete
@@ -210,6 +209,7 @@ export default function UserAdmin(props) {
             </TableContainer>
           </Container>
           <Box sx={{ mt: 3 }}></Box>
+          <AddNewCategoryComponent />
           <button
             className="btn btn-secondary"
             backgroundcolor="#00000"
@@ -227,6 +227,7 @@ export default function UserAdmin(props) {
               src="https://i.hizliresim.com/kti4lvy.png"
               height="100"
               width="100"
+              alt="logo"
             />{" "}
           </center>
           <Typography

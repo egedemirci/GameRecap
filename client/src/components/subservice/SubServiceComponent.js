@@ -5,10 +5,10 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import ResponsiveAppBar from "./appbarGame";
+import ResponsiveAppBar from "../appbarGame";
 import React, { useEffect, useContext, useState } from "react";
-import GameFinder from "../apis/GameFinder";
-import { GameContext } from "../context/gameContext";
+import GameFinder from "../../apis/GameFinder";
+import { GameContext } from "../../context/gameContext";
 import { styled } from "@mui/material/styles";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -20,6 +20,9 @@ import Paper from "@mui/material/Paper";
 import { useNavigate } from "react-router-dom";
 import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
+import AddNewGameComponent from "../language/AddNewLanguageComponent";
+import { colors } from "@mui/material";
+import AddSubService from "./AddSubServiceComponent";
 
 const theme = createTheme({
   palette: {
@@ -68,7 +71,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-export default function UserAdmin(props) {
+export default function SubService(props) {
   const { games, setGames } = useContext(GameContext);
   const navigate = useNavigate();
   const [start_date, setStartDate] = useState("");
@@ -77,7 +80,7 @@ export default function UserAdmin(props) {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await GameFinder.get("/useradmin");
+        const response = await GameFinder.get("/subservice");
         setGames(response.data.data.games);
       } catch (err) {}
     };
@@ -87,10 +90,10 @@ export default function UserAdmin(props) {
   const handleDelete = async (e, id) => {
     e.stopPropagation();
     try {
-      const response = await GameFinder.delete(`/useradmin/${id}`);
+      const response = await GameFinder.delete(`/subservice/${id}`);
       setGames(
         games.filter((game) => {
-          return games.dlc_id !== id;
+          return games.service_id !== id;
         })
       );
       window.location.reload();
@@ -102,18 +105,15 @@ export default function UserAdmin(props) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     let response = [];
-    if (
-      (start_date === " " || start_date === "") &&
-      (end_date === " " || end_date === "")
-    ) {
-      response = await GameFinder.get(`/useradmin`);
+    if (start_date === " " || start_date === "") {
+      const response = await GameFinder.get("/subservice");
+      setGames(response.data.data.games);
     } else {
-      response = await GameFinder.post(`/useradmin/date`, {
-        start_date: start_date,
-        end_date: end_date,
+      response = await GameFinder.post(`/subservice/date`, {
+        filter: start_date,
       });
+      setGames(response.data.data);
     }
-    setGames(response.data.data.games);
   };
 
   return (
@@ -140,7 +140,7 @@ export default function UserAdmin(props) {
               sx={{ mt: 1 }}
             >
               <Typography variant="h6" component="h10">
-                Created After
+                Name
               </Typography>
               <TextField
                 margin="normal"
@@ -150,7 +150,7 @@ export default function UserAdmin(props) {
                 onChange={(e) => setStartDate(e.target.value)}
                 id="date"
                 className="form-control"
-                type="date"
+                type="text"
               />
               <Button
                 type="submit"
@@ -164,40 +164,33 @@ export default function UserAdmin(props) {
             </Box>
             <Box sx={{ mt: 3 }}></Box>
             <Typography sx={{ mb: 2 }} variant="h4" component="h1">
-              Categories
+              Subscription Services
             </Typography>
             <TableContainer component={Paper}>
               <Table sx={{ minWidth: 100 }} aria-label="customized table">
                 <TableHead>
                   <TableRow>
-                    <StyledTableCell align="right">User ID</StyledTableCell>
-                    <StyledTableCell align="right">Username</StyledTableCell>
-                    <StyledTableCell align="right">Email</StyledTableCell>
-                    <StyledTableCell align="right">Create Date</StyledTableCell>
+                    <StyledTableCell align="right">Service ID</StyledTableCell>
+                    <StyledTableCell align="right">
+                      Service Name
+                    </StyledTableCell>
 
                     <StyledTableCell align="right">Delete</StyledTableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
                   {games.map((game) => (
-                    <StyledTableRow key={game.user_id}>
+                    <StyledTableRow key={game.service_id}>
                       <StyledTableCell align="right">
-                        {game.user_id}
+                        {game.service_id}
                       </StyledTableCell>
                       <StyledTableCell align="right">
-                        {game.username}
+                        {game.service_name}
                       </StyledTableCell>
-                      <StyledTableCell align="right">
-                        {game.email}
-                      </StyledTableCell>
-                      <StyledTableCell align="right">
-                        {game.created_at}
-                      </StyledTableCell>
-
                       <StyledTableCell align="right">
                         {" "}
                         <button
-                          onClick={(e) => handleDelete(e, game.user_id)}
+                          onClick={(e) => handleDelete(e, game.service_id)}
                           className="btn btn-danger"
                         >
                           Delete
@@ -210,6 +203,7 @@ export default function UserAdmin(props) {
             </TableContainer>
           </Container>
           <Box sx={{ mt: 3 }}></Box>
+          <AddSubService />
           <button
             className="btn btn-secondary"
             backgroundcolor="#00000"

@@ -3,21 +3,21 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import CssBaseline from "@mui/material/CssBaseline";
+
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import Link from "@mui/material/Link";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { DataGrid, GridToolbar } from "@mui/x-data-grid";
+import { DataGrid, gridClasses } from "@mui/x-data-grid";
 import { Button, CircularProgress, Paper } from "@mui/material";
-import GameFinder from "../apis/GameFinder";
-import ResponsiveAppBar from "./appbarGame";
-
+import GameFinder from "../../apis/GameFinder";
+import ResponsiveAppBar from "../appbarGame";
 const theme = createTheme({
   palette: {
     primary: {
-      main: "#1d3557",
+      main: "#D3EDEE",
     },
     secondary: {
       main: "#a8dadc",
@@ -59,18 +59,19 @@ const sectheme = createTheme({
     },
   },
 });
-
-export const Discover = () => {
+export const Playlist = () => {
   const [isLoading, setLoading] = useState(true);
-  const [discover, setDiscover] = useState([]);
+  const [playlist, setPlaylist] = useState([]);
   const [pageSize, setPageSize] = useState(10);
+  const queryString = window.location.href;
+  const id = queryString.match(/playlist\/(\d+)/)[1];
 
   const navigate = useNavigate();
   useEffect(() => {
     const fetcData = async () => {
       try {
-        const response = await GameFinder.get(`/discover`);
-        setDiscover(response.data.data.games);
+        const response = await GameFinder.get(`/playlist/${id}`);
+        setPlaylist(response.data.data.games);
         setLoading(false);
       } catch (err) {}
     };
@@ -84,8 +85,8 @@ export const Discover = () => {
 
   const columns = [
     {
-      field: "playlist_id",
-      headerName: "Playlist ID",
+      field: "game_id",
+      headerName: "Game ID",
       width: 90,
       disableColumnMenu: true,
 
@@ -94,29 +95,22 @@ export const Discover = () => {
           <Button
             variant="contained"
             color="secondary"
-            onClick={() => handlePlaylistSelect(params.row.playlist_id)}
+            onClick={() => handlePlaylistSelect(params.row.game_id)}
           >
-            {params.row.playlist_id}
+            {params.row.game_id}
           </Button>
         );
       },
     },
     {
-      field: "playlist_name",
-      headerName: "Playlist Name",
-      width: 300,
-      disableColumnMenu: true,
-    },
-    {
-      field: "string_agg",
-      headerName: "Most Common Genre",
-      width: 300,
+      field: "game_name",
+      headerName: "Game Name",
+      width: 600,
       disableColumnMenu: true,
     },
   ];
 
-  const rows = discover;
-  console.log(rows);
+  const rows = playlist;
 
   return (
     <div>
@@ -125,7 +119,7 @@ export const Discover = () => {
           <ResponsiveAppBar />
         </ThemeProvider>
 
-        <ThemeProvider theme={theme}>
+        <ThemeProvider theme={sectheme}>
           <Box
             sx={{
               height: 600,
@@ -139,12 +133,11 @@ export const Discover = () => {
                   <DataGrid
                     rows={rows}
                     columns={columns}
-                    getRowId={(row) => row.playlist_id}
+                    getRowId={(row) => row.game_id}
                     pageSize={20}
                     onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
                     disableSelectionOnClick
                     experimentalFeatures={{ newEditingApi: true }}
-                    components={{ Toolbar: GridToolbar }}
                   />
                 </Paper>
               </center>
@@ -156,4 +149,4 @@ export const Discover = () => {
   );
 };
 
-export default Discover;
+export default Playlist;

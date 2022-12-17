@@ -1,9 +1,9 @@
-import React, { useState, createContext } from "react";
+import { useState, createContext } from "react";
 
 export const UsersContext = createContext();
 
 export const UsersContextProvider = (props) => {
-  const [user, setUser] = useState();
+  const [user, setUser] = useState(localStorage.getItem("user") ?? null);
 
   return (
     <UsersContext.Provider

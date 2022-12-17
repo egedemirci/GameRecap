@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
@@ -10,9 +10,11 @@ import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import Alert from "@mui/material/Alert";
 import GameFinder from "../apis/GameFinder";
+import { UsersContext } from "../context/userContext";
 
 const LoginComponent = () => {
   const navigate = useNavigate();
+  const { setUser } = useContext(UsersContext);
   const [inputs, setInputs] = useState({
     mail: "",
     password: "",
@@ -48,6 +50,7 @@ const LoginComponent = () => {
       //auth user first
       if (response.status === 200) {
         localStorage.setItem("user", JSON.stringify(response.data.data));
+        setUser(response.data.data);
         navigate("/profile");
       } else throw { fmessage: "There was an unknown problem" };
     } catch (err) {
