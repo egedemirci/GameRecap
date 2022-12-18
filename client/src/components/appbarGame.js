@@ -6,9 +6,11 @@ import Button from "@mui/material/Button";
 import { useContext } from "react";
 import { UsersContext } from "../context/userContext";
 import Link from "@mui/material/Link";
+import { Navigate } from "react-router-dom";
 
 function ResponsiveAppBar() {
   const { user } = useContext(UsersContext);
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
@@ -40,6 +42,31 @@ function ResponsiveAppBar() {
               GAMERECAP
             </Link>
           </Typography>
+          <Box sx={{ display: { xs: "none", sm: "block" } }}>
+            {
+         
+            user.role === "admin" ? (
+              <Button
+                color="inherit"
+                href="/adminpage"
+                onClick={() => {
+                  
+                  Navigate("/adminpage");
+                  
+                }}
+              >
+                Admin Pages
+              </Button>
+            ) : (
+              <></>
+            )}
+          </Box>
+
+
+
+
+
+          
           <Box sx={{ display: { xs: "none", sm: "block" } }}>
             {user !== "null" ? (
               <Button

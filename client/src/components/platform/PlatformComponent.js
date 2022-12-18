@@ -171,7 +171,7 @@ export default function MainPage() {
                       Platform Name
                     </StyledTableCell>
 
-                    <StyledTableCell align="right">Update</StyledTableCell>
+                    
                     <StyledTableCell align="right">Delete</StyledTableCell>
                   </TableRow>
                 </TableHead>
@@ -184,15 +184,7 @@ export default function MainPage() {
                       <StyledTableCell align="right">
                         {game.platform_name}
                       </StyledTableCell>
-                      <StyledTableCell align="right">
-                        <button
-                          onClick={(e) => handleUpdate(e, game.c_id)}
-                          className="btn btn-secondary"
-                          backgroundcolor="#00000"
-                        >
-                          Update
-                        </button>
-                      </StyledTableCell>
+                      
                       <StyledTableCell align="right">
                         {" "}
                         <button
@@ -210,13 +202,7 @@ export default function MainPage() {
           </Container>
           <Box sx={{ mt: 3 }}></Box>
           <AddNewGameComponent />
-          <button
-            className="btn btn-secondary"
-            backgroundcolor="#00000"
-            onClick={() => navigate("/adminpage")}
-          >
-            Admin Page
-          </button>
+          
         </Box>
       </main>
       {/* Footer */}

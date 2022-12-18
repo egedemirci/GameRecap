@@ -93,7 +93,7 @@ export default function CategoryComponent() {
     e.stopPropagation();
     try {
       await GameFinder.delete(`/categories/${id}`).then(() => {
-        categories(
+        setCategories(
           categories.filter((game) => {
             return categories.c_id !== id;
           })
@@ -171,7 +171,7 @@ export default function CategoryComponent() {
                       Category Name
                     </StyledTableCell>
 
-                    <StyledTableCell align="right">Update</StyledTableCell>
+                    
                     <StyledTableCell align="right">Delete</StyledTableCell>
                   </TableRow>
                 </TableHead>
@@ -184,15 +184,7 @@ export default function CategoryComponent() {
                       <StyledTableCell align="right">
                         {category.category_name}
                       </StyledTableCell>
-                      <StyledTableCell align="right">
-                        <button
-                          onClick={(e) => handleUpdate(e, category.c_id)}
-                          className="btn btn-secondary"
-                          backgroundcolor="#00000"
-                        >
-                          Update
-                        </button>
-                      </StyledTableCell>
+                     
                       <StyledTableCell align="right">
                         {" "}
                         <button
@@ -210,13 +202,7 @@ export default function CategoryComponent() {
           </Container>
           <Box sx={{ mt: 3 }}></Box>
           <AddNewCategoryComponent />
-          <button
-            className="btn btn-secondary"
-            backgroundcolor="#00000"
-            onClick={() => navigate("/adminpage")}
-          >
-            Admin Page
-          </button>
+          
         </Box>
       </main>
       {/* Footer */}

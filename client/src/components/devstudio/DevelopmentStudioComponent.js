@@ -170,7 +170,7 @@ export default function MainPage(props) {
                     <StyledTableCell align="right">Studio ID</StyledTableCell>
                     <StyledTableCell align="right">Studio Name</StyledTableCell>
 
-                    <StyledTableCell align="right">Update</StyledTableCell>
+      
                     <StyledTableCell align="right">Delete</StyledTableCell>
                   </TableRow>
                 </TableHead>
@@ -183,15 +183,7 @@ export default function MainPage(props) {
                       <StyledTableCell align="right">
                         {game.studio_name}
                       </StyledTableCell>
-                      <StyledTableCell align="right">
-                        <button
-                          onClick={(e) => handleUpdate(e, game.c_id)}
-                          className="btn btn-secondary"
-                          backgroundcolor="#00000"
-                        >
-                          Update
-                        </button>
-                      </StyledTableCell>
+                      
                       <StyledTableCell align="right">
                         {" "}
                         <button
@@ -209,13 +201,7 @@ export default function MainPage(props) {
           </Container>
           <Box sx={{ mt: 3 }}></Box>
           <AddNewGameComponent />
-          <button
-            className="btn btn-secondary"
-            backgroundcolor="#00000"
-            onClick={() => navigate("/adminpage")}
-          >
-            Admin Page
-          </button>
+          
         </Box>
       </main>
       {/* Footer */}

@@ -13,8 +13,8 @@ export default function AddNewGame() {
     e.preventDefault();
     const data = new FormData(e.currentTarget);
     const sy = data.get("synopsis");
-    if (sy?.length > 255) {
-      setError("You cannot enter more than 255 characters!");
+    if (sy?.length > 6000) {
+      setError("You cannot enter more than 6000 characters!");
     }
     try {
       await GameFinder.post("/games", {

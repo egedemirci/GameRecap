@@ -204,13 +204,7 @@ export default function SubService(props) {
           </Container>
           <Box sx={{ mt: 3 }}></Box>
           <AddSubService />
-          <button
-            className="btn btn-secondary"
-            backgroundcolor="#00000"
-            onClick={() => navigate("/adminpage")}
-          >
-            Admin Page
-          </button>
+          
         </Box>
       </main>
       {/* Footer */}

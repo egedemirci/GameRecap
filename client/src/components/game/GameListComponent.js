@@ -184,6 +184,12 @@ export default function GameListComponent() {
                     <StyledTableCell align="right">
                       Release Date
                     </StyledTableCell>
+                    <StyledTableCell align="right">
+                    Synopsis
+                    </StyledTableCell>
+                    <StyledTableCell align="right">
+                    ID
+                    </StyledTableCell>
                     <StyledTableCell align="right">Update</StyledTableCell>
                     <StyledTableCell align="right">Delete</StyledTableCell>
                   </TableRow>
@@ -200,6 +206,12 @@ export default function GameListComponent() {
                       </StyledTableCell>
                       <StyledTableCell align="right">
                         {game.release_date}
+                      </StyledTableCell>
+                      <StyledTableCell align="right">
+                        {game.synopsis}
+                      </StyledTableCell>
+                      <StyledTableCell align="right">
+                        {game.game_id}
                       </StyledTableCell>
                       <StyledTableCell align="right">
                         <button
@@ -227,13 +239,7 @@ export default function GameListComponent() {
           </Container>
           <Box sx={{ mt: 3 }}></Box>
           <AddNewGameComponent />
-          <button
-            className="btn btn-secondary"
-            backgroundcolor="#00000"
-            onClick={() => navigate("/adminpage")}
-          >
-            Admin Page
-          </button>
+          
         </Box>
       </main>
       <Box sx={{ bgcolor: "#D3EDEE" }} component="footer">

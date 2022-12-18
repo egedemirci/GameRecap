@@ -43,8 +43,8 @@ export default class gameController {
   static async createGame(req, res, next) {
     try {
       const newGame = await db.query(
-        "INSERT INTO game_recap.dlc (dlc_name,game_id,release_date) values ($1, $2,$3) returning *",
-        [req.body.dlc_name,req.body.game_id, req.body.release_date]
+        "INSERT INTO game_recap.dlc (dlc_name,game_id,release_date,synopsis) values ($1, $2,$3,$4) returning *",
+        [req.body.dlc_name,req.body.game_id, req.body.release_date,req.body.synopsis]
       );
       res.status(200).json({
         data: newGame.rows[0],

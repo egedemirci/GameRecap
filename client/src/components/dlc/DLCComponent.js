@@ -120,7 +120,7 @@ export default function MainPage(props) {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <ResponsiveAppBar />
+      
       <main>
         {/* Hero unit */}
         <Box
@@ -173,7 +173,7 @@ export default function MainPage(props) {
                       Release Date
                     </StyledTableCell>
 
-                    <StyledTableCell align="right">Update</StyledTableCell>
+                    <StyledTableCell align="right">Synopsis</StyledTableCell>
                     <StyledTableCell align="right">Delete</StyledTableCell>
                   </TableRow>
                 </TableHead>
@@ -192,16 +192,11 @@ export default function MainPage(props) {
                       <StyledTableCell align="right">
                         {game.release_date}
                       </StyledTableCell>
-
                       <StyledTableCell align="right">
-                        <button
-                          onClick={(e) => handleUpdate(e, game.c_id)}
-                          className="btn btn-secondary"
-                          backgroundcolor="#00000"
-                        >
-                          Update
-                        </button>
+                        {game.synopsis}
                       </StyledTableCell>
+
+                      
                       <StyledTableCell align="right">
                         {" "}
                         <button
@@ -219,13 +214,7 @@ export default function MainPage(props) {
           </Container>
           <Box sx={{ mt: 3 }}></Box>
           <AddNewDLCComponent />
-          <button
-            className="btn btn-secondary"
-            backgroundcolor="#00000"
-            onClick={() => navigate("/adminpage")}
-          >
-            Admin Page
-          </button>
+          
         </Box>
       </main>
       {/* Footer */}
