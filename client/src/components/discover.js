@@ -40,7 +40,7 @@ const theme = createTheme({
 const sectheme = createTheme({
   palette: {
     primary: {
-      main: "#f1faee",
+      main: "#D3EDEE",
     },
     secondary: {
       main: "#a8dadc",
@@ -122,7 +122,11 @@ export const Discover = () => {
     <div>
       <main>
         <ThemeProvider theme={sectheme}>
+        <div>
+        <main>
           <ResponsiveAppBar />
+          </main>
+          </div>
         </ThemeProvider>
 
         <ThemeProvider theme={theme}>

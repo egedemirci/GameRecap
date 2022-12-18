@@ -38,7 +38,8 @@ const theme = createTheme({
       main: "#e63946",
     },
     fifth: {
-      main: "#a8dadc",
+      main: "#457b9d",
+      sec: "#D3EDEE",
     },
   },
 });
@@ -131,87 +132,52 @@ export default function AdminPage(props) {
         {/* Hero unit */}
         <Box
           sx={{
-            bgcolor: "background.paper",
+            bgcolor: "#f1faee",
             pt: 8,
             pb: 6,
           }}
         >
-          <button
-            className="btn btn-secondary"
-            backgroundcolor="#00000"
-            onClick={() => navigate("/categorypage")}
-          >
-            Categories
-          </button>
-          <button
-            className="btn btn-secondary"
-            backgroundcolor="#00000"
-            onClick={() => navigate("/developmentstudiopage")}
-          >
-            Development Studios
-          </button>
-          <button
-            className="btn btn-secondary"
-            backgroundcolor="#00000"
-            onClick={() => navigate("/dlcpage")}
-          >
-            DLC
-          </button>
-          <button
-            className="btn btn-secondary"
-            backgroundcolor="#00000"
-            onClick={() => navigate("/languagepage")}
-          >
-            Languages
-          </button>
-          <button
-            className="btn btn-secondary"
-            backgroundcolor="#00000"
-            onClick={() => navigate("/onlinestorepage")}
-          >
-            Online Stores
-          </button>
-          <button
-            className="btn btn-secondary"
-            backgroundcolor="#00000"
-            onClick={() => navigate("/platformpage")}
-          >
-            Platforms
-          </button>
-          <button
-            className="btn btn-secondary"
-            backgroundcolor="#00000"
-            onClick={() => navigate("/subservice")}
-          >
-            Subscription
-          </button>
-          <button
-            className="btn btn-secondary"
-            backgroundcolor="#00000"
-            onClick={() => navigate("/useradminpage")}
-          >
-            Users
-          </button>
+          <center>
+                  <Typography component="h1" variant="h4"                color="#457b9d"             fontWeight="600"
+>
+          Management
+        </Typography></center>
+     <Stack
+                sx={{ pt: 3 }}
+                direction="row"
+                spacing={1}
+                justifyContent="center"
+              >
+                <Button   onClick={() => navigate("/categorypage")}   sx={{ color: '#f1faee', backgroundColor: '#457b9d', borderColor: 'green' }} variant="contained">
+                  Categories
+                </Button>
+                <Button    onClick={() => navigate("/developmentstudiopage")} sx={{ color: '#f1faee', backgroundColor: '#457b9d', borderColor: 'green' }}variant="contained">
+                  Development Studios
+                </Button>
+                <Button  onClick={() => navigate("/dlcpage")} sx={{ color: '#f1faee', backgroundColor: '#457b9d', borderColor: 'green' }} variant="contained">
+                  DLC
+                </Button>
+                <Button   onClick={() => navigate("/languagepage")} sx={{ color: '#f1faee', backgroundColor: '#457b9d', borderColor: 'green' }} variant="contained">
+                  Languages
+                </Button>
+                <Button   onClick={() => navigate("/onlinestorepage")}  sx={{ color: '#f1faee', backgroundColor: '#457b9d', borderColor: 'green' }} variant="contained">
+                  Online Stores
+                </Button>
+                <Button    onClick={() => navigate("/platformpage")}  sx={{ color: '#f1faee', backgroundColor: '#457b9d', borderColor: 'green' }} variant="contained">
+                  Platforms
+                </Button>
+                <Button   onClick={() => navigate("/subservice")}  sx={{ color: '#f1faee', backgroundColor: '#457b9d', borderColor: 'green' }} variant="contained">
+                  Subscription Services
+                </Button>
+                <Button    onClick={() => navigate("/useradminpage")} sx={{ color: '#f1faee', backgroundColor: '#457b9d', borderColor: 'green' }} variant="contained">
+                  Users
+                </Button>
+              </Stack>
+          
         </Box>
       </main>
       {/* Footer */}
-      <Box sx={{ bgcolor: "#D3EDEE" }} component="footer">
-        <Box sx={{ pt: 3 }}>
-          <center>
-            <img
-              src="https://i.hizliresim.com/kti4lvy.png"
-              height="100"
-              width="100"
-            />{" "}
-          </center>
-          <Typography
-            variant="subtitle1"
-            align="center"
-            color="text.secondary"
-            component="p"
-          ></Typography>
-        </Box>
-      </Box>
+
       {/* End footer */}
     </ThemeProvider>
   );

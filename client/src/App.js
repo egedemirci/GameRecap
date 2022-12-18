@@ -5,8 +5,8 @@ import "./App.css";
 import { GameContextProvider } from "./context/gameContext";
 import { UsersContextProvider } from "./context/userContext";
 import UpdateGamePage from "./routes/game/updateGamePage";
-import SignUpPage from "./routes/user/SignUpPage";
 import LoginPage from "./routes/user/LoginPage";
+import SignUpPage from "./routes/user/signUpPage";
 import GamesPage from "./routes/game/GamesPage";
 import IndividualGameComponent from "./components/game/IndividualGameComponent";
 import UserProfile from "./components/profilePage";
@@ -22,14 +22,38 @@ import UserAdmin from "./components/UserAdminPage";
 import SubServicePage from "./routes/subservice/SubServicePage";
 import OnlineStoresPage from "./routes/store/OnlineStorePage";
 import PlatformPage from "./routes/platform/PlatformPage";
+
 import CheckLogin from "./components/CheckLogin";
 import { ROLES } from "./config/roles";
 import RequireAuthorization from "./components/RequireAuthorization";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+
 
 class App extends Component {
   render() {
+    const theme = createTheme({
+      palette: {
+        primary: {
+          main: "#D3EDEE",
+        },
+        secondary: {
+          main: "#a8dadc",
+        },
+        third: {
+          main: "#457b9d",
+        },
+        fourth: {
+          main: "#e63946",
+        },
+        fifth: {
+          main: "#a8dadc",
+        },
+      },
+    });
+
+
     const myStyle = {
-      background: "#D3EDEE",
+      background: "#f1faee",
       height: "100vh",
       fontSize: "24px",
       backgroundSize: "cover",
@@ -37,6 +61,7 @@ class App extends Component {
     return (
       <GameContextProvider>
         <UsersContextProvider>
+        <ThemeProvider theme={theme}>
           <div style={myStyle}>
             <Router>
               <Routes>
@@ -88,6 +113,7 @@ class App extends Component {
               </Routes>
             </Router>
           </div>
+          </ThemeProvider>
         </UsersContextProvider>
       </GameContextProvider>
     );

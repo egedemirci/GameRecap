@@ -5,12 +5,12 @@ import MainCard from "./MainCard";
 const SmallCard = ({ title, subtitle }) => (
   <MainCard contentSX={{ p: 2.25 }}>
     <Stack spacing={0.5}>
-      <Typography variant="h6" color="#252323" font fontWeight="bold">
+      <Typography variant="h6" color="#a8dadc" font fontWeight="bold">
         {title}
       </Typography>
       <Grid container alignItems="center">
         <Grid item>
-          <Typography variant="h5" color="#A99985" font fontWeight="light">
+          <Typography variant="h6" color="#F1FAEE" font fontWeight="light">
             {subtitle}
           </Typography>
         </Grid>

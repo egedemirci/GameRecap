@@ -78,8 +78,11 @@ const SignUpComponent = () => {
           alignItems: "center",
         }}
       >
-        <Typography variant="h4">Register</Typography>
-        <Box m={1} pt={0} />
+        <Typography component="h1" variant="h4"                color="#1d3557"             fontWeight="600"
+>
+          Register
+        </Typography>
+                <Box m={1} pt={0} />
         <Box component="form" noValidate onSubmit={onSubmitForm} sx={{ mt: 3 }}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
@@ -128,7 +131,7 @@ const SignUpComponent = () => {
           )}
           <Button
             type="submit"
-            color="secondary"
+            color="third"
             fullWidth
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
@@ -137,7 +140,7 @@ const SignUpComponent = () => {
           </Button>
           <Grid container justifyContent="flex-end">
             <Grid item>
-              <Link href="/login" variant="body2">
+              <Link href="/login" color = "#1d3557" variant="body2">
                 Already have an account? Sign in
               </Link>
             </Grid>

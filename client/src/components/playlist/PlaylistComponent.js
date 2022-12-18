@@ -119,7 +119,6 @@ export const Playlists = () => {
     <>
       <CssBaseline />
       <ThemeProvider theme={sectheme}>
-        <ResponsiveAppBar />
       </ThemeProvider>
 
       <ThemeProvider theme={theme}>

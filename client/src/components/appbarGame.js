@@ -34,7 +34,7 @@ function ResponsiveAppBar() {
           >
             <Link
               href={user !== "null" ? "/profile" : "/"}
-              color="secondary"
+              color="#1d3557"
               underline="none"
             >
               GAMERECAP

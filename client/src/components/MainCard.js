@@ -35,8 +35,8 @@ const MainCard = forwardRef(
           ...sx,
           border: border ? "1px solid" : "none",
           borderRadius: 2,
-          backgroundColor: "#F1EAE4",
-          borderColor: "#EAE0D7",
+          backgroundColor: "#1d3557",
+          borderColor: "#F1FAEE",
           "& pre": {
             m: 0,
             p: "12px !important",

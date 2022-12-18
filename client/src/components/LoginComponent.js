@@ -72,7 +72,8 @@ const LoginComponent = () => {
           alignItems: "center",
         }}
       >
-        <Typography component="h1" variant="h4">
+        <Typography component="h1" variant="h4"                color="#1d3557"             fontWeight="600"
+>
           Login
         </Typography>
         <Box component="form" onSubmit={onSubmitForm} noValidate sx={{ mt: 1 }}>
@@ -110,6 +111,7 @@ const LoginComponent = () => {
           <Button
             type="submit"
             fullWidth
+            color = "third"
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
           >
@@ -117,7 +119,7 @@ const LoginComponent = () => {
           </Button>
           <Grid container>
             <Grid item>
-              <Link href="/signup" variant="body2">
+              <Link href="/signup" color = "#1d3557" variant="body2">
                 Don't have an account? Sign Up
               </Link>
             </Grid>
