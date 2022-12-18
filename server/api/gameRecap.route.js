@@ -169,4 +169,9 @@ router.route("/auth").post(authController.login);
 
 router.route("/users").post(usersController.createUser);
 
+  router
+  .route("/dlcrate/")
+  .post(rateController.rateDLC)
+  .get(rateController.getRateDlc)
+
 export default router;
