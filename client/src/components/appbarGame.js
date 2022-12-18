@@ -42,25 +42,9 @@ function ResponsiveAppBar() {
               GAMERECAP
             </Link>
           </Typography>
-          <Box sx={{ display: { xs: "none", sm: "block" } }}>
-            {
-         
-            user.role === "admin" ? (
-              <Button
-                color="inherit"
-                href="/adminpage"
-                onClick={() => {
-                  
-                  Navigate("/adminpage");
-                  
-                }}
-              >
-                Admin Pages
-              </Button>
-            ) : (
-              <></>
-            )}
-          </Box>
+          
+ 
+          
 
 
 
@@ -122,5 +106,27 @@ export default ResponsiveAppBar;
           <Button>Hello</Button>
         </Toolbar>
       </Container>
-    </AppBar>*/
+    </AppBar>
+
+
+    <Box sx={{ display: { xs: "none", sm: "block" } }}>
+    {
+ 
+    user.role === "admin" ? (
+      <Button
+        color="inherit"
+        href="/adminpage"
+        onClick={() => {
+          
+          Navigate("/adminpage");
+          
+        }}
+      >
+        Admin Pages
+      </Button>
+    ) : (
+      <></>
+    )}
+    </Box>
+    */
 }
