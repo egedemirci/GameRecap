@@ -58,4 +58,9 @@ router
   .post(rateController.rateGame)
   .get(rateController.getRate)
 
+  router
+  .route("/dlcrate/")
+  .post(rateController.rateDLC)
+  .get(rateController.getRateDlc)
+
 export default router;
