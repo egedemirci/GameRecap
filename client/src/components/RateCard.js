@@ -33,8 +33,9 @@ export default function RateCard(props) {
         {
             setError(null)
             GameFinder.post("rate", {user_id: user_id, game_id: game_id, text: text}).then(function(response) {
-                if(response.status != 200) {
-                  setRated(true)
+                if(response.status == 200) {
+                  setRate({text:"Your rate submitted!"})
+                  setRated(true)                  
                 }
               })
         }

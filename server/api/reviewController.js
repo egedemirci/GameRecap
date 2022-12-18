@@ -40,7 +40,13 @@ export default class rateController {
                 const result = await db.query(
                   "SELECT * FROM game_recap.reviews WHERE user_id = $1 AND game_id = $2",
                   [req.query.uid, req.query.gid]
-                );
+                )
+                if(result.rows.length === 0)
+                  {
+                    console.log(`Error when getting user review`);
+                    res.status(400).json({data: [] });
+                    return
+                  }
                 res.status(200).json({
                   data: result.rows[0],
                 });
@@ -57,6 +63,12 @@ export default class rateController {
                 "SELECT * FROM game_recap.reviews WHERE user_id = $1 AND dlc_id = $2",
                 [req.query.uid, req.query.did]
               );
+              if(result.rows.length === 0)
+                  {
+                    console.log(`Error when getting user review`);
+                    res.status(400).json({data: [] });
+                    return
+                  }
               res.status(200).json({
                 data: result.rows[0],
               });

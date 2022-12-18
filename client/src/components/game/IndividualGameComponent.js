@@ -10,6 +10,13 @@ export default function IndividualGameComponent() {
   const { id } = useParams();
   const user = JSON.parse(localStorage.getItem("user"));
   const [game, setGame] = useState(null);
+
+  const refreshPage = () => {
+    console.log("Fresh")
+    window.location.reload()
+  }
+
+
   useEffect(() => {
     const fetchData = async () => {
       const result = await GameFinder.get(`/games/${id}`);
@@ -81,7 +88,7 @@ export default function IndividualGameComponent() {
           <SmallCard title="Synopsis" subtitle={game.synopsis, "In God of War, players control Kratos, a Spartan warrior who is sent by the Greek gods to kill Ares, the god of war. As the story progresses, Kratos is revealed to be Ares’ former servant, who had been tricked into killing his own family and is haunted by terrible nightmares. Armed with the Blades of Chaos, a weapon made out of two daggers attached to chains, Kratos rumbles through ancient Athens and other locations on a murderous quest to terminate the rogue god. Action in God of War is viewed from the third person, and advanced movements such as running, jumping, climbing, and swimming are similar to those in the Tomb Raider series, another adventure-game series with strong platform-game characteristics. Some of Kratos’s foes can be killed only by combinations of magic and physical attacks, making combat more reliant on skill. "} />
         </Grid>
         <Grid item xs={5} align="center">
-          {/* <RateCard user_id={user.user_id} game_id={id} /> */}
+          {<RateCard user_id={user.user_id} game_id={id} refreshPage={refreshPage}/> }
         </Grid>
         <Grid item xs={1} />
         <Grid
