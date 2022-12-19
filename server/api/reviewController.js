@@ -60,7 +60,7 @@ export default class rateController {
         static async getRateDlc(req, res, next){
           try {
               const result = await db.query(
-                "SELECT * FROM game_recap.reviews WHERE user_id = $1 AND dlc_id = $2",
+                "SELECT * FROM game_recap.dlcreview WHERE user_id = $1 AND dlc_id = $2",
                 [req.query.uid, req.query.did]
               );
               if(result.rows.length === 0)

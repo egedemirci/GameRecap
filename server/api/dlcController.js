@@ -75,12 +75,12 @@ export default class gameController {
     }
   }
 
-  static async getGameById(req, res, next) {
+  static async getDLCById(req, res, next) {
     try {
+      console.log(req.params.dlc_id);
       const results = await db.query(
-        "SELECT * FROM game_recap.dlc WHERE dlc_id = $1",
-        [req.params.dlc_id]
-      );
+        "SELECT * FROM game_recap.dlc d, game_recap.games g WHERE d.game_id = g.game_id AND dlc_id =$1", [req.params.id]);
+
       if (results.rows.length == 0) {
         throw {
           detail: "dlc not found.",
@@ -93,12 +93,13 @@ export default class gameController {
         lenght: results.rows.length,
         data: results.rows[0],
       });
-    } catch (error) {
-      if (err.code == 1) {
-        res.status(404).json({ detail: err.detail, data: [] });
+    } 
+    catch (error) {
+      if (error.code == 1) {
+        res.status(404).json({ detail: error.detail, data: [] });
         return;
       }
-      console.log(`Error when getting game by id ${error}`);
+      console.log(`Error when getting DLC by id ${error}`);
       res.status(400).json({ error: error, data: [] });
     }
   }

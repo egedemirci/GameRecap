@@ -95,6 +95,8 @@ router
   .get(developmentStudioController.getAllGames)
   .post(developmentStudioController.createGame);
 
+
+
 router
   .route("/developmentstudios/:id")
   .get(developmentStudioController.getGameById)
@@ -108,7 +110,7 @@ router
 
 router
   .route("/dlc/:id")
-  .get(dlcController.getGameById)
+  .get(dlcController.getDLCById)
   .patch(dlcController.updateGame)
   .delete(dlcController.deleteById);
 
