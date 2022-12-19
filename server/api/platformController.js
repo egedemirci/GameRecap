@@ -24,14 +24,14 @@ export default class gameController {
       );
       if (results.rows.length == 0) {
         throw {
-          detail: "platforms not found.",
+          detail: "Platform not found.",
           code: 1,
           error: new Error(),
         };
       }
       res.status(200).json({ data: results.rows[0] });
     } catch (err) {
-      console.log(`Failed to delete platforms ${err}.`);
+      console.log(`Failed to delete Platform ${err}.`);
       if (err.code == 1) {
         res.status(404).json({ detail: err.detail, data: [] });
         return;
@@ -50,7 +50,7 @@ export default class gameController {
         data: newGame.rows[0],
       });
     } catch (error) {
-      console.log(`Error when creating platforms ${error}`);
+      console.log(`Error when creating Platform ${error}`);
       res.status(400).json({ error: error, data: [] });
     }
   }
@@ -69,7 +69,7 @@ export default class gameController {
         data: filteredRows,
       });
     } catch (error) {
-      console.log(`Error when getting platforms by id ${error}`);
+      console.log(`Error when getting Platform by id ${error}`);
       res.status(400).json({ error: error, data: [] });
     }
   }
@@ -82,7 +82,7 @@ export default class gameController {
       );
       if (result.rows.length == 0) {
         throw {
-          detail: "platforms not found.",
+          detail: "Platform not found.",
           code: 1,
           error: new Error(),
         };
@@ -91,7 +91,7 @@ export default class gameController {
         data: result.rows[0],
       });
     } catch (err) {
-      console.log(`Error when updating platforms ${err}`);
+      console.log(`Error when updating Platform ${err}`);
       if (err.code == 1) {
         res.status(404).json({ detail: err.detail, data: [] });
         return;

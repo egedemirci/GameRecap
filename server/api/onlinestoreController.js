@@ -11,7 +11,7 @@ export default class gameController {
         },
       });
     } catch (error) {
-      console.log(`Error when getting all onlinestores ${error}`);
+      console.log(`Error when getting all online stores ${error}`);
       res.status(400).json({ error: error, data: { games: [] } });
     }
   }
@@ -24,14 +24,14 @@ export default class gameController {
       );
       if (results.rows.length == 0) {
         throw {
-          detail: "store not found.",
+          detail: "Online store not found.",
           code: 1,
           error: new Error(),
         };
       }
       res.status(200).json({ data: results.rows[0] });
     } catch (err) {
-      console.log(`Failed to delete onlinestores ${err}.`);
+      console.log(`Failed to delete Online store ${err}.`);
       if (err.code == 1) {
         res.status(404).json({ detail: err.detail, data: [] });
         return;
@@ -50,7 +50,7 @@ export default class gameController {
         data: newGame.rows[0],
       });
     } catch (error) {
-      console.log(`Error when creating onlinestores ${error}`);
+      console.log(`Error when creating Online store ${error}`);
       res.status(400).json({ error: error, data: [] });
     }
   }
@@ -67,7 +67,7 @@ export default class gameController {
         data: filteredRows,
       });
     } catch (error) {
-      console.log(`Error when getting onlinestores by id ${error}`);
+      console.log(`Error when getting Online store by id ${error}`);
       res.status(400).json({ error: error, data: [] });
     }
   }
@@ -80,7 +80,7 @@ export default class gameController {
       );
       if (results.rows.length == 0) {
         throw {
-          detail: "onlinestores not found.",
+          detail: "Online store not found.",
           code: 1,
           error: new Error(),
         };
@@ -95,7 +95,7 @@ export default class gameController {
         res.status(404).json({ detail: err.detail, data: [] });
         return;
       }
-      console.log(`Error when getting onlinestores by id ${error}`);
+      console.log(`Error when getting Online store by id ${error}`);
       res.status(400).json({ error: error, data: [] });
     }
   }
@@ -108,7 +108,7 @@ export default class gameController {
       );
       if (result.rows.length == 0) {
         throw {
-          detail: "onlinestores not found.",
+          detail: "Online store not found.",
           code: 1,
           error: new Error(),
         };
@@ -117,7 +117,7 @@ export default class gameController {
         data: result.rows[0],
       });
     } catch (err) {
-      console.log(`Error when updating onlinestores ${err}`);
+      console.log(`Error when updating Online store ${err}`);
       if (err.code == 1) {
         res.status(404).json({ detail: err.detail, data: [] });
         return;

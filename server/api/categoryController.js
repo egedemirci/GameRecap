@@ -31,7 +31,7 @@ export default class gameController {
       }
       res.status(200).json({ data: results.rows[0] });
     } catch (err) {
-      console.log(`Failed to delete categories ${err}.`);
+      console.log(`Failed to delete category ${err}.`);
       if (err.code == 1) {
         res.status(404).json({ detail: err.detail, data: [] });
         return;
@@ -50,7 +50,7 @@ export default class gameController {
         data: newGame.rows[0],
       });
     } catch (error) {
-      console.log(`Error when creating categories ${error}`);
+      console.log(`Error when creating category ${error}`);
       res.status(400).json({ error: error, data: [] });
     }
   }
@@ -69,7 +69,7 @@ export default class gameController {
         data: filteredRows,
       });
     } catch (error) {
-      console.log(`Error when getting categories by id ${error}`);
+      console.log(`Error when getting category by id ${error}`);
       res.status(400).json({ error: error, data: [] });
     }
   }
@@ -82,7 +82,7 @@ export default class gameController {
       );
       if (result.rows.length == 0) {
         throw {
-          detail: "categories not found.",
+          detail: "Category not found.",
           code: 1,
           error: new Error(),
         };
@@ -91,7 +91,7 @@ export default class gameController {
         data: result.rows[0],
       });
     } catch (err) {
-      console.log(`Error when updating categories ${err}`);
+      console.log(`Error when updating category ${err}`);
       if (err.code == 1) {
         res.status(404).json({ detail: err.detail, data: [] });
         return;

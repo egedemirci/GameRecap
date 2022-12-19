@@ -24,14 +24,14 @@ export default class gameController {
       );
       if (results.rows.length == 0) {
         throw {
-          detail: "language not found.",
+          detail: "Language not found.",
           code: 1,
           error: new Error(),
         };
       }
       res.status(200).json({ data: results.rows[0] });
     } catch (err) {
-      console.log(`Failed to delete languages ${err}.`);
+      console.log(`Failed to delete language ${err}.`);
       if (err.code == 1) {
         res.status(404).json({ detail: err.detail, data: [] });
         return;
@@ -50,7 +50,7 @@ export default class gameController {
         data: newGame.rows[0],
       });
     } catch (error) {
-      console.log(`Error when creating languages ${error}`);
+      console.log(`Error when creating language ${error}`);
       res.status(400).json({ error: error, data: [] });
     }
   }
@@ -67,7 +67,7 @@ export default class gameController {
         data: filteredRows,
       });
     } catch (error) {
-      console.log(`Error when getting languages by id ${error}`);
+      console.log(`Error when getting language by id ${error}`);
       res.status(400).json({ error: error, data: [] });
     }
   }
@@ -80,7 +80,7 @@ export default class gameController {
       );
       if (results.rows.length == 0) {
         throw {
-          detail: "languages not found.",
+          detail: "Language not found.",
           code: 1,
           error: new Error(),
         };
@@ -95,7 +95,7 @@ export default class gameController {
         res.status(404).json({ detail: err.detail, data: [] });
         return;
       }
-      console.log(`Error when getting languages by id ${error}`);
+      console.log(`Error when getting language by id ${error}`);
       res.status(400).json({ error: error, data: [] });
     }
   }
@@ -108,7 +108,7 @@ export default class gameController {
       );
       if (result.rows.length == 0) {
         throw {
-          detail: "languages not found.",
+          detail: "Language not found.",
           code: 1,
           error: new Error(),
         };
@@ -117,7 +117,7 @@ export default class gameController {
         data: result.rows[0],
       });
     } catch (err) {
-      console.log(`Error when updating languages ${err}`);
+      console.log(`Error when updating language ${err}`);
       if (err.code == 1) {
         res.status(404).json({ detail: err.detail, data: [] });
         return;

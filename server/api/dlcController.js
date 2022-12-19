@@ -24,7 +24,7 @@ export default class gameController {
       );
       if (results.rows.length == 0) {
         throw {
-          detail: "dlc not found.",
+          detail: "Dlc not found.",
           code: 1,
           error: new Error(),
         };
@@ -81,11 +81,13 @@ export default class gameController {
     try {
       console.log(req.params.dlc_id);
       const results = await db.query(
-        "SELECT * FROM game_recap.dlc d, game_recap.games g WHERE d.game_id = g.game_id AND dlc_id =$1", [req.params.id]);
+        "SELECT * FROM game_recap.dlc d, game_recap.games g WHERE d.game_id = g.game_id AND dlc_id =$1",
+        [req.params.id]
+      );
 
       if (results.rows.length == 0) {
         throw {
-          detail: "dlc not found.",
+          detail: "Dlc not found.",
           code: 1,
           error: new Error(),
         };
@@ -95,8 +97,7 @@ export default class gameController {
         lenght: results.rows.length,
         data: results.rows[0],
       });
-    } 
-    catch (error) {
+    } catch (error) {
       if (error.code == 1) {
         res.status(404).json({ detail: error.detail, data: [] });
         return;
@@ -116,7 +117,7 @@ export default class gameController {
       );
       if (result.rows.length == 0) {
         throw {
-          detail: "dlc not found.",
+          detail: "Dlc not found.",
           code: 1,
           error: new Error(),
         };
