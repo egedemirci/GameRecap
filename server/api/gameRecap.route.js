@@ -11,6 +11,7 @@ import subserviceController from "./subserviceController.js";
 import onlinestoreController from "./onlinestoreController.js";
 import platformController from "./platformController.js";
 import rateController from "./reviewController.js";
+import publishingStudioController from "./publishingStudioController.js";
 
 //Api calls are done through uri and router routes uri correct functions
 //get request send through uri > router makes correct controllerCall > controller makes DBOcall > DBO returns results from db to controller > controller adds json to response of the request
@@ -94,13 +95,22 @@ router
   .get(developmentStudioController.getAllGames)
   .post(developmentStudioController.createGame);
 
-
-
 router
   .route("/developmentstudios/:id")
   .get(developmentStudioController.getGameById)
   .patch(developmentStudioController.updateGame)
   .delete(developmentStudioController.deleteById);
+
+router
+  .route("/publishingstudios")
+  .get(publishingStudioController.getAllGames)
+  .post(publishingStudioController.createGame);
+
+router
+  .route("/publishingstudios/:id")
+  .get(publishingStudioController.getGameById)
+  .patch(publishingStudioController.updateGame)
+  .delete(publishingStudioController.deleteById);
 
 router
   .route("/dlc")
@@ -165,16 +175,16 @@ router
   .route("/rate/")
   .post(rateController.rateGame)
   .get(rateController.getRate)
-  .put(rateController.getAllRate)
+  .put(rateController.getAllRate);
 
 router.route("/auth").post(authController.login);
 
 router.route("/users").post(usersController.createUser);
 
-  router
+router
   .route("/dlcrate/")
   .post(rateController.rateDLC)
   .get(rateController.getRateDlc)
-  .put(rateController.getAllRateDLC)
+  .put(rateController.getAllRateDLC);
 
 export default router;
