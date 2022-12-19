@@ -7,6 +7,8 @@ import ResponsiveAppBar from "../appbarGame";
 import RateCard from "../RateCard";
 import TextField from "@mui/material/TextField/TextField";
 import { useTheme } from "@mui/material/styles";
+import Button from "@mui/material/Button";
+
 
 export default function IndividualGameComponent() {
   const { id } = useParams();
@@ -119,7 +121,9 @@ export default function IndividualGameComponent() {
         <Grid item xs={1} />
         <Grid item xs={10} align="center">
           <SmallCard title="Synopsis" subtitle={game.synopsis, "In God of War, players control Kratos, a Spartan warrior who is sent by the Greek gods to kill Ares, the god of war. As the story progresses, Kratos is revealed to be Ares’ former servant, who had been tricked into killing his own family and is haunted by terrible nightmares. Armed with the Blades of Chaos, a weapon made out of two daggers attached to chains, Kratos rumbles through ancient Athens and other locations on a murderous quest to terminate the rogue god. Action in God of War is viewed from the third person, and advanced movements such as running, jumping, climbing, and swimming are similar to those in the Tomb Raider series, another adventure-game series with strong platform-game characteristics. Some of Kratos’s foes can be killed only by combinations of magic and physical attacks, making combat more reliant on skill. "} />
-        </Grid>
+        </Grid>"
+        <Grid item xs={10}>
+          <center><Button href={game.merchandise_link} sx={{ml:27}} variant="contained">Merchandise</Button></center></Grid>
         <Grid item xs={5} align="center">
           <Grid container spacing={3}
           direction="column"
