@@ -175,5 +175,6 @@ router.route("/users").post(usersController.createUser);
   .route("/dlcrate/")
   .post(rateController.rateDLC)
   .get(rateController.getRateDlc)
+  .put(rateController.getAllRateDLC)
 
 export default router;
