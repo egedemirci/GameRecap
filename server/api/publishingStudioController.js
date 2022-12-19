@@ -3,7 +3,7 @@ import db from "../db.js";
 export default class gameController {
   static async getAllGames(req, res, next) {
     try {
-      const results = await db.query("SELECT * FROM game_recap.dlc");
+      const results = await db.query("SELECT * FROM game_recap.publishingstudios");
       res.status(200).json({
         lenght: results.rows.length,
         data: {
@@ -11,7 +11,7 @@ export default class gameController {
         },
       });
     } catch (error) {
-      console.log(`Error when getting all dlc ${error}`);
+      console.log(`Error when getting all publsihing studios ${error}`);
       res.status(400).json({ error: error, data: { games: [] } });
     }
   }
@@ -19,19 +19,19 @@ export default class gameController {
   static async deleteById(req, res, next) {
     try {
       const results = await db.query(
-        "DELETE FROM game_recap.dlc WHERE dlc_id = $1 returning *",
+        "DELETE FROM game_recap.publishingstudios WHERE d_studio_id = $1 returning *",
         [req.params.id]
       );
       if (results.rows.length == 0) {
         throw {
-          detail: "dlc not found.",
+          detail: "publishingstudios not found.",
           code: 1,
           error: new Error(),
         };
       }
       res.status(200).json({ data: results.rows[0] });
     } catch (err) {
-      console.log(`Failed to delete dlc ${err}.`);
+      console.log(`Failed to delete user ${err}.`);
       if (err.code == 1) {
         res.status(404).json({ detail: err.detail, data: [] });
         return;
@@ -43,49 +43,48 @@ export default class gameController {
   static async createGame(req, res, next) {
     try {
       const newGame = await db.query(
-        "INSERT INTO game_recap.dlc (dlc_name,game_id,release_date,synopsis) values ($1, $2,$3,$4) returning *",
-        [
-          req.body.dlc_name,
-          req.body.game_id,
-          req.body.release_date,
-          req.body.synopsis,
-        ]
+        "INSERT INTO game_recap.publishingstudios (studio_name) values ($1) returning *",
+        [req.body.studio_name]
       );
       res.status(200).json({
         data: newGame.rows[0],
       });
     } catch (error) {
-      console.log(`Error when creating dlc ${error}`);
+      console.log(`Error when creating game ${error}`);
       res.status(400).json({ error: error, data: [] });
     }
   }
 
   static async getGamesByDate(req, res, next) {
     try {
-      const result = await db.query(`SELECT * FROM game_recap.dlc `);
-      const filteredRows = result.rows.filter((row) =>
-        row.dlc_name.toLowerCase().startsWith(req.body.filter.toLowerCase())
-      );
-      console.log(filteredRows);
-      console.log(result.rows);
-      res.status(200).json({
-        data: filteredRows,
-      });
+        const result = await db.query(
+          `SELECT * FROM game_recap.publishingstudios `
+
+        )
+        const filteredRows = result.rows.filter(row => row.studio_name.toLowerCase().startsWith(req.body.filter.toLowerCase()));
+        console.log(filteredRows);
+        console.log(result.rows);
+        res.status(200).json({
+          data: filteredRows,
+        });
+  
     } catch (error) {
-      console.log(`Error when getting dlc by id ${error}`);
+     
+      console.log(`Error when getting game by id ${error}`);
       res.status(400).json({ error: error, data: [] });
     }
   }
 
-  static async getDLCById(req, res, next) {
-    try {
-      console.log(req.params.dlc_id);
-      const results = await db.query(
-        "SELECT * FROM game_recap.dlc d, game_recap.games g WHERE d.game_id = g.game_id AND dlc_id =$1", [req.params.id]);
 
+  static async getGameById(req, res, next) {
+    try {
+      const results = await db.query(
+        "SELECT * FROM game_recap.publishingstudios WHERE d_studio_id = $1",
+        [req.params.d_studio_id]
+      );
       if (results.rows.length == 0) {
         throw {
-          detail: "dlc not found.",
+          detail: "publishingstudios not found.",
           code: 1,
           error: new Error(),
         };
@@ -95,18 +94,17 @@ export default class gameController {
         lenght: results.rows.length,
         data: results.rows[0],
       });
-    } 
-    catch (error) {
-      if (error.code == 1) {
-        res.status(404).json({ detail: error.detail, data: [] });
+    } catch (error) {
+      if (err.code == 1) {
+        res.status(404).json({ detail: err.detail, data: [] });
         return;
       }
-
-      console.log(`Error when getting DLC by id ${error}`);
-
+      console.log(`Error when getting game by id ${error}`);
       res.status(400).json({ error: error, data: [] });
     }
   }
+
+
 
   static async updateGame(req, res, next) {
     try {
@@ -116,7 +114,7 @@ export default class gameController {
       );
       if (result.rows.length == 0) {
         throw {
-          detail: "dlc not found.",
+          detail: "Game not found.",
           code: 1,
           error: new Error(),
         };
@@ -125,7 +123,7 @@ export default class gameController {
         data: result.rows[0],
       });
     } catch (err) {
-      console.log(`Error when updating dlc ${err}`);
+      console.log(`Error when updating game ${err}`);
       if (err.code == 1) {
         res.status(404).json({ detail: err.detail, data: [] });
         return;
@@ -133,4 +131,6 @@ export default class gameController {
       res.status(400).json({ error: err, data: [] });
     }
   }
+
+
 }

@@ -57,10 +57,32 @@ export default class rateController {
             }
 
 
+            static async getAllRate(req, res, next){
+              try {
+                  const result = await db.query(
+                    "SELECT r.*, u.username FROM game_recap.reviews r, game_recap.users u WHERE game_id = $1 AND r.user_id = u.user_id",
+                    [req.query.gid]
+                  )
+                  if(result.rows.length === 0)
+                    {
+                      console.log(`Error when getting all review game`);
+                      res.status(400).json({data: [] });
+                      return
+                    }
+                  res.status(200).json({
+                    data: result.rows,
+                  });
+                } catch (error) {
+                  console.log(`Error when getting all review game ${error}`);
+                  res.status(400).json({ error: error.detail, error: error.code, data: [] });
+                }
+              }
+
+
         static async getRateDlc(req, res, next){
           try {
               const result = await db.query(
-                "SELECT * FROM game_recap.reviews WHERE user_id = $1 AND dlc_id = $2",
+                "SELECT * FROM game_recap.dlcreview WHERE user_id = $1 AND dlc_id = $2",
                 [req.query.uid, req.query.did]
               );
               if(result.rows.length === 0)
