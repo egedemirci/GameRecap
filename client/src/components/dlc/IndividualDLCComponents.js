@@ -1,26 +1,61 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { Avatar, Grid, Typography } from "@mui/material";
+import { Avatar, Card, CardContent, Grid, Stack, Typography } from "@mui/material";
 import SmallCard from "../SmallCard";
 import GameFinder from "../../apis/GameFinder";
 import ResponsiveAppBar from "../appbarGame";
 import DlcRateCard from "../DLCRateCard";
+import TextField from "@mui/material/TextField/TextField";
+import { useTheme } from "@mui/material/styles";
+
 
 export default function IndividualDLCComponent() {
   const { id } = useParams();
   const user = JSON.parse(localStorage.getItem("user"));
+  const [reviews, setReviews] = useState([]);
   const [dlc, setDLC] = useState(null);
+  const theme = useTheme();
+
 
   const refreshPage = () => {
     console.log("Fresh")
     window.location.reload()
   }
 
+  function renderReview(text, username)
+  {
+    return(
+      <Card
+            sx={{ height: 250, width: 500 }}
+            style={{ backgroundColor: theme.palette.secondary.main }}
+          >
+            <CardContent>
+              <Grid
+                container
+                spacing={2}
+                direction="column"
+                justifyContent="center"
+                alignItems="flex-start"
+              >
+                <Grid item>
+                  <Typography style={{ fontWeight: "bold", fontSize: 15 }}>{username} </Typography>
+                </Grid>
+      
+                <Grid item>
+                  <Typography sx={{ height: 150, width: 400}}> {text} </Typography>
+                </Grid>
+                </Grid>
+            </CardContent>
+          </Card>
+    )
+  }
+
   useEffect(() => {
     const fetchData = async () => {
       const result = await GameFinder.get(`/dlc/${id}`);
-      console.log(result)
       setDLC(result.data.data);
+      const reviewRes = await GameFinder.put(`/dlcrate/?did=${id}`)
+      setReviews(reviewRes.data.data)
     };
     fetchData();
   }, [id]);
@@ -58,7 +93,22 @@ export default function IndividualDLCComponent() {
           <SmallCard title="Synopsis" subtitle={dlc.synopsis, "In God of War, players control Kratos, a Spartan warrior who is sent by the Greek gods to kill Ares, the god of war. As the story progresses, Kratos is revealed to be Ares’ former servant, who had been tricked into killing his own family and is haunted by terrible nightmares. Armed with the Blades of Chaos, a weapon made out of two daggers attached to chains, Kratos rumbles through ancient Athens and other locations on a murderous quest to terminate the rogue god. Action in God of War is viewed from the third person, and advanced movements such as running, jumping, climbing, and swimming are similar to those in the Tomb Raider series, another adventure-game series with strong platform-game characteristics. Some of Kratos’s foes can be killed only by combinations of magic and physical attacks, making combat more reliant on skill. "} />
         </Grid></center>
         <Grid item xs={5} md = {3} align="center">
-          {<DlcRateCard user_id={user.user_id} dlc_id={id} /> }
+        <Grid container spacing={3}
+          direction="column"
+          justifyContent="center"
+          alignItems="center" >
+            <Grid item><DlcRateCard user_id={user.user_id} dlc_id={id}/> </Grid >
+            <Grid item><Typography style={{ fontWeight: "bold", fontSize: 30 }}>All Reviews</Typography></Grid >
+            <Grid item><Stack>
+            <div>
+      {reviews.map(review => (
+        <div key={review.user_id}>
+          {renderReview(review.text, review.username)}
+        </div>
+      ))}
+    </div>
+              </Stack></Grid>
+          </Grid >
         </Grid>
         <Grid item xs={1} />
         <Grid

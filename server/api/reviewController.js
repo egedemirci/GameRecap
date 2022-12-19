@@ -23,7 +23,7 @@ export default class rateController {
           try {
               const timestamp = moment().format('YYYY-MM-DD HH:mm:ss');
               const result = await db.query(
-                "INSERT INTO game_recap.dlcreviews (user_id, dlc_id, review_date, text) values ($1,$2,$3,$4) returning *",
+                "INSERT INTO game_recap.dlcreview (user_id, dlc_id, review_date, text) values ($1,$2,$3,$4) returning *",
                 [req.body.user_id, req.body.dlc_id, timestamp, req.body.text]
               );
               res.status(200).json({
@@ -77,6 +77,28 @@ export default class rateController {
                   res.status(400).json({ error: error.detail, error: error.code, data: [] });
                 }
               }
+
+
+              static async getAllRateDLC(req, res, next){
+                try {
+                    const result = await db.query(
+                      "SELECT r.*, u.username FROM game_recap.dlcreview r, game_recap.users u WHERE dlc_id = $1 AND r.user_id = u.user_id",
+                      [req.query.did]
+                    )
+                    if(result.rows.length === 0)
+                      {
+                        console.log(`Error when getting all review game`);
+                        res.status(400).json({data: [] });
+                        return
+                      }
+                    res.status(200).json({
+                      data: result.rows,
+                    });
+                  } catch (error) {
+                    console.log(`Error when getting all review game ${error}`);
+                    res.status(400).json({ error: error.detail, error: error.code, data: [] });
+                  }
+                }
 
 
         static async getRateDlc(req, res, next){
