@@ -140,7 +140,15 @@ export const UserProfile = () => {
                   >
                     Admin Pages
                   </Button>
-                ) : null}
+                ) : (
+                  <Button
+                    onClick={() => navigate("/userpage")}
+                    color="primary"
+                    variant="contained"
+                  >
+                    User Pages
+                  </Button>
+                )}
               </Stack>
               <Divider variant="middle" />
             </Container>

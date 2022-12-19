@@ -14,6 +14,7 @@ import PlaylistPage from "./routes/playlist/PlaylistPage";
 import IndividualPlaylistPage from "./routes/playlist/IndividualPlaylistPage";
 import Discover from "./components/discover";
 import AdminPage from "./components/admin/AdminComponent";
+import UserPage from "./components/admin/AdminComponent";
 import CategoryPage from "./routes/category/CategoryPage";
 import DlcPage from "./routes/dlc/DLCPage";
 import DevelopmentStudioPage from "./routes/devstudio/DevelopmentStudioPage";
@@ -28,7 +29,6 @@ import { ROLES } from "./config/roles";
 import RequireAuthorization from "./components/RequireAuthorization";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import IndividualDLCComponent from "./components/dlc/IndividualDLCComponents";
-
 
 class App extends Component {
   render() {
@@ -52,7 +52,6 @@ class App extends Component {
       },
     });
 
-
     const myStyle = {
       background: "#f1faee",
       fontSize: "24px",
@@ -61,63 +60,66 @@ class App extends Component {
     return (
       <GameContextProvider>
         <UsersContextProvider>
-        <ThemeProvider theme={theme}>
-          <div style={myStyle}>
-            <Router>
-              <Routes>
-                <Route path="/" element={<LoginPage />} />
-                <Route path="/games/:id/update" element={<UpdateGamePage />} />
-                <Route path="/signup" element={<SignUpPage />} />
-                <Route path="/login" element={<LoginPage />} />
-                {/* Logged In Routes */}
-                <Route element={<CheckLogin />}>
-                  <Route path="/games">
-                    <Route index element={<GamesPage />} />
-                    <Route path=":id" element={<IndividualGameComponent />} />
-                  </Route>
-                  <Route path="/dlc">
-                    <Route path=":id" element={<IndividualDLCComponent />} />
-                  </Route>
+          <ThemeProvider theme={theme}>
+            <div style={myStyle}>
+              <Router>
+                <Routes>
+                  <Route path="/" element={<LoginPage />} />
+                  <Route
+                    path="/games/:id/update"
+                    element={<UpdateGamePage />}
+                  />
+                  <Route path="/signup" element={<SignUpPage />} />
+                  <Route path="/login" element={<LoginPage />} />
+                  {/* Logged In Routes */}
+                  <Route element={<CheckLogin />}>
+                    <Route path="/games">
+                      <Route index element={<GamesPage />} />
+                      <Route path=":id" element={<IndividualGameComponent />} />
+                    </Route>
+                    <Route path="/dlc">
+                      <Route path=":id" element={<IndividualDLCComponent />} />
+                    </Route>
 
-
-                  <Route path="/profile" element={<UserProfile />} />
-                </Route>
-                <Route path="/adminpage" element={<AdminPage />} />
-                <Route
-                  path="/categorypage"
-                  element={<CategoryPage></CategoryPage>}
-                />
-                <Route
-                  path="/developmentstudiopage"
-                  element={<DevelopmentStudioPage></DevelopmentStudioPage>}
-                />
-                <Route path="/dlcpage" element={<DlcPage></DlcPage>} />
-                <Route
-                  path="/languagepage"
-                  element={<LanguagePage></LanguagePage>}
-                />
-                <Route
-                  path="/useradminpage"
-                  element={<UserAdmin></UserAdmin>}
-                />
-                <Route path="/subservice" element={<SubServicePage />} />
-                <Route
-                  path="/onlinestorepage"
-                  element={<OnlineStoresPage></OnlineStoresPage>}
-                />
-                <Route
-                  path="/platformpage"
-                  element={<PlatformPage></PlatformPage>}
-                />
-                <Route path="/playlists/:id" element={<PlaylistPage />} />
-                <Route
-                  path="/playlist/:id"
-                  element={<IndividualPlaylistPage />}
-                />
-                <Route path="/discover" element={<Discover />} />
-              </Routes>
-            </Router>
-          </div>
+                    <Route path="/profile" element={<UserProfile />} />
+                  </Route>
+                  <Route path="/adminpage" element={<AdminPage />} />
+                  <Route path="/userpage" element={<UserPage />} />
+                  <Route
+                    path="/categorypage"
+                    element={<CategoryPage></CategoryPage>}
+                  />
+                  <Route
+                    path="/developmentstudiopage"
+                    element={<DevelopmentStudioPage></DevelopmentStudioPage>}
+                  />
+                  <Route path="/dlcpage" element={<DlcPage></DlcPage>} />
+                  <Route
+                    path="/languagepage"
+                    element={<LanguagePage></LanguagePage>}
+                  />
+                  <Route
+                    path="/useradminpage"
+                    element={<UserAdmin></UserAdmin>}
+                  />
+                  <Route path="/subservice" element={<SubServicePage />} />
+                  <Route
+                    path="/onlinestorepage"
+                    element={<OnlineStoresPage></OnlineStoresPage>}
+                  />
+                  <Route
+                    path="/platformpage"
+                    element={<PlatformPage></PlatformPage>}
+                  />
+                  <Route path="/playlists/:id" element={<PlaylistPage />} />
+                  <Route
+                    path="/playlist/:id"
+                    element={<IndividualPlaylistPage />}
+                  />
+                  <Route path="/discover" element={<Discover />} />
+                </Routes>
+              </Router>
+            </div>
           </ThemeProvider>
         </UsersContextProvider>
       </GameContextProvider>
