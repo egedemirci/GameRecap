@@ -22,6 +22,7 @@ import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
 import AddNewGameComponent from "../game/AddNewGame";
 import { colors } from "@mui/material";
+import { UsersContext } from "../../context/userContext";
 
 const theme = createTheme({
   palette: {
@@ -72,6 +73,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 export default function AdminPage(props) {
+  const { user } = useContext(UsersContext);
   const { games, setGames } = useContext(GameContext);
   const navigate = useNavigate();
   const [start_date, setStartDate] = useState("");
@@ -138,42 +140,123 @@ export default function AdminPage(props) {
           }}
         >
           <center>
-                  <Typography component="h1" variant="h4"                color="#457b9d"             fontWeight="600"
->
-          Management
-        </Typography></center>
-     <Stack
-                sx={{ pt: 3 }}
-                direction="row"
-                spacing={1}
-                justifyContent="center"
+            {user.role === "admin" ? (
+              <Typography
+                component="h1"
+                variant="h4"
+                color="#457b9d"
+                fontWeight="600"
               >
-                <Button   onClick={() => navigate("/categorypage")}   sx={{ color: '#f1faee', backgroundColor: '#457b9d', borderColor: 'green' }} variant="contained">
-                  Categories
-                </Button>
-                <Button    onClick={() => navigate("/developmentstudiopage")} sx={{ color: '#f1faee', backgroundColor: '#457b9d', borderColor: 'green' }}variant="contained">
-                  Development Studios
-                </Button>
-                <Button  onClick={() => navigate("/dlcpage")} sx={{ color: '#f1faee', backgroundColor: '#457b9d', borderColor: 'green' }} variant="contained">
-                  DLC
-                </Button>
-                <Button   onClick={() => navigate("/languagepage")} sx={{ color: '#f1faee', backgroundColor: '#457b9d', borderColor: 'green' }} variant="contained">
-                  Languages
-                </Button>
-                <Button   onClick={() => navigate("/onlinestorepage")}  sx={{ color: '#f1faee', backgroundColor: '#457b9d', borderColor: 'green' }} variant="contained">
-                  Online Stores
-                </Button>
-                <Button    onClick={() => navigate("/platformpage")}  sx={{ color: '#f1faee', backgroundColor: '#457b9d', borderColor: 'green' }} variant="contained">
-                  Platforms
-                </Button>
-                <Button   onClick={() => navigate("/subservice")}  sx={{ color: '#f1faee', backgroundColor: '#457b9d', borderColor: 'green' }} variant="contained">
-                  Subscription Services
-                </Button>
-                <Button    onClick={() => navigate("/useradminpage")} sx={{ color: '#f1faee', backgroundColor: '#457b9d', borderColor: 'green' }} variant="contained">
-                  Users
-                </Button>
-              </Stack>
-          
+                Management
+              </Typography>
+            ) : (
+              <Typography
+                component="h1"
+                variant="h4"
+                color="#457b9d"
+                fontWeight="600"
+              >
+                Pages
+              </Typography>
+            )}
+          </center>
+          <Stack
+            sx={{ pt: 3 }}
+            direction="row"
+            spacing={1}
+            justifyContent="center"
+          >
+            <Button
+              onClick={() => navigate("/categorypage")}
+              sx={{
+                color: "#f1faee",
+                backgroundColor: "#457b9d",
+                borderColor: "green",
+              }}
+              variant="contained"
+            >
+              Categories
+            </Button>
+            <Button
+              onClick={() => navigate("/developmentstudiopage")}
+              sx={{
+                color: "#f1faee",
+                backgroundColor: "#457b9d",
+                borderColor: "green",
+              }}
+              variant="contained"
+            >
+              Development Studios
+            </Button>
+            <Button
+              onClick={() => navigate("/dlcpage")}
+              sx={{
+                color: "#f1faee",
+                backgroundColor: "#457b9d",
+                borderColor: "green",
+              }}
+              variant="contained"
+            >
+              DLC
+            </Button>
+            <Button
+              onClick={() => navigate("/languagepage")}
+              sx={{
+                color: "#f1faee",
+                backgroundColor: "#457b9d",
+                borderColor: "green",
+              }}
+              variant="contained"
+            >
+              Languages
+            </Button>
+            <Button
+              onClick={() => navigate("/onlinestorepage")}
+              sx={{
+                color: "#f1faee",
+                backgroundColor: "#457b9d",
+                borderColor: "green",
+              }}
+              variant="contained"
+            >
+              Online Stores
+            </Button>
+            <Button
+              onClick={() => navigate("/platformpage")}
+              sx={{
+                color: "#f1faee",
+                backgroundColor: "#457b9d",
+                borderColor: "green",
+              }}
+              variant="contained"
+            >
+              Platforms
+            </Button>
+            <Button
+              onClick={() => navigate("/subservice")}
+              sx={{
+                color: "#f1faee",
+                backgroundColor: "#457b9d",
+                borderColor: "green",
+              }}
+              variant="contained"
+            >
+              Subscription Services
+            </Button>
+            {user.role === "admin" ? (
+              <Button
+                onClick={() => navigate("/useradminpage")}
+                sx={{
+                  color: "#f1faee",
+                  backgroundColor: "#457b9d",
+                  borderColor: "green",
+                }}
+                variant="contained"
+              >
+                Users
+              </Button>
+            ) : null}
+          </Stack>
         </Box>
       </main>
       {/* Footer */}
