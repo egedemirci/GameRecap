@@ -11,7 +11,7 @@ export default class gameController {
         },
       });
     } catch (error) {
-      console.log(`Error when getting all games ${error}`);
+      console.log(`Error when getting all languages ${error}`);
       res.status(400).json({ error: error, data: { games: [] } });
     }
   }
@@ -31,7 +31,7 @@ export default class gameController {
       }
       res.status(200).json({ data: results.rows[0] });
     } catch (err) {
-      console.log(`Failed to delete user ${err}.`);
+      console.log(`Failed to delete languages ${err}.`);
       if (err.code == 1) {
         res.status(404).json({ detail: err.detail, data: [] });
         return;
@@ -50,27 +50,24 @@ export default class gameController {
         data: newGame.rows[0],
       });
     } catch (error) {
-      console.log(`Error when creating game ${error}`);
+      console.log(`Error when creating languages ${error}`);
       res.status(400).json({ error: error, data: [] });
     }
   }
 
   static async getGamesByDate(req, res, next) {
     try {
-        const result = await db.query(
-          `SELECT * FROM game_recap.languages `
-
-        )
-        const filteredRows = result.rows.filter(row => row.lang_name.toLowerCase().startsWith(req.body.filter.toLowerCase()));
-        console.log(filteredRows);
-        console.log(result.rows);
-        res.status(200).json({
-          data: filteredRows,
-        });
-  
+      const result = await db.query(`SELECT * FROM game_recap.languages `);
+      const filteredRows = result.rows.filter((row) =>
+        row.lang_name.toLowerCase().startsWith(req.body.filter.toLowerCase())
+      );
+      console.log(filteredRows);
+      console.log(result.rows);
+      res.status(200).json({
+        data: filteredRows,
+      });
     } catch (error) {
-     
-      console.log(`Error when getting game by id ${error}`);
+      console.log(`Error when getting languages by id ${error}`);
       res.status(400).json({ error: error, data: [] });
     }
   }
@@ -83,7 +80,7 @@ export default class gameController {
       );
       if (results.rows.length == 0) {
         throw {
-          detail: "dlc not found.",
+          detail: "languages not found.",
           code: 1,
           error: new Error(),
         };
@@ -98,12 +95,10 @@ export default class gameController {
         res.status(404).json({ detail: err.detail, data: [] });
         return;
       }
-      console.log(`Error when getting game by id ${error}`);
+      console.log(`Error when getting languages by id ${error}`);
       res.status(400).json({ error: error, data: [] });
     }
   }
-
-
 
   static async updateGame(req, res, next) {
     try {
@@ -113,7 +108,7 @@ export default class gameController {
       );
       if (result.rows.length == 0) {
         throw {
-          detail: "Game not found.",
+          detail: "languages not found.",
           code: 1,
           error: new Error(),
         };
@@ -122,7 +117,7 @@ export default class gameController {
         data: result.rows[0],
       });
     } catch (err) {
-      console.log(`Error when updating game ${err}`);
+      console.log(`Error when updating languages ${err}`);
       if (err.code == 1) {
         res.status(404).json({ detail: err.detail, data: [] });
         return;
@@ -130,6 +125,4 @@ export default class gameController {
       res.status(400).json({ error: err, data: [] });
     }
   }
-
-
 }

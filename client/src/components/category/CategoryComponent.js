@@ -19,6 +19,7 @@ import { useNavigate } from "react-router-dom";
 import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
 import AddNewCategoryComponent from "./AddNewCategoryComponent";
+import { UsersContext } from "../../context/userContext";
 
 const theme = createTheme({
   palette: {
@@ -71,6 +72,7 @@ export default function CategoryComponent() {
   const [categories, setCategories] = useState([]);
   const navigate = useNavigate();
   const [start_date, setStartDate] = useState("");
+  const { user } = useContext(UsersContext);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -171,8 +173,9 @@ export default function CategoryComponent() {
                       Category Name
                     </StyledTableCell>
 
-                    
-                    <StyledTableCell align="right">Delete</StyledTableCell>
+                    {user.role === "admin" ? (
+                      <StyledTableCell align="right">Delete</StyledTableCell>
+                    ) : null}
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -184,16 +187,18 @@ export default function CategoryComponent() {
                       <StyledTableCell align="right">
                         {category.category_name}
                       </StyledTableCell>
-                     
-                      <StyledTableCell align="right">
-                        {" "}
-                        <button
-                          onClick={(e) => handleDelete(e, category.c_id)}
-                          className="btn btn-danger"
-                        >
-                          Delete
-                        </button>
-                      </StyledTableCell>
+
+                      {user.role === "admin" ? (
+                        <StyledTableCell align="right">
+                          {" "}
+                          <button
+                            onClick={(e) => handleDelete(e, category.c_id)}
+                            className="btn btn-danger"
+                          >
+                            Delete
+                          </button>
+                        </StyledTableCell>
+                      ) : null}
                     </StyledTableRow>
                   ))}
                 </TableBody>
@@ -201,8 +206,7 @@ export default function CategoryComponent() {
             </TableContainer>
           </Container>
           <Box sx={{ mt: 3 }}></Box>
-          <AddNewCategoryComponent />
-          
+          {user.role === "admin" ? <AddNewCategoryComponent /> : null}
         </Box>
       </main>
       {/* Footer */}

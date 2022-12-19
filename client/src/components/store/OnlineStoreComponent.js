@@ -22,6 +22,7 @@ import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
 import AddNewGameComponent from "./AddNewOnlineStoreComponent";
 import { colors } from "@mui/material";
+import { UsersContext } from "../../context/userContext";
 
 const theme = createTheme({
   palette: {
@@ -71,6 +72,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 export default function MainPage(props) {
+  const { user } = useContext(UsersContext);
   const { games, setGames } = useContext(GameContext);
   const navigate = useNavigate();
   const [start_date, setStartDate] = useState("");
@@ -171,8 +173,9 @@ export default function MainPage(props) {
                     <StyledTableCell align="right">Store ID</StyledTableCell>
                     <StyledTableCell align="right">Store Name</StyledTableCell>
 
-
-                    <StyledTableCell align="right">Delete</StyledTableCell>
+                    {user.role === "admin" ? (
+                      <StyledTableCell align="right">Delete</StyledTableCell>
+                    ) : null}
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -184,16 +187,17 @@ export default function MainPage(props) {
                       <StyledTableCell align="right">
                         {game.store_name}
                       </StyledTableCell>
-                      
-                      <StyledTableCell align="right">
-                        {" "}
-                        <button
-                          onClick={(e) => handleDelete(e, game.store_id)}
-                          className="btn btn-danger"
-                        >
-                          Delete
-                        </button>
-                      </StyledTableCell>
+                      {user.role === "admin" ? (
+                        <StyledTableCell align="right">
+                          {" "}
+                          <button
+                            onClick={(e) => handleDelete(e, game.store_id)}
+                            className="btn btn-danger"
+                          >
+                            Delete
+                          </button>
+                        </StyledTableCell>
+                      ) : null}
                     </StyledTableRow>
                   ))}
                 </TableBody>
@@ -201,8 +205,7 @@ export default function MainPage(props) {
             </TableContainer>
           </Container>
           <Box sx={{ mt: 3 }}></Box>
-          <AddNewGameComponent />
-         
+          {user.role === "admin" ? <AddNewGameComponent /> : null}
         </Box>
       </main>
       {/* Footer */}
