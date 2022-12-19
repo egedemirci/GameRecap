@@ -33,6 +33,7 @@ export default function DlcRateCard(props) {
         {
             setError(null)
             GameFinder.post("dlcrate", {user_id: user_id, dlc_id: dlc_id, text: text}).then(function(response) {
+              
                 if(response.status == 200) {
                   setRate({text:"Your rate submitted!"})
                   setRated(true)

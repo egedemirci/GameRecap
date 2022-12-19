@@ -27,6 +27,7 @@ import CheckLogin from "./components/CheckLogin";
 import { ROLES } from "./config/roles";
 import RequireAuthorization from "./components/RequireAuthorization";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import IndividualDLCComponent from "./components/dlc/IndividualDLCComponents";
 
 
 class App extends Component {
@@ -54,7 +55,6 @@ class App extends Component {
 
     const myStyle = {
       background: "#f1faee",
-      height: "100vh",
       fontSize: "24px",
       backgroundSize: "cover",
     };
@@ -75,6 +75,11 @@ class App extends Component {
                     <Route index element={<GamesPage />} />
                     <Route path=":id" element={<IndividualGameComponent />} />
                   </Route>
+                  <Route path="/dlc">
+                    <Route path=":id" element={<IndividualDLCComponent />} />
+                  </Route>
+
+
                   <Route path="/profile" element={<UserProfile />} />
                 </Route>
                 <Route path="/adminpage" element={<AdminPage />} />
