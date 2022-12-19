@@ -10,7 +10,6 @@ import userAdmin from "./adminUser.js";
 import subserviceController from "./subserviceController.js";
 import onlinestoreController from "./onlinestoreController.js";
 import platformController from "./platformController.js";
-import reviewController from "./reviewController.js";
 import rateController from "./reviewController.js";
 
 //Api calls are done through uri and router routes uri correct functions
@@ -163,7 +162,8 @@ router
 router
   .route("/rate/")
   .post(rateController.rateGame)
-  .get(rateController.getRate);
+  .get(rateController.getRate)
+  .put(rateController.getAllRate)
 
 router.route("/auth").post(authController.login);
 
