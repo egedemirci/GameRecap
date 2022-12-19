@@ -20,6 +20,7 @@ import Paper from "@mui/material/Paper";
 import { useNavigate } from "react-router-dom";
 import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
+import { UsersContext } from "../context/userContext";
 
 const theme = createTheme({
   palette: {
@@ -69,6 +70,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 export default function UserAdmin(props) {
+  const { user } = useContext(UsersContext);
   const { games, setGames } = useContext(GameContext);
   const navigate = useNavigate();
   const [start_date, setStartDate] = useState("");
@@ -174,8 +176,9 @@ export default function UserAdmin(props) {
                     <StyledTableCell align="right">Username</StyledTableCell>
                     <StyledTableCell align="right">Email</StyledTableCell>
                     <StyledTableCell align="right">Create Date</StyledTableCell>
-
-                    <StyledTableCell align="right">Delete</StyledTableCell>
+                    {user.role === "admin" ? (
+                      <StyledTableCell align="right">Delete</StyledTableCell>
+                    ) : null}
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -193,16 +196,17 @@ export default function UserAdmin(props) {
                       <StyledTableCell align="right">
                         {game.created_at}
                       </StyledTableCell>
-
-                      <StyledTableCell align="right">
-                        {" "}
-                        <button
-                          onClick={(e) => handleDelete(e, game.user_id)}
-                          className="btn btn-danger"
-                        >
-                          Delete
-                        </button>
-                      </StyledTableCell>
+                      {user.role === "admin" ? (
+                        <StyledTableCell align="right">
+                          {" "}
+                          <button
+                            onClick={(e) => handleDelete(e, game.user_id)}
+                            className="btn btn-danger"
+                          >
+                            Delete
+                          </button>
+                        </StyledTableCell>
+                      ) : null}
                     </StyledTableRow>
                   ))}
                 </TableBody>
@@ -210,7 +214,6 @@ export default function UserAdmin(props) {
             </TableContainer>
           </Container>
           <Box sx={{ mt: 3 }}></Box>
-          
         </Box>
       </main>
       {/* Footer */}

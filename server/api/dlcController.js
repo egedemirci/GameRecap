@@ -11,7 +11,7 @@ export default class gameController {
         },
       });
     } catch (error) {
-      console.log(`Error when getting all games ${error}`);
+      console.log(`Error when getting all dlc ${error}`);
       res.status(400).json({ error: error, data: { games: [] } });
     }
   }
@@ -31,7 +31,7 @@ export default class gameController {
       }
       res.status(200).json({ data: results.rows[0] });
     } catch (err) {
-      console.log(`Failed to delete user ${err}.`);
+      console.log(`Failed to delete dlc ${err}.`);
       if (err.code == 1) {
         res.status(404).json({ detail: err.detail, data: [] });
         return;
@@ -44,33 +44,35 @@ export default class gameController {
     try {
       const newGame = await db.query(
         "INSERT INTO game_recap.dlc (dlc_name,game_id,release_date,synopsis) values ($1, $2,$3,$4) returning *",
-        [req.body.dlc_name,req.body.game_id, req.body.release_date,req.body.synopsis]
+        [
+          req.body.dlc_name,
+          req.body.game_id,
+          req.body.release_date,
+          req.body.synopsis,
+        ]
       );
       res.status(200).json({
         data: newGame.rows[0],
       });
     } catch (error) {
-      console.log(`Error when creating game ${error}`);
+      console.log(`Error when creating dlc ${error}`);
       res.status(400).json({ error: error, data: [] });
     }
   }
 
   static async getGamesByDate(req, res, next) {
     try {
-        const result = await db.query(
-          `SELECT * FROM game_recap.dlc `
-
-        )
-        const filteredRows = result.rows.filter(row => row.dlc_name.toLowerCase().startsWith(req.body.filter.toLowerCase()));
-        console.log(filteredRows);
-        console.log(result.rows);
-        res.status(200).json({
-          data: filteredRows,
-        });
-  
+      const result = await db.query(`SELECT * FROM game_recap.dlc `);
+      const filteredRows = result.rows.filter((row) =>
+        row.dlc_name.toLowerCase().startsWith(req.body.filter.toLowerCase())
+      );
+      console.log(filteredRows);
+      console.log(result.rows);
+      res.status(200).json({
+        data: filteredRows,
+      });
     } catch (error) {
-     
-      console.log(`Error when getting game by id ${error}`);
+      console.log(`Error when getting dlc by id ${error}`);
       res.status(400).json({ error: error, data: [] });
     }
   }
@@ -98,12 +100,10 @@ export default class gameController {
         res.status(404).json({ detail: err.detail, data: [] });
         return;
       }
-      console.log(`Error when getting game by id ${error}`);
+      console.log(`Error when getting dlc by id ${error}`);
       res.status(400).json({ error: error, data: [] });
     }
   }
-
-
 
   static async updateGame(req, res, next) {
     try {
@@ -113,7 +113,7 @@ export default class gameController {
       );
       if (result.rows.length == 0) {
         throw {
-          detail: "Game not found.",
+          detail: "dlc not found.",
           code: 1,
           error: new Error(),
         };
@@ -122,7 +122,7 @@ export default class gameController {
         data: result.rows[0],
       });
     } catch (err) {
-      console.log(`Error when updating game ${err}`);
+      console.log(`Error when updating dlc ${err}`);
       if (err.code == 1) {
         res.status(404).json({ detail: err.detail, data: [] });
         return;
@@ -130,6 +130,4 @@ export default class gameController {
       res.status(400).json({ error: err, data: [] });
     }
   }
-
-
 }

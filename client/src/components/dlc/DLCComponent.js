@@ -20,6 +20,7 @@ import { useNavigate } from "react-router-dom";
 import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
 import AddNewDLCComponent from "./AddNewDLCComponent";
+import { UsersContext } from "../../context/userContext";
 
 const theme = createTheme({
   palette: {
@@ -69,6 +70,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 export default function MainPage(props) {
+  const { user } = useContext(UsersContext);
   const { games, setGames } = useContext(GameContext);
   const navigate = useNavigate();
   const [start_date, setStartDate] = useState("");
@@ -120,7 +122,7 @@ export default function MainPage(props) {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      
+
       <main>
         {/* Hero unit */}
         <Box
@@ -174,7 +176,10 @@ export default function MainPage(props) {
                     </StyledTableCell>
 
                     <StyledTableCell align="right">Synopsis</StyledTableCell>
-                    <StyledTableCell align="right">Delete</StyledTableCell>
+
+                    {user.role === "admin" ? (
+                      <StyledTableCell align="right">Delete</StyledTableCell>
+                    ) : null}
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -196,16 +201,17 @@ export default function MainPage(props) {
                         {game.synopsis}
                       </StyledTableCell>
 
-                      
-                      <StyledTableCell align="right">
-                        {" "}
-                        <button
-                          onClick={(e) => handleDelete(e, game.dlc_id)}
-                          className="btn btn-danger"
-                        >
-                          Delete
-                        </button>
-                      </StyledTableCell>
+                      {user.role === "admin" ? (
+                        <StyledTableCell align="right">
+                          {" "}
+                          <button
+                            onClick={(e) => handleDelete(e, game.dlc_id)}
+                            className="btn btn-danger"
+                          >
+                            Delete
+                          </button>
+                        </StyledTableCell>
+                      ) : null}
                     </StyledTableRow>
                   ))}
                 </TableBody>
@@ -213,8 +219,7 @@ export default function MainPage(props) {
             </TableContainer>
           </Container>
           <Box sx={{ mt: 3 }}></Box>
-          <AddNewDLCComponent />
-          
+          {user.role === "admin" ? <AddNewDLCComponent /> : null}
         </Box>
       </main>
       {/* Footer */}

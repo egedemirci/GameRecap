@@ -3,7 +3,9 @@ import db from "../db.js";
 export default class subserviceController {
   static async getAllGames(req, res, next) {
     try {
-      const results = await db.query("SELECT * FROM game_recap.subscriptionservices");
+      const results = await db.query(
+        "SELECT * FROM game_recap.subscriptionservices"
+      );
       res.status(200).json({
         lenght: results.rows.length,
         data: {
@@ -11,7 +13,7 @@ export default class subserviceController {
         },
       });
     } catch (error) {
-      console.log(`Error when getting all games ${error}`);
+      console.log(`Error when getting all subscriptionservices ${error}`);
       res.status(400).json({ error: error, data: { games: [] } });
     }
   }
@@ -24,14 +26,14 @@ export default class subserviceController {
       );
       if (results.rows.length == 0) {
         throw {
-          detail: "language not found.",
+          detail: "subscriptionservices not found.",
           code: 1,
           error: new Error(),
         };
       }
       res.status(200).json({ data: results.rows[0] });
     } catch (err) {
-      console.log(`Failed to delete user ${err}.`);
+      console.log(`Failed to delete subscriptionservices ${err}.`);
       if (err.code == 1) {
         res.status(404).json({ detail: err.detail, data: [] });
         return;
@@ -50,25 +52,25 @@ export default class subserviceController {
         data: newGame.rows[0],
       });
     } catch (error) {
-      console.log(`Error when creating game ${error}`);
+      console.log(`Error when creating subscriptionservices ${error}`);
       res.status(400).json({ error: error, data: [] });
     }
   }
 
   static async getGamesByDate(req, res, next) {
     try {
-        const result = await db.query(`SELECT * FROM game_recap.subscriptionservices `)
-        const filteredRows = result.rows.filter(row => row.service_name.toLowerCase().startsWith(req.body.filter.toLowerCase()));
-        res.status(200).json({
-          data: filteredRows,
-        });
-  
+      const result = await db.query(
+        `SELECT * FROM game_recap.subscriptionservices `
+      );
+      const filteredRows = result.rows.filter((row) =>
+        row.service_name.toLowerCase().startsWith(req.body.filter.toLowerCase())
+      );
+      res.status(200).json({
+        data: filteredRows,
+      });
     } catch (error) {
-     
-      console.log(`Error when getting game by id ${error}`);
+      console.log(`Error when getting subscriptionservices by id ${error}`);
       res.status(400).json({ error: error, data: [] });
     }
   }
-
-
 }
