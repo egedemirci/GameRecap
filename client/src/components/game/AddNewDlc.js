@@ -3,43 +3,39 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import Container from "@mui/material/Container";
+import Alert from "@mui/material/Alert";
 import GameFinder from "../../apis/GameFinder";
-import { GameContext } from "../../context/gameContext";
-import { useNavigate } from "react-router-dom";
-import { useContext, useState, useEffect } from "react";
+import { useState } from "react";
 
-export default function AddNewGame() {
-  const [name, setName] = useState("");
-  const [synopsis, setSynopsis] = useState("");
-  const [game_id, setGame_id] = useState();
-  const [date, setDate] = useState("");
-  const navigate = useNavigate();
-  const { addGame } = useContext(GameContext);
-
+export default function AddNewDlc(game_id) {
+  const [error, setError] = useState(null);
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
-    console.log(name, date);
+    const data = new FormData(e.currentTarget);
+    const sy = data.get("synopsis");
+    if (sy?.length > 6000) {
+      setError("You cannot enter more than 6000 characters!");
+    }
     try {
-      const response = await GameFinder.post("/dlc", {
-        dlc_name: name,
-        release_date: date,
-        game_id: game_id,
-        synopsis: synopsis
+      await GameFinder.post("/dlc", {
+        dlc_name: data.get("name"),
+        game_id: game_id.game_id,
+        release_date: data.get("date"),
+        synopsis: data.get("synopsis"),
+      }).then((res) => {
+        alert("Success! Refreshing...");
+        window.location.reload();
       });
-      alert("Success! Refreshing...");
-      window.location.reload();
     } catch (err) {
       console.log(err);
     }
-  
   };
   const content = (
     <>
       <Container maxWidth="sm">
         <Box component="form" sx={{ mt: 6 }} onSubmit={handleSubmit}>
           <Typography variant="h4" component="h1" gutterBottom>
-            Add New Dlc
+            Add New DLC
           </Typography>
           <Typography variant="h6" component="h10">
             Name of the DLC
@@ -47,26 +43,9 @@ export default function AddNewGame() {
           <TextField
             margin="normal"
             required
-            value={name}
-            onChange={(e) => setName(e.target.value)}
             fullWidth
             id="name"
             name="name"
-            className="form-control"
-            type="text"
-          />
-
-          <Typography variant="h6" component="h10">
-            Game ID
-          </Typography>
-          <TextField
-            margin="normal"
-            required
-            value={game_id}
-            onChange={(e) => setGame_id(e.target.value)}
-            fullWidth
-            id="game_id"
-            name="game_id"
             className="form-control"
             type="text"
           />
@@ -76,8 +55,6 @@ export default function AddNewGame() {
           <TextField
             margin="normal"
             required
-            value={date}
-            onChange={(e) => setDate(e.target.value)}
             fullWidth
             id="date"
             name="date"
@@ -89,9 +66,6 @@ export default function AddNewGame() {
           </Typography>
           <TextField
             margin="normal"
-            required
-            value={synopsis}
-            onChange={(e) => setSynopsis(e.target.value)}
             fullWidth
             id="synopsis"
             name="synopsis"
@@ -100,7 +74,11 @@ export default function AddNewGame() {
             multiline
             rows={4}
           />
-          
+          {error && (
+            <Alert variant="filled" severity="error">
+              {error}
+            </Alert>
+          )}
           <Button
             type="submit"
             fullWidth

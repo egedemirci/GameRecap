@@ -115,7 +115,7 @@ router
 router
   .route("/dlc")
   .get(dlcController.getAllGames)
-  .post(dlcController.createGame);
+  .post(dlcController.createDlc);
 
 router
   .route("/dlc/:id")

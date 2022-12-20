@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
 import { Avatar, Card, CardContent, Grid, Stack, Typography } from "@mui/material";
 import SmallCard from "../SmallCard";
@@ -7,10 +7,13 @@ import ResponsiveAppBar from "../appbarGame";
 import RateCard from "../RateCard";
 import TextField from "@mui/material/TextField/TextField";
 import { useTheme } from "@mui/material/styles";
+import { UsersContext } from "../../context/userContext";
+import AddNewDlc from "./AddNewDlc";
+import { Container, Box } from "@mui/system";
 
 export default function IndividualGameComponent() {
   const { id } = useParams();
-  const user = JSON.parse(localStorage.getItem("user"));
+  const {user} = useContext(UsersContext);
   const [game, setGame] = useState(null);
   const [reviews, setReviews] = useState([]);
   const theme = useTheme();
@@ -120,8 +123,17 @@ export default function IndividualGameComponent() {
         <Grid item xs={10} align="center">
           <SmallCard title="Synopsis" subtitle={game.synopsis, "In God of War, players control Kratos, a Spartan warrior who is sent by the Greek gods to kill Ares, the god of war. As the story progresses, Kratos is revealed to be Ares’ former servant, who had been tricked into killing his own family and is haunted by terrible nightmares. Armed with the Blades of Chaos, a weapon made out of two daggers attached to chains, Kratos rumbles through ancient Athens and other locations on a murderous quest to terminate the rogue god. Action in God of War is viewed from the third person, and advanced movements such as running, jumping, climbing, and swimming are similar to those in the Tomb Raider series, another adventure-game series with strong platform-game characteristics. Some of Kratos’s foes can be killed only by combinations of magic and physical attacks, making combat more reliant on skill. "} />
         </Grid>
-        <Grid item xs={5} align="center">
-          <Grid container spacing={3}
+        <Grid item xs={1} />
+        <Grid
+          item
+          md={8}
+          sx={{ display: { sm: "none", md: "block", lg: "none" } }}
+        />
+      </Grid>
+      <Box sx={{display:"flex", justifyContent:"center", alignItems:"center"}}>
+            {user.role === "admin" ? 
+            (<AddNewDlc game_id={id}/>) : 
+            (<Grid sx={{mt:1}} container spacing={3}
           direction="column"
           justifyContent="center"
           alignItems="center" >
@@ -136,15 +148,8 @@ export default function IndividualGameComponent() {
       ))}
     </div>
               </Stack></Grid>
-          </Grid >
-        </Grid>
-        <Grid item xs={1} />
-        <Grid
-          item
-          md={8}
-          sx={{ display: { sm: "none", md: "block", lg: "none" } }}
-        />
-      </Grid>
+          </Grid >)}
+      </Box>  
     </>
   ) : null;
 }

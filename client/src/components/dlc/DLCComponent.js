@@ -19,7 +19,6 @@ import Paper from "@mui/material/Paper";
 import { useNavigate } from "react-router-dom";
 import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
-import AddNewDLCComponent from "./AddNewDLCComponent";
 import { UsersContext } from "../../context/userContext";
 
 const theme = createTheme({
@@ -218,8 +217,6 @@ export default function MainPage(props) {
               </Table>
             </TableContainer>
           </Container>
-          <Box sx={{ mt: 3 }}></Box>
-          {user.role === "admin" ? <AddNewDLCComponent /> : null}
         </Box>
       </main>
       {/* Footer */}
