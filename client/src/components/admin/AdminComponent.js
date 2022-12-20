@@ -276,6 +276,17 @@ export default function AdminPage(props) {
             >
               Subscription Services
             </Button>
+            <Button
+              onClick={() => navigate("/reviews")}
+              sx={{
+                color: "#f1faee",
+                backgroundColor: "#457b9d",
+                borderColor: "green",
+              }}
+              variant="contained"
+            >
+              Reviews
+            </Button>
             {user.role === "admin" ? (
               <Button
                 onClick={() => navigate("/useradminpage")}

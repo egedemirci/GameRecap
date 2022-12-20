@@ -12,6 +12,7 @@ import onlinestoreController from "./onlinestoreController.js";
 import platformController from "./platformController.js";
 import rateController from "./reviewController.js";
 import publishingStudioController from "./publishingStudioController.js";
+import reviewListController from "./reviewListController.js";
 
 //Api calls are done through uri and router routes uri correct functions
 //get request send through uri > router makes correct controllerCall > controller makes DBOcall > DBO returns results from db to controller > controller adds json to response of the request
@@ -200,4 +201,8 @@ router
   .get(rateController.getRateDlc)
   .put(rateController.getAllRateDLC);
 
+router.route("/reviews")
+  .get(reviewListController.getAllReviews)
+  .patch(reviewListController.deleteById)
+  .post(reviewListController.getRateFilter);
 export default router;

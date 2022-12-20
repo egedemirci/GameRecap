@@ -228,21 +228,21 @@ export default class gameController {
          g.game_name, 
          g.release_date, 
          --l.lang_id, 
-         string_agg(l.lang_name, ', ') as lang_name, 
+         string_agg(distinct l.lang_name, ', ') as lang_name, 
          --s.store_id,
-        string_agg(s.store_name, ', ') as store_name, 
+        string_agg(distinct s.store_name, ', ') as store_name, 
         --ss.service_id, 
-        string_agg(ss.service_name,  ', ') as service_name, 
-        string_agg(d.dlc_id::text, ', ') as dlc_ids, 
-        string_agg(d.dlc_name, ', ') as dlc_name,
+        string_agg(distinct ss.service_name,  ', ') as service_name, 
+        string_agg(distinct d.dlc_id::text, ', ') as dlc_ids, 
+        string_agg(distinct d.dlc_name, ', ') as dlc_name,
         --ds.d_studio_id, 
-        string_agg(ds.studio_name, ', ') as ds_name,
+        string_agg(distinct ds.studio_name, ', ') as ds_name,
         --c.c_id, 
-        string_agg(c.category_name, ', ') as category_name,
+        string_agg(distinct c.category_name, ', ') as category_name,
         --ps.p_studio_id, 
-        string_agg(ps.studio_name, ', ') as ps_name,
+        string_agg(distinct ps.studio_name, ', ') as ps_name,
         --p.platform_id, 
-        string_agg(p.platform_name, ', ') as platform_name
+        string_agg(distinct p.platform_name, ', ') as platform_name
 from game_recap.games g
 left join game_recap.languagesavailable la on g.game_id = la.game_id
 left join game_recap.languages l on la.lang_id = l.lang_id
@@ -259,8 +259,8 @@ left join game_recap.gamespublishing gp on g.game_id = gp.game_id
 left join game_recap.publishingstudios ps on gp.p_studio_id = ps.p_studio_id
 left join game_recap.gamesplatforms gps on g.game_id = gps.game_id
 left join game_recap.platforms p on gps.platform_id = p.platform_id
-where g.game_id = $1
-group by 1, 2, 3`,
+where g.game_id = 59
+group by 1, 2, 3, 4, 5`,
         [req.params.id]
       );
       if (results.rows.length == 0) {

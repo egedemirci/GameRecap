@@ -29,6 +29,7 @@ import IndividualDLCComponent from "./components/dlc/IndividualDLCComponents";
 import CreatePlaylistPage from "./routes/playlist/CreatePlaylistPage";
 import PublishingStudioPage from "./routes/pubstudio/PublishingStudioPage";
 import PlaylistAdminPage from "./routes/playlist/PlaylistAdminPage";
+import ReviewsPage from "./routes/review/ReviewsPage";
 
 class App extends Component {
   render() {
@@ -125,6 +126,10 @@ class App extends Component {
                       element={<CreatePlaylistPage />}
                     />
                     <Route path="/discover" element={<Discover />} />
+                    <Route
+                      path="/reviews"
+                      element={<ReviewsPage></ReviewsPage>}
+                    />
                   </Route>
                 </Routes>
               </Router>
