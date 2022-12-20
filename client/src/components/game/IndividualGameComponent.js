@@ -5,6 +5,7 @@ import {
   Card,
   CardContent,
   Grid,
+  Link,
   Stack,
   Typography,
 } from "@mui/material";
@@ -24,6 +25,7 @@ export default function IndividualGameComponent() {
   const { user } = useContext(UsersContext);
   const [game, setGame] = useState(null);
   const [reviews, setReviews] = useState([]);
+  const [final_dlc, setDLC] = useState([]);
   const theme = useTheme();
 
   const refreshPage = () => {
@@ -64,6 +66,12 @@ export default function IndividualGameComponent() {
     const fetchData = async () => {
       const result = await GameFinder.get(`/games/${id}`);
       setGame(result.data.data);
+      let list_ids = result.data.data.dlc_ids.split(/(, )/);
+      let list_dlcs = result.data.data.dlc_name.split(/(, )/);
+      let m = list_dlcs.map(function(e, i) {
+        return [e, list_ids[i]];
+      });
+      setDLC(m)
       const reviewRes = await GameFinder.put(`/rate/?gid=${id}`);
       setReviews(reviewRes.data.data);
     };
@@ -114,7 +122,11 @@ export default function IndividualGameComponent() {
           sx={{ display: { sm: "none", md: "block", lg: "none" } }}
         />
         <Grid item ml={2} mt={0} xs={12} sm={6} md={4} lg={2.5}>
-          <SmallCard title="DLCs" subtitle={game.dlc_name} />
+          <SmallCard title="DLCs" subtitle={
+    final_dlc.map((final) => (
+      <Link href={`http://localhost:3000/dlc/${final[1]}`}>{final[0]}</Link>
+    ))
+  }  />
         </Grid>
         <Grid item xs={12} mt={0} sm={6} md={4} lg={3}>
           <SmallCard title="By Development Studios" subtitle={game.ds_name} />
@@ -168,14 +180,12 @@ export default function IndividualGameComponent() {
               </Typography>
             </Grid>
             <Grid item sx={{ mb: 4 }}>
-              <Stack>
-                <div>
+              <Stack direction="row" spacing={4}>
                   {reviews.map((review) => (
                     <div key={review.user_id}>
                       {renderReview(review.text, review.username)}
                     </div>
                   ))}
-                </div>
               </Stack>
             </Grid>
           </Grid>

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { Avatar, Card, CardContent, Grid, Stack, Typography } from "@mui/material";
+import { Avatar, Box, Card, CardContent, Grid, Stack, Typography } from "@mui/material";
 import SmallCard from "../SmallCard";
 import GameFinder from "../../apis/GameFinder";
 import ResponsiveAppBar from "../appbarGame";
@@ -86,29 +86,36 @@ export default function IndividualDLCComponent() {
         </Grid>
 
         <Grid item xs={12} mt={0} sm={6} md={4} lg={6}>
-          <SmallCard title="Game Name" subtitle={dlc.game_name,"Steam"} />
+          <SmallCard title="Game Name" subtitle={dlc.game_name} />
         </Grid>
 <center> 
         <Grid item xs={10} mt={4} sm={6} lg = {11} align="center">
-          <SmallCard title="Synopsis" subtitle={dlc.synopsis, "In God of War, players control Kratos, a Spartan warrior who is sent by the Greek gods to kill Ares, the god of war. As the story progresses, Kratos is revealed to be Ares’ former servant, who had been tricked into killing his own family and is haunted by terrible nightmares. Armed with the Blades of Chaos, a weapon made out of two daggers attached to chains, Kratos rumbles through ancient Athens and other locations on a murderous quest to terminate the rogue god. Action in God of War is viewed from the third person, and advanced movements such as running, jumping, climbing, and swimming are similar to those in the Tomb Raider series, another adventure-game series with strong platform-game characteristics. Some of Kratos’s foes can be killed only by combinations of magic and physical attacks, making combat more reliant on skill. "} />
+          <SmallCard title="Synopsis" subtitle={dlc.synopsis} />
         </Grid></center>
         <Grid item xs={5} md = {3} align="center">
-        <Grid container spacing={3}
+        
+        <Box
+        sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}
+      >
+         <Grid container spacing={3}
           direction="column"
           justifyContent="center"
           alignItems="center" >
             <Grid item><DlcRateCard user_id={user.user_id} dlc_id={id}/> </Grid >
             <Grid item><Typography style={{ fontWeight: "bold", fontSize: 30 }}>All Reviews</Typography></Grid >
-            <Grid item><Stack>
-            <div>
+            <Grid item><Stack direction="row" spacing={4}>
       {reviews.map(review => (
         <div key={review.user_id}>
           {renderReview(review.text, review.username)}
         </div>
       ))}
-    </div>
               </Stack></Grid>
           </Grid >
+  
+      </Box>
+        
+        
+        
         </Grid>
         <Grid item xs={1} />
         <Grid
