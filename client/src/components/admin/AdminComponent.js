@@ -211,6 +211,17 @@ export default function AdminPage(props) {
               Publishing Studios
             </Button>
             <Button
+              onClick={() => navigate("/playlists")}
+              sx={{
+                color: "#f1faee",
+                backgroundColor: "#457b9d",
+                borderColor: "green",
+              }}
+              variant="contained"
+            >
+              Playlists
+            </Button>
+            <Button
               onClick={() => navigate("/dlcpage")}
               sx={{
                 color: "#f1faee",

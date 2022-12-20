@@ -16,7 +16,7 @@ export default class gameController {
     }
   }
 
-  static async getAllPlaylists(req, res, next) {
+  static async getAllPlaylistsByUserId(req, res, next) {
     try {
       const results = await db.query(
         "SELECT * FROM game_recap.playlists WHERE user_id = $1",
@@ -31,6 +31,18 @@ export default class gameController {
     } catch (error) {
       console.log(`Error when getting all games ${error}`);
       res.status(400).json({ error: error, data: { games: [] } });
+    }
+  }
+
+  static async getAllPlaylists(req, res, next) {
+    try {
+      const results = await db.query("SELECT * FROM game_recap.playlists");
+      res.status(200).json({
+        playlists: results.rows,
+      });
+    } catch (error) {
+      console.log(`Error when getting all playlists: ${error}`);
+      res.status(500).json({ error: error });
     }
   }
 
@@ -95,6 +107,47 @@ export default class gameController {
     } catch (error) {
       console.log(`Error when getting all games ${error}`);
       res.status(400).json({ error: error, data: { games: [] } });
+    }
+  }
+
+  static async filterAllPlaylists(req, res, next) {
+    try {
+      const result = await db.query(`SELECT * FROM game_recap.playlists `);
+      const filteredRows = result.rows.filter((row) =>
+        row.playlist_name
+          .toLowerCase()
+          .startsWith(req.body.filter.toLowerCase())
+      );
+      res.status(200).json({
+        playlists: filteredRows,
+      });
+    } catch (error) {
+      console.log(`Error when getting category by id ${error}`);
+      res.status(400).json({ error: error, data: [] });
+    }
+  }
+
+  static async deletePlaylistById(req, res, next) {
+    try {
+      const results = await db.query(
+        "DELETE FROM game_recap.playlists WHERE playlist_id = $1 returning *",
+        [req.params.id]
+      );
+      if (results.rows.length == 0) {
+        throw {
+          detail: "Playlist not found.",
+          code: 1,
+          error: new Error(),
+        };
+      }
+      res.status(200).json({ data: results.rows[0] });
+    } catch (err) {
+      console.log(`Failed to delete playlist ${err}.`);
+      if (err.code == 1) {
+        res.status(404).json({ detail: err.detail });
+        return;
+      }
+      res.status(400).json({ detail: err });
     }
   }
 

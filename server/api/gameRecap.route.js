@@ -28,9 +28,16 @@ router
   .route("/games")
   .get(gameController.getAllGames)
   .post(gameController.createGame);
-router.route("/playlists/:id").get(gameController.getAllPlaylists);
+
+router.route("/playlists/:id").get(gameController.getAllPlaylistsByUserId);
 
 router.route("/playlist").post(gameController.createPlaylist);
+
+router.route("/playlists").get(gameController.getAllPlaylists);
+
+router.route("/playlists/:id").delete(gameController.deletePlaylistById);
+
+router.route("/playlists/filter").post(gameController.filterAllPlaylists);
 
 router.route("/playlist/:id").get(gameController.getPlaylistById);
 router.route("/users/:id").get(gameController.getUserById);

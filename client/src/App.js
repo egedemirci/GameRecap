@@ -28,6 +28,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import IndividualDLCComponent from "./components/dlc/IndividualDLCComponents";
 import CreatePlaylistPage from "./routes/playlist/CreatePlaylistPage";
 import PublishingStudioPage from "./routes/pubstudio/PublishingStudioPage";
+import PlaylistAdminPage from "./routes/playlist/PlaylistAdminPage";
 
 class App extends Component {
   render() {
@@ -118,6 +119,7 @@ class App extends Component {
                       path="/playlist/:id"
                       element={<IndividualPlaylistPage />}
                     />
+                    <Route path="playlists" element={<PlaylistAdminPage />} />
                     <Route
                       path="/playlist/create"
                       element={<CreatePlaylistPage />}

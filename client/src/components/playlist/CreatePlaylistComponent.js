@@ -9,12 +9,6 @@ import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { UsersContext } from "../../context/userContext";
 
-const top100Films = [
-  { title: "The Shawshank Redemption", year: 1994 },
-  { title: "The Godfather", year: 1972 },
-  { title: "The Godfather: Part II", year: 1974 },
-];
-
 export default function CreatePlaylistComponent() {
   const { user } = useContext(UsersContext);
   const [games, setGames] = useState([]);
