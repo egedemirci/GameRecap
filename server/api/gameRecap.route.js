@@ -30,6 +30,8 @@ router
   .post(gameController.createGame);
 router.route("/playlists/:id").get(gameController.getAllPlaylists);
 
+router.route("/playlist").post(gameController.createPlaylist);
+
 router.route("/playlist/:id").get(gameController.getPlaylistById);
 router.route("/users/:id").get(gameController.getUserById);
 router.route("/discover").get(gameController.getPlaylistsGenres);

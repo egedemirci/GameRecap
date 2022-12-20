@@ -34,6 +34,34 @@ export default class gameController {
     }
   }
 
+  static async createPlaylist(req, res, next) {
+    try {
+      const timeElapsed = Date.now();
+      const now = new Date(timeElapsed).toISOString();
+      const results = await db.query(
+        "INSERT INTO game_recap.playlists (user_id, playlist_name, creation_date) VALUES ($1, $2, $3) returning *",
+        [req.body.user_id, req.body.playlist_name, now]
+      );
+      const playlist_id = results.rows[0].playlist_id;
+      await db.query(
+        "INSERT INTO game_recap.usersplaylists (user_id, playlist_id) VALUES ($1, $2)",
+        [req.body.user_id, playlist_id]
+      );
+      for (let i = 0; i < req.body.game_ids.length; i++) {
+        await db.query(
+          "INSERT INTO game_recap.gamesplaylists (game_id, playlist_id) VALUES ($1, $2)",
+          [req.body.game_ids[i], playlist_id]
+        );
+      }
+      return res
+        .status(201)
+        .json({ message: "Playlist successfully created!" });
+    } catch (error) {
+      console.log(`Error when creating playlist: ${error}`);
+      res.status(400).json({ error: error });
+    }
+  }
+
   static async getPlaylistsGenres(req, res, next) {
     try {
       const results = await db.query(

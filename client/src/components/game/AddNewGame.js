@@ -123,7 +123,11 @@ export default function AddNewGame() {
     } = e;
     setSelCats(typeof value === "string" ? value.split(",") : value);
     const orgKey = key.key.substr(2, key.key.length);
-    setIdCats(typeof orgKey === "string" ? orgKey.split(",") : orgKey);
+    if (idCats.includes(orgKey)) {
+      setIdCats(idCats.filter((item) => item !== orgKey));
+    } else {
+      setIdCats([...idCats, orgKey]);
+    }
   };
 
   const handlePlatChange = (e, key) => {
@@ -132,7 +136,11 @@ export default function AddNewGame() {
     } = e;
     setSelPlats(typeof value === "string" ? value.split(",") : value);
     const orgKey = key.key.substr(2, key.key.length);
-    setIdPlats(typeof orgKey === "string" ? orgKey.split(",") : orgKey);
+    if (idPlats.includes(orgKey)) {
+      setIdPlats(idPlats.filter((item) => item !== orgKey));
+    } else {
+      setIdPlats([...idPlats, orgKey]);
+    }
   };
 
   const handleDevChange = (e, key) => {
@@ -141,7 +149,11 @@ export default function AddNewGame() {
     } = e;
     setSelDevS(typeof value === "string" ? value.split(",") : value);
     const orgKey = key.key.substr(2, key.key.length);
-    setIdDevS(typeof orgKey === "string" ? orgKey.split(",") : orgKey);
+    if (idDevS.includes(orgKey)) {
+      setIdDevS(idDevS.filter((item) => item !== orgKey));
+    } else {
+      setIdDevS([...idDevS, orgKey]);
+    }
   };
 
   const handlePubChange = (e, key) => {
@@ -150,7 +162,11 @@ export default function AddNewGame() {
     } = e;
     setSelPubS(typeof value === "string" ? value.split(",") : value);
     const orgKey = key.key.substr(2, key.key.length);
-    setIdPubS(typeof orgKey === "string" ? orgKey.split(",") : orgKey);
+    if (idPubS.includes(orgKey)) {
+      setIdPubS(idPubS.filter((item) => item !== orgKey));
+    } else {
+      setIdPubS([...idPubS, orgKey]);
+    }
   };
 
   const handleSubChange = (e, key) => {
@@ -159,7 +175,11 @@ export default function AddNewGame() {
     } = e;
     setSelSub(typeof value === "string" ? value.split(",") : value);
     const orgKey = key.key.substr(2, key.key.length);
-    setIdSub(typeof orgKey === "string" ? orgKey.split(",") : orgKey);
+    if (idSub.includes(orgKey)) {
+      setIdSub(idSub.filter((item) => item !== orgKey));
+    } else {
+      setIdSub([...idSub, orgKey]);
+    }
   };
 
   const handleLangChange = (e, key) => {
@@ -168,7 +188,11 @@ export default function AddNewGame() {
     } = e;
     setSelLang(typeof value === "string" ? value.split(",") : value);
     const orgKey = key.key.substr(2, key.key.length);
-    setIdLang(typeof orgKey === "string" ? orgKey.split(",") : orgKey);
+    if (idLang.includes(orgKey)) {
+      setIdLang(idLang.filter((item) => item !== orgKey));
+    } else {
+      setIdLang([...idLang, orgKey]);
+    }
   };
 
   const handleStoreChange = (e, key) => {
@@ -177,7 +201,11 @@ export default function AddNewGame() {
     } = e;
     setSelStore(typeof value === "string" ? value.split(",") : value);
     const orgKey = key.key.substr(2, key.key.length);
-    setIdStore(typeof orgKey === "string" ? orgKey.split(",") : orgKey);
+    if (idStore.includes(orgKey)) {
+      setIdStore(idStore.filter((item) => item !== orgKey));
+    } else {
+      setIdStore([...idStore, orgKey]);
+    }
   };
 
   const handleClear = (e) => {
