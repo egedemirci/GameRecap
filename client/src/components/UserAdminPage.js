@@ -166,7 +166,7 @@ export default function UserAdmin(props) {
             </Box>
             <Box sx={{ mt: 3 }}></Box>
             <Typography sx={{ mb: 2 }} variant="h4" component="h1">
-              Categories
+              Users
             </Typography>
             <TableContainer component={Paper}>
               <Table sx={{ minWidth: 100 }} aria-label="customized table">
