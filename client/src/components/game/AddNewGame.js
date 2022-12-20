@@ -32,22 +32,39 @@ const MenuProps = {
 export default function AddNewGame() {
   const { user } = useContext(UsersContext);
   const [date, setDate] = useState("");
-  const [dbCats, setDbCats] = useState([]);
-  const [plats, setPlats] = useState([]);
-  const [devS, setDevS] = useState([]);
-  const [pubS, setPubS] = useState([]);
-  const [subS, setSubS] = useState([]);
-  const [langs, setLangs] = useState([]);
-  const [stores, setStores] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [name, setName] = useState("");
+  const [mLink, setMLink] = useState("");
+  const [syp, setSyp] = useState("");
   const [error, setError] = useState(null);
+
+  const [dbCats, setDbCats] = useState([]);
   const [selCats, setSelCats] = useState([]);
-  const [plat, setPlat] = useState("");
-  const [dev, setDev] = useState("");
-  const [pub, setPub] = useState("");
-  const [sub, setSub] = useState("");
-  const [lang, setLang] = useState("");
-  const [store, setStore] = useState("");
+  const [idCats, setIdCats] = useState([]);
+
+  const [dbPlats, setDbPlats] = useState([]);
+  const [selPlats, setSelPlats] = useState([]);
+  const [idPlats, setIdPlats] = useState([]);
+
+  const [dbDevS, setDbDevS] = useState([]);
+  const [selDevS, setSelDevS] = useState([]);
+  const [idDevS, setIdDevS] = useState([]);
+
+  const [dbPubS, setDbPubS] = useState([]);
+  const [selPubS, setSelPubS] = useState([]);
+  const [idPubS, setIdPubS] = useState([]);
+
+  const [dbSubS, setDbSubS] = useState([]);
+  const [selSub, setSelSub] = useState([]);
+  const [idSub, setIdSub] = useState([]);
+
+  const [dbLang, setDbLang] = useState([]);
+  const [selLang, setSelLang] = useState([]);
+  const [idLang, setIdLang] = useState([]);
+
+  const [dbStores, setDbStores] = useState([]);
+  const [selStore, setSelStore] = useState([]);
+  const [idStore, setIdStore] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -56,22 +73,22 @@ export default function AddNewGame() {
           setDbCats(res.data.data.games);
         });
         await GameFinder.get("/platforms").then((res) => {
-          setPlats(res.data.data.games);
+          setDbPlats(res.data.data.games);
         });
         await GameFinder.get("/developmentstudios").then((res) => {
-          setDevS(res.data.data.games);
+          setDbDevS(res.data.data.games);
         });
         await GameFinder.get("/publishingstudios").then((res) => {
-          setPubS(res.data.data.games);
+          setDbPubS(res.data.data.games);
         });
         await GameFinder.get("/subservice").then((res) => {
-          setSubS(res.data.data.games);
+          setDbSubS(res.data.data.games);
         });
         await GameFinder.get("/languages").then((res) => {
-          setLangs(res.data.data.games);
+          setDbLang(res.data.data.games);
         });
         await GameFinder.get("/onlinestores").then((res) => {
-          setStores(res.data.data.games);
+          setDbStores(res.data.data.games);
         });
       } catch (err) {
         console.log(err);
@@ -79,17 +96,86 @@ export default function AddNewGame() {
     };
     fetchData();
     setLoading(false);
-  }, [setDbCats, setPlats, setDevS, setPubS, setSubS, setLangs, setStores]);
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    await GameFinder.post("/games", {
+      game_name: name,
+      release_date: date,
+      merch_link: mLink,
+      synopsis: syp,
+      category: idCats,
+      platform: idPlats,
+      devs: idDevS,
+      pubs: idPubS,
+      subs: idSub,
+      lang: idLang,
+      store: idStore,
+    });
   };
 
-  const handleCatChange = (e) => {
+  const handleCatChange = (e, key) => {
     const {
       target: { value },
     } = e;
     setSelCats(typeof value === "string" ? value.split(",") : value);
+    const orgKey = key.key.substr(2, key.key.length);
+    setIdCats(typeof orgKey === "string" ? orgKey.split(",") : orgKey);
+  };
+
+  const handlePlatChange = (e, key) => {
+    const {
+      target: { value },
+    } = e;
+    setSelPlats(typeof value === "string" ? value.split(",") : value);
+    const orgKey = key.key.substr(2, key.key.length);
+    setIdPlats(typeof orgKey === "string" ? orgKey.split(",") : orgKey);
+  };
+
+  const handleDevChange = (e, key) => {
+    const {
+      target: { value },
+    } = e;
+    setSelDevS(typeof value === "string" ? value.split(",") : value);
+    const orgKey = key.key.substr(2, key.key.length);
+    setIdDevS(typeof orgKey === "string" ? orgKey.split(",") : orgKey);
+  };
+
+  const handlePubChange = (e, key) => {
+    const {
+      target: { value },
+    } = e;
+    setSelPubS(typeof value === "string" ? value.split(",") : value);
+    const orgKey = key.key.substr(2, key.key.length);
+    setIdPubS(typeof orgKey === "string" ? orgKey.split(",") : orgKey);
+  };
+
+  const handleSubChange = (e, key) => {
+    const {
+      target: { value },
+    } = e;
+    setSelSub(typeof value === "string" ? value.split(",") : value);
+    const orgKey = key.key.substr(2, key.key.length);
+    setIdSub(typeof orgKey === "string" ? orgKey.split(",") : orgKey);
+  };
+
+  const handleLangChange = (e, key) => {
+    const {
+      target: { value },
+    } = e;
+    setSelLang(typeof value === "string" ? value.split(",") : value);
+    const orgKey = key.key.substr(2, key.key.length);
+    setIdLang(typeof orgKey === "string" ? orgKey.split(",") : orgKey);
+  };
+
+  const handleStoreChange = (e, key) => {
+    const {
+      target: { value },
+    } = e;
+    setSelStore(typeof value === "string" ? value.split(",") : value);
+    const orgKey = key.key.substr(2, key.key.length);
+    setIdStore(typeof orgKey === "string" ? orgKey.split(",") : orgKey);
   };
 
   const content =
@@ -125,17 +211,20 @@ export default function AddNewGame() {
               <Select
                 labelId="plat"
                 id="plat"
-                value={plat}
-                label="Platforms"
-                onChange={(e) => setPlat(e.target.value)}
+                multiple
+                value={selPlats}
+                onChange={handlePlatChange}
+                renderValue={(selected) => selected.join(", ")}
+                MenuProps={MenuProps}
               >
-                {plats.map((plat) => {
-                  return (
-                    <MenuItem key={plat.platform_id} value={plat.platform_name}>
-                      {plat.platform_name}
-                    </MenuItem>
-                  );
-                })}
+                {dbPlats.map((plat) => (
+                  <MenuItem key={plat.platform_id} value={plat.platform_name}>
+                    <Checkbox
+                      checked={selPlats.indexOf(plat.platform_name) > -1}
+                    />
+                    <ListItemText primary={plat.platform_name} />
+                  </MenuItem>
+                ))}
               </Select>
             </Box>
             <Box>
@@ -143,17 +232,18 @@ export default function AddNewGame() {
               <Select
                 labelId="ds"
                 id="ds"
-                value={dev}
-                label="Development Studios"
-                onChange={(e) => setDev(e.target.value)}
+                multiple
+                value={selDevS}
+                onChange={handleDevChange}
+                renderValue={(selected) => selected.join(", ")}
+                MenuProps={MenuProps}
               >
-                {devS.map((dev) => {
-                  return (
-                    <MenuItem key={dev.d_studio_id} value={dev.studio_name}>
-                      {dev.studio_name}
-                    </MenuItem>
-                  );
-                })}
+                {dbDevS.map((dev) => (
+                  <MenuItem key={dev.d_studio_id} value={dev.studio_name}>
+                    <Checkbox checked={selDevS.indexOf(dev.studio_name) > -1} />
+                    <ListItemText primary={dev.studio_name} />
+                  </MenuItem>
+                ))}
               </Select>
             </Box>
             <Box>
@@ -161,17 +251,18 @@ export default function AddNewGame() {
               <Select
                 labelId="ps"
                 id="ps"
-                value={pub}
-                label="Publishing Studios"
-                onChange={(e) => setPub(e.target.value)}
+                multiple
+                value={selPubS}
+                onChange={handlePubChange}
+                renderValue={(selected) => selected.join(", ")}
+                MenuProps={MenuProps}
               >
-                {pubS.map((pub) => {
-                  return (
-                    <MenuItem key={pub.p_studio_id} value={pub.studio_name}>
-                      {pub.studio_name}
-                    </MenuItem>
-                  );
-                })}
+                {dbPubS.map((pub) => (
+                  <MenuItem key={pub.p_studio_id} value={pub.studio_name}>
+                    <Checkbox checked={selPubS.indexOf(pub.studio_name) > -1} />
+                    <ListItemText primary={pub.studio_name} />
+                  </MenuItem>
+                ))}
               </Select>
             </Box>
             <Box>
@@ -179,53 +270,58 @@ export default function AddNewGame() {
               <Select
                 labelId="ss"
                 id="ss"
-                value={sub}
-                label="Subscription Services"
-                onChange={(e) => setSub(e.target.value)}
+                multiple
+                value={selSub}
+                onChange={handleSubChange}
+                renderValue={(selected) => selected.join(", ")}
+                MenuProps={MenuProps}
               >
-                {subS.map((sub) => {
-                  return (
-                    <MenuItem key={sub.service_id} value={sub.service_name}>
-                      {sub.service_name}
-                    </MenuItem>
-                  );
-                })}
+                {dbSubS.map((sub) => (
+                  <MenuItem key={sub.service_id} value={sub.service_name}>
+                    <Checkbox checked={selSub.indexOf(sub.service_name) > -1} />
+                    <ListItemText primary={sub.service_name} />
+                  </MenuItem>
+                ))}
               </Select>
             </Box>
             <Box>
-              <InputLabel id="lang">Languages</InputLabel>
+              <InputLabel id="lan">Languages</InputLabel>
               <Select
-                labelId="lang"
-                id="lang"
-                value={lang}
-                label="Languages"
-                onChange={(e) => setLang(e.target.value)}
+                labelId="lan"
+                id="lan"
+                multiple
+                value={selLang}
+                onChange={handleLangChange}
+                renderValue={(selected) => selected.join(", ")}
+                MenuProps={MenuProps}
               >
-                {langs.map((lan) => {
-                  return (
-                    <MenuItem key={lan.lang_id} value={lan.lang_name}>
-                      {lan.lang_name}
-                    </MenuItem>
-                  );
-                })}
+                {dbLang.map((lang) => (
+                  <MenuItem key={lang.lang_id} value={lang.lang_name}>
+                    <Checkbox checked={selLang.indexOf(lang.lang_name) > -1} />
+                    <ListItemText primary={lang.lang_name} />
+                  </MenuItem>
+                ))}
               </Select>
             </Box>
             <Box>
-              <InputLabel id="store">Online Stores</InputLabel>
+              <InputLabel id="os">Online Stores</InputLabel>
               <Select
-                labelId="store"
-                id="store"
-                value={store}
-                label="Online Stores"
-                onChange={(e) => setStore(e.target.value)}
+                labelId="os"
+                id="os"
+                multiple
+                value={selStore}
+                onChange={handleStoreChange}
+                renderValue={(selected) => selected.join(", ")}
+                MenuProps={MenuProps}
               >
-                {stores.map((store) => {
-                  return (
-                    <MenuItem key={store.store_id} value={store.store_name}>
-                      {store.store_name}
-                    </MenuItem>
-                  );
-                })}
+                {dbStores.map((store) => (
+                  <MenuItem key={store.store_id} value={store.store_name}>
+                    <Checkbox
+                      checked={selStore.indexOf(store.store_name) > -1}
+                    />
+                    <ListItemText primary={store.store_name} />
+                  </MenuItem>
+                ))}
               </Select>
             </Box>
           </Stack>
@@ -241,7 +337,35 @@ export default function AddNewGame() {
               <Typography variant="h6" component="h10">
                 Game Name
               </Typography>
-              <TextField fullwidth id="name" name="name" />
+              <TextField
+                fullwidth
+                value={name}
+                onChange={(e) => setName(e.currentTarget.value)}
+                id="name"
+                name="name"
+              />
+              <Typography variant="h6" component="h10">
+                Merchandise Link
+              </Typography>
+              <TextField
+                fullwidth
+                value={mLink}
+                onChange={(e) => setMLink(e.currentTarget.value)}
+                id="mLink"
+                name="mLink"
+              />
+              <Typography variant="h6" component="h10">
+                Synopsis
+              </Typography>
+              <TextField
+                fullwidth
+                value={syp}
+                onChange={(e) => setSyp(e.currentTarget.value)}
+                id="syp"
+                name="syp"
+                multiline
+                rows={4}
+              />
               <Typography variant="h6" component="h10" sx={{ mt: 2 }}>
                 Release Date
               </Typography>
