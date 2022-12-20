@@ -10,10 +10,9 @@ import { Navigate } from "react-router-dom";
 
 function ResponsiveAppBar() {
   const { user } = useContext(UsersContext);
-
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
+      <AppBar position="static" elevation={0}>
         <Toolbar>
           <img
             src="https://i.hizliresim.com/kti4lvy.png"
@@ -42,15 +41,6 @@ function ResponsiveAppBar() {
               GAMERECAP
             </Link>
           </Typography>
-          
- 
-          
-
-
-
-
-
-          
           <Box sx={{ display: { xs: "none", sm: "block" } }}>
             {user !== "null" ? (
               <Button

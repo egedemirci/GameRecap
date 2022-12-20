@@ -23,10 +23,7 @@ import UserAdmin from "./components/UserAdminPage";
 import SubServicePage from "./routes/subservice/SubServicePage";
 import OnlineStoresPage from "./routes/store/OnlineStorePage";
 import PlatformPage from "./routes/platform/PlatformPage";
-
 import CheckLogin from "./components/CheckLogin";
-import { ROLES } from "./config/roles";
-import RequireAuthorization from "./components/RequireAuthorization";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import IndividualDLCComponent from "./components/dlc/IndividualDLCComponents";
 
@@ -80,43 +77,42 @@ class App extends Component {
                     <Route path="/dlc">
                       <Route path=":id" element={<IndividualDLCComponent />} />
                     </Route>
-
                     <Route path="/profile" element={<UserProfile />} />
+                    <Route path="/adminpage" element={<AdminPage />} />
+                    <Route path="/userpage" element={<UserPage />} />
+                    <Route
+                      path="/categorypage"
+                      element={<CategoryPage></CategoryPage>}
+                    />
+                    <Route
+                      path="/developmentstudiopage"
+                      element={<DevelopmentStudioPage></DevelopmentStudioPage>}
+                    />
+                    <Route path="/dlcpage" element={<DlcPage></DlcPage>} />
+                    <Route
+                      path="/languagepage"
+                      element={<LanguagePage></LanguagePage>}
+                    />
+                    <Route
+                      path="/useradminpage"
+                      element={<UserAdmin></UserAdmin>}
+                    />
+                    <Route path="/subservice" element={<SubServicePage />} />
+                    <Route
+                      path="/onlinestorepage"
+                      element={<OnlineStoresPage></OnlineStoresPage>}
+                    />
+                    <Route
+                      path="/platformpage"
+                      element={<PlatformPage></PlatformPage>}
+                    />
+                    <Route path="/playlists/:id" element={<PlaylistPage />} />
+                    <Route
+                      path="/playlist/:id"
+                      element={<IndividualPlaylistPage />}
+                    />
+                    <Route path="/discover" element={<Discover />} />
                   </Route>
-                  <Route path="/adminpage" element={<AdminPage />} />
-                  <Route path="/userpage" element={<UserPage />} />
-                  <Route
-                    path="/categorypage"
-                    element={<CategoryPage></CategoryPage>}
-                  />
-                  <Route
-                    path="/developmentstudiopage"
-                    element={<DevelopmentStudioPage></DevelopmentStudioPage>}
-                  />
-                  <Route path="/dlcpage" element={<DlcPage></DlcPage>} />
-                  <Route
-                    path="/languagepage"
-                    element={<LanguagePage></LanguagePage>}
-                  />
-                  <Route
-                    path="/useradminpage"
-                    element={<UserAdmin></UserAdmin>}
-                  />
-                  <Route path="/subservice" element={<SubServicePage />} />
-                  <Route
-                    path="/onlinestorepage"
-                    element={<OnlineStoresPage></OnlineStoresPage>}
-                  />
-                  <Route
-                    path="/platformpage"
-                    element={<PlatformPage></PlatformPage>}
-                  />
-                  <Route path="/playlists/:id" element={<PlaylistPage />} />
-                  <Route
-                    path="/playlist/:id"
-                    element={<IndividualPlaylistPage />}
-                  />
-                  <Route path="/discover" element={<Discover />} />
                 </Routes>
               </Router>
             </div>

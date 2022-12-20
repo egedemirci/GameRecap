@@ -5,11 +5,8 @@ import TextField from "@mui/material/TextField";
 import Container from "@mui/material/Container";
 import Alert from "@mui/material/Alert";
 import MenuItem from "@mui/material/MenuItem";
-import OutlinedInput from "@mui/material/OutlinedInput";
-import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
 import Select from "@mui/material/Select";
-import Grid from "@mui/material/Grid";
 import Stack from "@mui/material/Stack";
 import GameFinder from "../../apis/GameFinder";
 import ListItemText from "@mui/material/ListItemText";
@@ -100,19 +97,24 @@ export default function AddNewGame() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await GameFinder.post("/games", {
-      game_name: name,
-      release_date: date,
-      merch_link: mLink,
-      synopsis: syp,
-      category: idCats,
-      platform: idPlats,
-      devs: idDevS,
-      pubs: idPubS,
-      subs: idSub,
-      lang: idLang,
-      store: idStore,
-    });
+    try {
+      await GameFinder.post("/games", {
+        game_name: name,
+        release_date: date,
+        merch_link: mLink,
+        synopsis: syp,
+        category: idCats,
+        platform: idPlats,
+        devs: idDevS,
+        pubs: idPubS,
+        subs: idSub,
+        lang: idLang,
+        store: idStore,
+      });
+      window.location.reload();
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   const handleCatChange = (e, key) => {
@@ -178,154 +180,201 @@ export default function AddNewGame() {
     setIdStore(typeof orgKey === "string" ? orgKey.split(",") : orgKey);
   };
 
+  const handleClear = (e) => {
+    e.preventDefault();
+    setName("");
+    setDate("");
+    setMLink("");
+    setSyp("");
+    setSelCats([]);
+    setIdCats([]);
+    setSelPlats([]);
+    setIdPlats([]);
+    setSelDevS([]);
+    setIdDevS([]);
+    setSelPubS([]);
+    setIdPubS([]);
+    setSelSub([]);
+    setIdSub([]);
+    setSelLang([]);
+    setIdLang([]);
+    setSelStore([]);
+    setIdStore([]);
+  };
+
   const content =
     user.role === "admin" ? (
       loading ? (
         <p>Loading...</p>
       ) : (
         <>
-          <Stack direction="row" spacing={11}>
-            <Box>
-              <InputLabel id="cat">Categories</InputLabel>
-              <Select
-                labelId="cat"
-                id="cat"
-                multiple
-                value={selCats}
-                onChange={handleCatChange}
-                renderValue={(selected) => selected.join(", ")}
-                MenuProps={MenuProps}
-              >
-                {dbCats.map((cat) => (
-                  <MenuItem key={cat.c_id} value={cat.category_name}>
-                    <Checkbox
-                      checked={selCats.indexOf(cat.category_name) > -1}
-                    />
-                    <ListItemText primary={cat.category_name} />
-                  </MenuItem>
-                ))}
-              </Select>
-            </Box>
-            <Box>
-              <InputLabel id="plat">Platforms</InputLabel>
-              <Select
-                labelId="plat"
-                id="plat"
-                multiple
-                value={selPlats}
-                onChange={handlePlatChange}
-                renderValue={(selected) => selected.join(", ")}
-                MenuProps={MenuProps}
-              >
-                {dbPlats.map((plat) => (
-                  <MenuItem key={plat.platform_id} value={plat.platform_name}>
-                    <Checkbox
-                      checked={selPlats.indexOf(plat.platform_name) > -1}
-                    />
-                    <ListItemText primary={plat.platform_name} />
-                  </MenuItem>
-                ))}
-              </Select>
-            </Box>
-            <Box>
-              <InputLabel id="ds">Development Studios</InputLabel>
-              <Select
-                labelId="ds"
-                id="ds"
-                multiple
-                value={selDevS}
-                onChange={handleDevChange}
-                renderValue={(selected) => selected.join(", ")}
-                MenuProps={MenuProps}
-              >
-                {dbDevS.map((dev) => (
-                  <MenuItem key={dev.d_studio_id} value={dev.studio_name}>
-                    <Checkbox checked={selDevS.indexOf(dev.studio_name) > -1} />
-                    <ListItemText primary={dev.studio_name} />
-                  </MenuItem>
-                ))}
-              </Select>
-            </Box>
-            <Box>
-              <InputLabel id="ps">Publishing Studios</InputLabel>
-              <Select
-                labelId="ps"
-                id="ps"
-                multiple
-                value={selPubS}
-                onChange={handlePubChange}
-                renderValue={(selected) => selected.join(", ")}
-                MenuProps={MenuProps}
-              >
-                {dbPubS.map((pub) => (
-                  <MenuItem key={pub.p_studio_id} value={pub.studio_name}>
-                    <Checkbox checked={selPubS.indexOf(pub.studio_name) > -1} />
-                    <ListItemText primary={pub.studio_name} />
-                  </MenuItem>
-                ))}
-              </Select>
-            </Box>
-            <Box>
-              <InputLabel id="ss">Subscription Services</InputLabel>
-              <Select
-                labelId="ss"
-                id="ss"
-                multiple
-                value={selSub}
-                onChange={handleSubChange}
-                renderValue={(selected) => selected.join(", ")}
-                MenuProps={MenuProps}
-              >
-                {dbSubS.map((sub) => (
-                  <MenuItem key={sub.service_id} value={sub.service_name}>
-                    <Checkbox checked={selSub.indexOf(sub.service_name) > -1} />
-                    <ListItemText primary={sub.service_name} />
-                  </MenuItem>
-                ))}
-              </Select>
-            </Box>
-            <Box>
-              <InputLabel id="lan">Languages</InputLabel>
-              <Select
-                labelId="lan"
-                id="lan"
-                multiple
-                value={selLang}
-                onChange={handleLangChange}
-                renderValue={(selected) => selected.join(", ")}
-                MenuProps={MenuProps}
-              >
-                {dbLang.map((lang) => (
-                  <MenuItem key={lang.lang_id} value={lang.lang_name}>
-                    <Checkbox checked={selLang.indexOf(lang.lang_name) > -1} />
-                    <ListItemText primary={lang.lang_name} />
-                  </MenuItem>
-                ))}
-              </Select>
-            </Box>
-            <Box>
-              <InputLabel id="os">Online Stores</InputLabel>
-              <Select
-                labelId="os"
-                id="os"
-                multiple
-                value={selStore}
-                onChange={handleStoreChange}
-                renderValue={(selected) => selected.join(", ")}
-                MenuProps={MenuProps}
-              >
-                {dbStores.map((store) => (
-                  <MenuItem key={store.store_id} value={store.store_name}>
-                    <Checkbox
-                      checked={selStore.indexOf(store.store_name) > -1}
-                    />
-                    <ListItemText primary={store.store_name} />
-                  </MenuItem>
-                ))}
-              </Select>
-            </Box>
-          </Stack>
-          <Container maxWidth="sm">
+          <Container maxWidth="lg" sx={{ mt: 4 }}>
+            <Typography variant="h4" align="center" gutterBottom sx={{ mb: 4 }}>
+              Add Game
+            </Typography>
+            <Stack
+              direction="row"
+              spacing={12}
+              align="center"
+              justifyContent="space-evenly"
+            >
+              <Box>
+                <InputLabel id="cat">Categories</InputLabel>
+                <Select
+                  labelId="cat"
+                  id="cat"
+                  multiple
+                  value={selCats}
+                  onChange={handleCatChange}
+                  style={{ width: 120 }}
+                  renderValue={(selected) => selected.join(", ")}
+                  MenuProps={MenuProps}
+                >
+                  {dbCats.map((cat) => (
+                    <MenuItem key={cat.c_id} value={cat.category_name}>
+                      <Checkbox
+                        checked={selCats.indexOf(cat.category_name) > -1}
+                      />
+                      <ListItemText primary={cat.category_name} />
+                    </MenuItem>
+                  ))}
+                </Select>
+              </Box>
+              <Box>
+                <InputLabel id="plat">Platforms</InputLabel>
+                <Select
+                  labelId="plat"
+                  id="plat"
+                  multiple
+                  value={selPlats}
+                  onChange={handlePlatChange}
+                  style={{ width: 120 }}
+                  renderValue={(selected) => selected.join(", ")}
+                  MenuProps={MenuProps}
+                >
+                  {dbPlats.map((plat) => (
+                    <MenuItem key={plat.platform_id} value={plat.platform_name}>
+                      <Checkbox
+                        checked={selPlats.indexOf(plat.platform_name) > -1}
+                      />
+                      <ListItemText primary={plat.platform_name} />
+                    </MenuItem>
+                  ))}
+                </Select>
+              </Box>
+              <Box>
+                <InputLabel id="ds">Development Studios</InputLabel>
+                <Select
+                  labelId="ds"
+                  id="ds"
+                  multiple
+                  value={selDevS}
+                  onChange={handleDevChange}
+                  style={{ width: 120 }}
+                  renderValue={(selected) => selected.join(", ")}
+                  MenuProps={MenuProps}
+                >
+                  {dbDevS.map((dev) => (
+                    <MenuItem key={dev.d_studio_id} value={dev.studio_name}>
+                      <Checkbox
+                        checked={selDevS.indexOf(dev.studio_name) > -1}
+                      />
+                      <ListItemText primary={dev.studio_name} />
+                    </MenuItem>
+                  ))}
+                </Select>
+              </Box>
+              <Box>
+                <InputLabel id="ps">Publishing Studios</InputLabel>
+                <Select
+                  labelId="ps"
+                  id="ps"
+                  multiple
+                  value={selPubS}
+                  onChange={handlePubChange}
+                  style={{ width: 120 }}
+                  renderValue={(selected) => selected.join(", ")}
+                  MenuProps={MenuProps}
+                >
+                  {dbPubS.map((pub) => (
+                    <MenuItem key={pub.p_studio_id} value={pub.studio_name}>
+                      <Checkbox
+                        checked={selPubS.indexOf(pub.studio_name) > -1}
+                      />
+                      <ListItemText primary={pub.studio_name} />
+                    </MenuItem>
+                  ))}
+                </Select>
+              </Box>
+              <Box>
+                <InputLabel id="ss">Subscription Services</InputLabel>
+                <Select
+                  labelId="ss"
+                  id="ss"
+                  multiple
+                  value={selSub}
+                  onChange={handleSubChange}
+                  style={{ width: 120 }}
+                  renderValue={(selected) => selected.join(", ")}
+                  MenuProps={MenuProps}
+                >
+                  {dbSubS.map((sub) => (
+                    <MenuItem key={sub.service_id} value={sub.service_name}>
+                      <Checkbox
+                        checked={selSub.indexOf(sub.service_name) > -1}
+                      />
+                      <ListItemText primary={sub.service_name} />
+                    </MenuItem>
+                  ))}
+                </Select>
+              </Box>
+              <Box>
+                <InputLabel id="lan">Languages</InputLabel>
+                <Select
+                  labelId="lan"
+                  id="lan"
+                  multiple
+                  value={selLang}
+                  onChange={handleLangChange}
+                  style={{ width: 120 }}
+                  renderValue={(selected) => selected.join(", ")}
+                  MenuProps={MenuProps}
+                >
+                  {dbLang.map((lang) => (
+                    <MenuItem key={lang.lang_id} value={lang.lang_name}>
+                      <Checkbox
+                        checked={selLang.indexOf(lang.lang_name) > -1}
+                      />
+                      <ListItemText primary={lang.lang_name} />
+                    </MenuItem>
+                  ))}
+                </Select>
+              </Box>
+              <Box>
+                <InputLabel id="os">Online Stores</InputLabel>
+                <Select
+                  labelId="os"
+                  id="os"
+                  multiple
+                  value={selStore}
+                  onChange={handleStoreChange}
+                  style={{ width: 120 }}
+                  renderValue={(selected) => selected.join(", ")}
+                  MenuProps={MenuProps}
+                >
+                  {dbStores.map((store) => (
+                    <MenuItem key={store.store_id} value={store.store_name}>
+                      <Checkbox
+                        checked={selStore.indexOf(store.store_name) > -1}
+                      />
+                      <ListItemText primary={store.store_name} />
+                    </MenuItem>
+                  ))}
+                </Select>
+              </Box>
+            </Stack>
+          </Container>
+          <Container maxWidth="md">
             <Box
               sx={{
                 mt: 2,
@@ -338,27 +387,27 @@ export default function AddNewGame() {
                 Game Name
               </Typography>
               <TextField
-                fullwidth
+                fullWidth
                 value={name}
                 onChange={(e) => setName(e.currentTarget.value)}
                 id="name"
                 name="name"
               />
-              <Typography variant="h6" component="h10">
+              <Typography variant="h6" component="h10" sx={{ mt: 2 }}>
                 Merchandise Link
               </Typography>
               <TextField
-                fullwidth
+                fullWidth
                 value={mLink}
                 onChange={(e) => setMLink(e.currentTarget.value)}
                 id="mLink"
                 name="mLink"
               />
-              <Typography variant="h6" component="h10">
+              <Typography variant="h6" component="h10" sx={{ mt: 2 }}>
                 Synopsis
               </Typography>
               <TextField
-                fullwidth
+                fullWidth
                 value={syp}
                 onChange={(e) => setSyp(e.currentTarget.value)}
                 id="syp"
@@ -370,15 +419,19 @@ export default function AddNewGame() {
                 Release Date
               </Typography>
               <TextField
-                fullwidth
                 value={date}
                 onChange={(e) => setDate(e.target.value)}
                 id="date"
                 type="date"
               />
-              <Button onClick={handleSubmit} variant="contained" sx={{ mt: 2 }}>
-                Burdayim
-              </Button>
+              <Stack direction="row" spacing={2} sx={{ mt: 6 }}>
+                <Button onClick={handleSubmit} variant="contained">
+                  Add New Game
+                </Button>
+                <Button onClick={handleClear} variant="contained" color="error">
+                  Clear Fields
+                </Button>
+              </Stack>
             </Box>
           </Container>
         </>

@@ -143,7 +143,7 @@ export default class gameController {
   static async getGameById(req, res, next) {
     try {
       const results = await db.query(
-        `select g.game_id, g.synopsis,
+        `select g.game_id, g.synopsis, g.merchandise_link,
          g.game_name, 
          g.release_date, 
          --l.lang_id, 

@@ -21,7 +21,7 @@ import Button from "@mui/material/Button";
 
 export default function IndividualGameComponent() {
   const { id } = useParams();
-  const {user} = useContext(UsersContext);
+  const { user } = useContext(UsersContext);
   const [game, setGame] = useState(null);
   const [reviews, setReviews] = useState([]);
   const theme = useTheme();
@@ -64,13 +64,13 @@ export default function IndividualGameComponent() {
     const fetchData = async () => {
       const result = await GameFinder.get(`/games/${id}`);
       setGame(result.data.data);
-      console.log(game);
       const reviewRes = await GameFinder.put(`/rate/?gid=${id}`);
       setReviews(reviewRes.data.data);
     };
     fetchData();
   }, [id]);
 
+  console.log(game);
   return game !== null ? (
     <>
       <ResponsiveAppBar />
@@ -105,7 +105,7 @@ export default function IndividualGameComponent() {
         <Grid item xs={12} mt={0} sm={6} md={4} lg={3}>
           <SmallCard
             title="Offered In Services"
-            subtitle={(game.service_names, "XBOX Game Pass")}
+            subtitle={game.service_names}
           />
         </Grid>
         <Grid
@@ -114,64 +114,41 @@ export default function IndividualGameComponent() {
           sx={{ display: { sm: "none", md: "block", lg: "none" } }}
         />
         <Grid item ml={2} mt={0} xs={12} sm={6} md={4} lg={2.5}>
-          <SmallCard title="DLCs" subtitle={(game.dlc_name, "Tomorrow")} />
+          <SmallCard title="DLCs" subtitle={game.dlc_name} />
         </Grid>
         <Grid item xs={12} mt={0} sm={6} md={4} lg={3}>
-          <SmallCard
-            title="By Development Studios"
-            subtitle={(game.ds_name, "Rockstar")}
-          />
+          <SmallCard title="By Development Studios" subtitle={game.ds_name} />
         </Grid>
         <Grid item xs={12} mt={0} sm={6} md={4} lg={3}>
-          <SmallCard
-            title="Categories"
-            subtitle={(game.category_name, "Sports")}
-          />
+          <SmallCard title="Categories" subtitle={game.category_name} />
         </Grid>
         <Grid item xs={12} mt={0} sm={6} md={4} lg={3}>
-          <SmallCard
-            title="On Platforms"
-            subtitle={(game.platform_name, "Playstation")}
-          />
+          <SmallCard title="On Platforms" subtitle={game.platform_name} />
         </Grid>
-        <Grid
-          item
-          md={8}
-          sx={{ display: { sm: "none", md: "block", lg: "none" } }}
-        />
-        <Grid item xs={1} />
-        <Grid item xs={10} align="center">
-          <SmallCard
-            title="Synopsis"
-            subtitle={
-              (game.synopsis,
-              "In God of War, players control Kratos, a Spartan warrior who is sent by the Greek gods to kill Ares, the god of war. As the story progresses, Kratos is revealed to be Ares’ former servant, who had been tricked into killing his own family and is haunted by terrible nightmares. Armed with the Blades of Chaos, a weapon made out of two daggers attached to chains, Kratos rumbles through ancient Athens and other locations on a murderous quest to terminate the rogue god. Action in God of War is viewed from the third person, and advanced movements such as running, jumping, climbing, and swimming are similar to those in the Tomb Raider series, another adventure-game series with strong platform-game characteristics. Some of Kratos’s foes can be killed only by combinations of magic and physical attacks, making combat more reliant on skill. ")
-            }
-          />
+        <Grid item xs={1} sx={{ mb: 6 }} />
+        <Grid item xs={10} align="center" sx={{ mb: 6 }}>
+          <SmallCard title="Synopsis" subtitle={game.synopsis} />
         </Grid>
-        "
-        <Grid item xs={10}>
-          <center>
-            <Button
-              href={game.merchandise_link}
-              sx={{ ml: 27 }}
-              variant="contained"
-            >
-              Merchandise
-            </Button>
-          </center>
-        </Grid>
-        <Grid item xs={1} />
-        <Grid
-          item
-          md={8}
-          sx={{ display: { sm: "none", md: "block", lg: "none" } }}
-        />
+        <Grid item xs={1} sx={{ mb: 6 }} />
+        {game.merchandise_link !== null ? (
+          <>
+            <Grid item xs={1} sx={{ mb: 4 }} />
+            <Grid item xs={10} align="center" sx={{ mb: 4, mt: -6 }}>
+              <Button href={game.merchandise_link} variant="contained">
+                Merchandise
+              </Button>
+            </Grid>
+            <Grid item xs={1} sx={{ mb: 4 }} />
+          </>
+        ) : null}
       </Grid>
-      <Box sx={{display:"flex", justifyContent:"center", alignItems:"center"}}>
-            {user.role === "admin" ? 
-            (<AddNewDlc game_id={id}/>) : 
-            (<Grid
+      <Box
+        sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}
+      >
+        {user.role === "admin" ? (
+          <AddNewDlc game_id={id} />
+        ) : (
+          <Grid
             container
             spacing={3}
             direction="column"
@@ -190,7 +167,7 @@ export default function IndividualGameComponent() {
                 All Reviews
               </Typography>
             </Grid>
-            <Grid item>
+            <Grid item sx={{ mb: 4 }}>
               <Stack>
                 <div>
                   {reviews.map((review) => (
@@ -202,8 +179,8 @@ export default function IndividualGameComponent() {
               </Stack>
             </Grid>
           </Grid>
-      )}
-      </Box>  
+        )}
+      </Box>
     </>
   ) : null;
 }

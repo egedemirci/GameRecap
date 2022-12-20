@@ -91,7 +91,7 @@ export const UserProfile = () => {
               <center>
                 <Chip
                   color="secondary"
-                  label="Gamer"
+                  label={user.role === "admin" ? "Admin" : "User"}
                   deleteIcon={<DoneIcon />}
                   icon={<FaceIcon />}
                 />
@@ -123,15 +123,6 @@ export const UserProfile = () => {
                 spacing={1}
                 justifyContent="center"
               >
-                <Button onClick={onPlaylist} color="error" variant="contained">
-                  Playlists
-                </Button>
-                <Button onClick={onGames} color="sixth" variant="contained">
-                  Games
-                </Button>
-                <Button onClick={onDiscover} color="fourth" variant="contained">
-                  Discover
-                </Button>
                 {user.role === "admin" ? (
                   <Button
                     onClick={() => navigate("/adminpage")}
@@ -141,13 +132,32 @@ export const UserProfile = () => {
                     Admin Pages
                   </Button>
                 ) : (
-                  <Button
-                    onClick={() => navigate("/userpage")}
-                    color="primary"
-                    variant="contained"
-                  >
-                    User Pages
-                  </Button>
+                  <>
+                    <Button
+                      onClick={() => navigate("/userpage")}
+                      color="primary"
+                      variant="contained"
+                    >
+                      User Pages
+                    </Button>
+                    <Button
+                      onClick={onPlaylist}
+                      color="error"
+                      variant="contained"
+                    >
+                      Playlists
+                    </Button>
+                    <Button onClick={onGames} color="sixth" variant="contained">
+                      Games
+                    </Button>
+                    <Button
+                      onClick={onDiscover}
+                      color="fourth"
+                      variant="contained"
+                    >
+                      Discover
+                    </Button>
+                  </>
                 )}
               </Stack>
               <Divider variant="middle" />

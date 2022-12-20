@@ -11,6 +11,7 @@ import Typography from "@mui/material/Typography";
 import Alert from "@mui/material/Alert";
 import GameFinder from "../apis/GameFinder";
 import { UsersContext } from "../context/userContext";
+import FooterComponent from "./FooterComponent";
 
 const LoginComponent = () => {
   const navigate = useNavigate();
@@ -62,71 +63,82 @@ const LoginComponent = () => {
   };
 
   return (
-    <Container component="main" maxWidth="xs">
-      <CssBaseline />
-      <Box
-        sx={{
-          marginTop: 4,
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-        }}
-      >
-        <Typography component="h1" variant="h4"                color="#1d3557"             fontWeight="600"
->
-          Login
-        </Typography>
-        <Box component="form" onSubmit={onSubmitForm} noValidate sx={{ mt: 1 }}>
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            id="mail"
-            label="Email Address"
-            name="mail"
-            autoComplete="mail"
-            autoFocus
-            onChange={(e) => onChange(e)}
-          />
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Password"
-            type="password"
-            id="password"
-            autoComplete="current-password"
-            onChange={(e) => onChange(e)}
-          />
-          <Box m={1} pt={0}>
-            {" "}
-          </Box>
-          {error && (
-            <Alert variant="filled" severity="error">
-              {" "}
-              {error}{" "}
-            </Alert>
-          )}
-          <Button
-            type="submit"
-            fullWidth
-            color = "third"
-            variant="contained"
-            sx={{ mt: 3, mb: 2 }}
+    <>
+      <Container component="main" maxWidth="xs">
+        <CssBaseline />
+        <Box
+          sx={{
+            marginTop: 4,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
+          <Typography
+            component="h1"
+            variant="h4"
+            color="#1d3557"
+            fontWeight="600"
           >
-            Sign In
-          </Button>
-          <Grid container>
-            <Grid item>
-              <Link href="/signup" color = "#1d3557" variant="body2">
-                Don't have an account? Sign Up
-              </Link>
+            Login
+          </Typography>
+          <Box
+            component="form"
+            onSubmit={onSubmitForm}
+            noValidate
+            sx={{ mt: 1 }}
+          >
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="mail"
+              label="Email Address"
+              name="mail"
+              autoComplete="mail"
+              autoFocus
+              onChange={(e) => onChange(e)}
+            />
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              name="password"
+              label="Password"
+              type="password"
+              id="password"
+              autoComplete="current-password"
+              onChange={(e) => onChange(e)}
+            />
+            <Box m={1} pt={0}>
+              {" "}
+            </Box>
+            {error && (
+              <Alert variant="filled" severity="error">
+                {" "}
+                {error}{" "}
+              </Alert>
+            )}
+            <Button
+              type="submit"
+              fullWidth
+              color="third"
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+            >
+              Sign In
+            </Button>
+            <Grid container>
+              <Grid item>
+                <Link href="/signup" color="#1d3557" variant="body2">
+                  Don't have an account? Sign Up
+                </Link>
+              </Grid>
             </Grid>
-          </Grid>
+          </Box>
         </Box>
-      </Box>
-    </Container>
+      </Container>
+    </>
   );
 };
 export default LoginComponent;

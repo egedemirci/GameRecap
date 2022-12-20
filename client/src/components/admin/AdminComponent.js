@@ -167,6 +167,17 @@ export default function AdminPage(props) {
             justifyContent="center"
           >
             <Button
+              onClick={() => navigate("/games")}
+              sx={{
+                color: "#f1faee",
+                backgroundColor: "#457b9d",
+                borderColor: "green",
+              }}
+              variant="contained"
+            >
+              Games
+            </Button>
+            <Button
               onClick={() => navigate("/categorypage")}
               sx={{
                 color: "#f1faee",

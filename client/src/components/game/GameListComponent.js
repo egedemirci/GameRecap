@@ -19,6 +19,8 @@ import { Link, useNavigate } from "react-router-dom";
 import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
 import AddNewGameComponent from "./AddNewGame";
+import FooterComponent from "../FooterComponent";
+import { UsersContext } from "../../context/userContext";
 
 const theme = createTheme({
   palette: {
@@ -69,6 +71,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 export default function GameListComponent() {
   const { games, setGames } = useContext(GameContext);
+  const { user } = useContext(UsersContext);
   const navigate = useNavigate();
   const [start_date, setStartDate] = useState("");
   const [end_date, setEndDate] = useState("");
@@ -131,7 +134,7 @@ export default function GameListComponent() {
             pb: 6,
           }}
         >
-          <Container maxWidth="sm">
+          <Container maxWidth="md">
             <Typography variant="h4" component="h1">
               Filter Release Date
             </Typography>
@@ -141,7 +144,6 @@ export default function GameListComponent() {
               </Typography>
               <TextField
                 margin="normal"
-                required
                 fullWidth
                 value={start_date}
                 onChange={(e) => setStartDate(e.target.value)}
@@ -154,7 +156,6 @@ export default function GameListComponent() {
               </Typography>
               <TextField
                 margin="normal"
-                required
                 fullWidth
                 value={end_date}
                 onChange={(e) => setEndDate(e.target.value)}
@@ -180,18 +181,18 @@ export default function GameListComponent() {
               <Table sx={{ minWidth: 100 }} aria-label="customized table">
                 <TableHead>
                   <TableRow>
-                    <StyledTableCell align="right">Game Name</StyledTableCell>
-                    <StyledTableCell align="right">
+                    <StyledTableCell align="center">Game Name</StyledTableCell>
+                    <StyledTableCell align="center">
                       Release Date
                     </StyledTableCell>
-                    <StyledTableCell align="right">
-                    Synopsis
-                    </StyledTableCell>
-                    <StyledTableCell align="right">
-                    ID
-                    </StyledTableCell>
-                    <StyledTableCell align="right">Update</StyledTableCell>
-                    <StyledTableCell align="right">Delete</StyledTableCell>
+                    <StyledTableCell align="center">Synopsis</StyledTableCell>
+                    <StyledTableCell align="center">ID</StyledTableCell>
+                    {user.role === "admin" ? (
+                      <>
+                        <StyledTableCell align="center">Update</StyledTableCell>
+                        <StyledTableCell align="center">Delete</StyledTableCell>
+                      </>
+                    ) : null}
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -204,33 +205,37 @@ export default function GameListComponent() {
                           </Link>
                         </Button>
                       </StyledTableCell>
-                      <StyledTableCell align="right">
+                      <StyledTableCell align="center">
                         {game.release_date}
                       </StyledTableCell>
-                      <StyledTableCell align="right">
+                      <StyledTableCell align="left">
                         {game.synopsis}
                       </StyledTableCell>
-                      <StyledTableCell align="right">
+                      <StyledTableCell align="left">
                         {game.game_id}
                       </StyledTableCell>
-                      <StyledTableCell align="right">
-                        <button
-                          onClick={(e) => handleUpdate(e, game.game_id)}
-                          className="btn btn-secondary"
-                          backgroundcolor="#00000"
-                        >
-                          Update
-                        </button>
-                      </StyledTableCell>
-                      <StyledTableCell align="right">
-                        {" "}
-                        <button
-                          onClick={(e) => handleDelete(e, game.game_id)}
-                          className="btn btn-danger"
-                        >
-                          Delete
-                        </button>
-                      </StyledTableCell>
+                      {user.role === "admin" ? (
+                        <>
+                          <StyledTableCell align="center">
+                            <button
+                              onClick={(e) => handleUpdate(e, game.game_id)}
+                              className="btn btn-secondary"
+                              backgroundcolor="#00000"
+                            >
+                              Update
+                            </button>
+                          </StyledTableCell>
+                          <StyledTableCell align="center">
+                            {" "}
+                            <button
+                              onClick={(e) => handleDelete(e, game.game_id)}
+                              className="btn btn-danger"
+                            >
+                              Delete
+                            </button>
+                          </StyledTableCell>
+                        </>
+                      ) : null}
                     </StyledTableRow>
                   ))}
                 </TableBody>
@@ -239,27 +244,9 @@ export default function GameListComponent() {
           </Container>
           <Box sx={{ mt: 3 }}></Box>
           <AddNewGameComponent />
-          
         </Box>
       </main>
-      <Box sx={{ bgcolor: "#D3EDEE" }} component="footer">
-        <Box sx={{ pt: 3 }}>
-          <center>
-            <img
-              src="https://i.hizliresim.com/kti4lvy.png"
-              height="100"
-              width="100"
-              alt="logo"
-            />
-          </center>
-          <Typography
-            variant="subtitle1"
-            align="center"
-            color="text.secondary"
-            component="p"
-          ></Typography>
-        </Box>
-      </Box>
+      <FooterComponent />
     </ThemeProvider>
   );
 }
