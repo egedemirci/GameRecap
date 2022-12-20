@@ -200,6 +200,17 @@ export default function AdminPage(props) {
               Development Studios
             </Button>
             <Button
+              onClick={() => navigate("/publishingstudiospage")}
+              sx={{
+                color: "#f1faee",
+                backgroundColor: "#457b9d",
+                borderColor: "green",
+              }}
+              variant="contained"
+            >
+              Publishing Studios
+            </Button>
+            <Button
               onClick={() => navigate("/dlcpage")}
               sx={{
                 color: "#f1faee",

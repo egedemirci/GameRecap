@@ -27,6 +27,7 @@ import CheckLogin from "./components/CheckLogin";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import IndividualDLCComponent from "./components/dlc/IndividualDLCComponents";
 import CreatePlaylistPage from "./routes/playlist/CreatePlaylistPage";
+import PublishingStudioPage from "./routes/pubstudio/PublishingStudioPage";
 
 class App extends Component {
   render() {
@@ -54,8 +55,7 @@ class App extends Component {
       background: "#f1faee",
       fontSize: "24px",
       backgroundSize: "cover",
-      height: "100vh"
-
+      height: "100vh",
     };
     return (
       <GameContextProvider>
@@ -90,6 +90,10 @@ class App extends Component {
                     <Route
                       path="/developmentstudiopage"
                       element={<DevelopmentStudioPage></DevelopmentStudioPage>}
+                    />
+                    <Route
+                      path="/publishingstudiospage"
+                      element={<PublishingStudioPage />}
                     />
                     <Route path="/dlcpage" element={<DlcPage></DlcPage>} />
                     <Route

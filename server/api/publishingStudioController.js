@@ -21,7 +21,7 @@ export default class gameController {
   static async deleteById(req, res, next) {
     try {
       const results = await db.query(
-        "DELETE FROM game_recap.publishingstudios WHERE d_studio_id = $1 returning *",
+        "DELETE FROM game_recap.publishingstudios WHERE p_studio_id = $1 returning *",
         [req.params.id]
       );
       if (results.rows.length == 0) {
