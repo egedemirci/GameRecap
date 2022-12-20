@@ -53,6 +53,8 @@ class App extends Component {
       background: "#f1faee",
       fontSize: "24px",
       backgroundSize: "cover",
+      height: "100vh"
+
     };
     return (
       <GameContextProvider>
