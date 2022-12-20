@@ -16,13 +16,13 @@ export default class authController {
         } catch (error) {
           console.log(`Error when creating user: ${JSON.stringify(error)}`)
           console.log(`Error when creating user: ${error}`)
-          if(String(error).includes("users_mail_key") )
+          if(String(error).includes("users_username_key") )
           {
             return res.status(401).json({error:error, data:{users:[]}})
           }
-          else if(error.code === 1)
+          else if(String(error).includes("users_email_key") )
           {
-            return res.status(402).json({detail:error.detail, data:[]})
+            return res.status(402).json({error:error, data:{users:[]}})
           }
           else{
             return res.status(400).json({error:error, data:{users:[]}})

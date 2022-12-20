@@ -152,7 +152,7 @@ export default class gameController {
         string_agg(s.store_name, ', ') as store_name, 
         --ss.service_id, 
         string_agg(ss.service_name,  ', ') as service_name, 
-        --d.dlc_id, 
+        string_agg(d.dlc_id, ', ') as dlc_ids, 
         string_agg(d.dlc_name, ', ') as dlc_name,
         --ds.d_studio_id, 
         string_agg(ds.studio_name, ', ') as ds_name,

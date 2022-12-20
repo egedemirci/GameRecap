@@ -57,11 +57,9 @@ const SignUpComponent = () => {
     } catch (err) {
       if (err.fmessage) setError(err.fmessage);
       else if (err.response.status === 401)
-        setError("Selected mail is already in use, please change your mail.");
+        setError("Selected username is already in use, please change your username.");
       else if (err.response.status === 402)
-        setError(
-          "Invalid security key. Please make sure you are using a correct key that matches your role."
-        );
+        setError("Selected email is already in use, please change your email.");
       else setError("There was an unknown problem");
       console.error("onSubmit form error: ", err);
     }
