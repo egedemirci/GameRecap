@@ -259,7 +259,7 @@ left join game_recap.gamespublishing gp on g.game_id = gp.game_id
 left join game_recap.publishingstudios ps on gp.p_studio_id = ps.p_studio_id
 left join game_recap.gamesplatforms gps on g.game_id = gps.game_id
 left join game_recap.platforms p on gps.platform_id = p.platform_id
-where g.game_id = 59
+where g.game_id = $1
 group by 1, 2, 3, 4, 5`,
         [req.params.id]
       );
