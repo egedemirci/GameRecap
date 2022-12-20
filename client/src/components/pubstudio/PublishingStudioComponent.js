@@ -93,9 +93,9 @@ export default function PublishingStudioComponent() {
     e.preventDefault();
     let response = [];
     if (filter === " ") {
-      response = await GameFinder.get(`/developmentstudios`);
+      response = await GameFinder.get(`/publishingstudios`);
     } else {
-      response = await GameFinder.post(`/developmentstudios/filter`, {
+      response = await GameFinder.post(`/publishingstudios/filter`, {
         filter: filter,
       });
     }

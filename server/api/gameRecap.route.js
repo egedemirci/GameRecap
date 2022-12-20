@@ -115,6 +115,10 @@ router
   .delete(publishingStudioController.deleteById);
 
 router
+  .route("/publishingstudios/filter")
+  .post(publishingStudioController.getGamesByDate);
+
+router
   .route("/dlc")
   .get(dlcController.getAllGames)
   .post(dlcController.createDlc);
