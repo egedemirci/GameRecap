@@ -71,16 +71,12 @@ export const Playlists = () => {
     const fetcData = async () => {
       try {
         const response = await GameFinder.get(`/playlists/${id}`);
-
-        console.log(response);
         setPlaylists(response.data.data.games);
         setLoading(false);
       } catch (err) {}
     };
-
     fetcData();
-  }, []);
-  console.log(playlists);
+  }, [id]);
 
   const handlePlaylistSelect = (id) => {
     navigate(`/playlist/${id}`);
@@ -118,13 +114,10 @@ export const Playlists = () => {
   return (
     <>
       <CssBaseline />
-      <ThemeProvider theme={sectheme}>
-      </ThemeProvider>
-
       <ThemeProvider theme={theme}>
         <Box
           sx={{
-            height: 600,
+            height: "100vh",
             width: "100%",
           }}
         >
@@ -144,6 +137,18 @@ export const Playlists = () => {
               </Paper>
             </center>
           </Container>
+          <Box textAlign="center" sx={{ mt: 2 }}>
+            <Button
+              variant="contained"
+              color="success"
+              onClick={() => {
+                navigate("/playlist/create");
+              }}
+              style={{ justifyContent: "center" }}
+            >
+              Create New Playlist
+            </Button>
+          </Box>
         </Box>
       </ThemeProvider>
     </>

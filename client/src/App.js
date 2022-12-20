@@ -26,6 +26,7 @@ import PlatformPage from "./routes/platform/PlatformPage";
 import CheckLogin from "./components/CheckLogin";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import IndividualDLCComponent from "./components/dlc/IndividualDLCComponents";
+import CreatePlaylistPage from "./routes/playlist/CreatePlaylistPage";
 
 class App extends Component {
   render() {
@@ -112,6 +113,10 @@ class App extends Component {
                     <Route
                       path="/playlist/:id"
                       element={<IndividualPlaylistPage />}
+                    />
+                    <Route
+                      path="/playlist/create"
+                      element={<CreatePlaylistPage />}
                     />
                     <Route path="/discover" element={<Discover />} />
                   </Route>

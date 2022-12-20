@@ -131,7 +131,7 @@ export default function UserAdmin(props) {
             pb: 6,
           }}
         >
-          <Container maxWidth="sm">
+          <Container maxWidth="md">
             <Typography variant="h4" component="h1">
               Filter
             </Typography>

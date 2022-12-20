@@ -77,7 +77,7 @@ export const Playlist = () => {
     };
 
     fetcData();
-  }, []);
+  }, [id]);
 
   const handlePlaylistSelect = (id) => {
     navigate(`/games/${id}`);
@@ -115,10 +115,6 @@ export const Playlist = () => {
   return (
     <div>
       <main>
-        <ThemeProvider theme={sectheme}>
-          <ResponsiveAppBar />
-        </ThemeProvider>
-
         <ThemeProvider theme={sectheme}>
           <Box
             sx={{
