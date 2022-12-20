@@ -22,8 +22,8 @@ export default class authController {
       );
       if (!validPassword) {
         throw {
-          detail: "User password not found.",
-          code: 1,
+          detail: "User password is wrong.",
+          code: 2,
           error: new Error(),
         };
       }
@@ -34,6 +34,10 @@ export default class authController {
       console.log(`Error when auth: ${err.detail}`);
       if (err.code == 1) {
         res.status(404).json({ detail: err.detail, data: [] });
+        return;
+      }
+      else if (err.code == 2) {
+        res.status(401).json({ detail: err.detail, data: [] });
         return;
       }
       res.status(400).json({ detail: err, data: [] });

@@ -56,7 +56,8 @@ const LoginComponent = () => {
       } else throw { fmessage: "There was an unknown problem" };
     } catch (err) {
       if (err.fmessage) setError(err.fmessage);
-      else if (err.response.status === 404) setError("Invalid credentials!");
+      else if (err.response.status === 404) setError("There is no user registered with this email! Please check your email or register a new account");
+      else if (err.response.status === 401) setError("The password is wrong! Please check your password");
       else setError("There was an unknown problem!");
       console.error("onSubmit form error: ", err);
     }
