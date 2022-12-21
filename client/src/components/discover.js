@@ -79,7 +79,7 @@ export const Discover = () => {
   }, []);
 
   const handlePlaylistSelect = (id) => {
-    navigate(`/games/${id}`);
+    navigate(`/playlist/${id}`);
   };
 
   const columns = [
@@ -120,15 +120,15 @@ export const Discover = () => {
 
   return (
     <div>
+      <CssBaseline />
       <main>
         <ThemeProvider theme={sectheme}>
-        <div>
-        <main>
-          <ResponsiveAppBar />
-          </main>
+          <div>
+            <main>
+              <ResponsiveAppBar />
+            </main>
           </div>
         </ThemeProvider>
-
         <ThemeProvider theme={theme}>
           <Box
             sx={{
@@ -136,6 +136,15 @@ export const Discover = () => {
               width: "100%",
             }}
           >
+            <Typography
+              variant="h3"
+              align="center"
+              component="h1"
+              gutterBottom
+              sx={{ mt: 2 }}
+            >
+              Discover
+            </Typography>
             <Container>
               <center>
                 <Toolbar />

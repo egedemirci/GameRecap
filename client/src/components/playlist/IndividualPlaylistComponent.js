@@ -79,7 +79,7 @@ export const Playlist = () => {
     fetcData();
   }, [id]);
 
-  const handlePlaylistSelect = (id) => {
+  const handleGameSelect = (id) => {
     navigate(`/games/${id}`);
   };
 
@@ -95,7 +95,7 @@ export const Playlist = () => {
           <Button
             variant="contained"
             color="secondary"
-            onClick={() => handlePlaylistSelect(params.row.game_id)}
+            onClick={() => handleGameSelect(params.row.game_id)}
           >
             {params.row.game_id}
           </Button>
@@ -122,6 +122,16 @@ export const Playlist = () => {
               width: "100%",
             }}
           >
+            <CssBaseline />
+            <Typography
+              variant="h4"
+              component="h1"
+              align="center"
+              gutterBottom
+              sx={{ mt: 2 }}
+            >
+              Playlist
+            </Typography>
             <Container>
               <center>
                 <Toolbar />
