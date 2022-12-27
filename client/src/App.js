@@ -31,7 +31,8 @@ import PublishingStudioPage from "./routes/pubstudio/PublishingStudioPage";
 import PlaylistAdminPage from "./routes/playlist/PlaylistAdminPage";
 import ReviewsPage from "./routes/review/ReviewsPage";
 import SupportPage from "./routes/user/SupportPage";
-
+import ChatPage from "./components/Chats";
+ 
 class App extends Component {
   render() {
     const theme = createTheme({
@@ -86,6 +87,7 @@ class App extends Component {
                     </Route>
                     <Route path="/profile" element={<UserProfile />} />
                     <Route path="/adminpage" element={<AdminPage />} />
+                    <Route path="/chats" element={<ChatPage />} />
                     <Route path="/userpage" element={<UserPage />} />
                     <Route
                       path="/categorypage"

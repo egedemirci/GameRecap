@@ -6,8 +6,9 @@ import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import { Divider } from "@mui/material";
 
+import { Divider,Container } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 const top100Films = [
   { label: "The Shawshank Redemption", year: 1994 },
   { label: "The Godfather", year: 1972 },
@@ -23,6 +24,7 @@ export default function SupportPageComponent() {
   const [date, setDate] = useState(new Date());
   const [chatroom, setChatroom] = useState(null);
   const role = user.role;
+  const navigate = useNavigate();
 
   useEffect(() => {
     // Fetch messages from Firebase
@@ -55,70 +57,85 @@ export default function SupportPageComponent() {
         </Grid>
       </>
     );
-  return (
-    <>
-      <Typography component="h1" variant="h3" align="center">
-        Support Page
-      </Typography>
-      <Grid container sx={{ mt: 4 }}>
-        <Grid item xs={12} md={4}>
-          <Box component="form" onSubmit={handleSendMessage} mt={2}>
-            <Typography component="h2" variant="h6" color="#1d3557">
-              You are messaging as {user.username}. <br />
-              Please fill out the form below to send a message <br />
-              to our support team.
+    return (
+      <>
+        <Box display="flex" flexDirection="column">
+          <Typography
+
+            font
+            fontWeight="600"
+            color = "#1d3557"
+            
+            variant="h4"
+            component="h1"
+            align="center"
+            gutterBottom
+            sx={{ mt: 3}}
+          >
+              Support Page
+          </Typography>
+          <Container maxWidth="md" component="main">
+            <Typography variant="h6"             font
+            fontWeight="500"
+            color = "#457b9d" component="h2" gutterBottom>
+              User Name
             </Typography>
             <TextField
+              fullWidth
               label="Your Name"
               required
               variant="outlined"
-              sx={{ width: 300 }}
             />
+            <Typography variant="h6" font fontWeight = "500" color = "#457b9d" component="h2" gutterBottom sx={{ mt:1 }}>
+              Select Subject
+            </Typography>
             <Autocomplete
               disablePortal
               required
               options={top100Films}
-              sx={{ width: 300 }}
               renderInput={(params) => (
                 <TextField {...params} required label="Subject" />
               )}
             />
-            <TextField
+            <Typography variant="h6" font fontWeight = "500" color = "#457b9d" component="h2" gutterBottom sx={{ mt: 1 }}>
+              Message
+            </Typography>
+<TextField
+fullWidth
               label="Your Message"
               variant="outlined"
               required
-              sx={{ width: 300 }}
               multiline
               rows={4}
             />
+                      <Typography variant="h6" font fontWeight = "500" color = "#457b9d"  component="h2" gutterBottom sx={{ mt: 1 }}>
+              Date
+            </Typography>
             <TextField
+            fullWidth
               value={date}
               required
               onChange={(e) => setDate(e.target.value)}
               id="date"
               type="date"
             />
-            <Button type="submit" variant="contained">
-              Send Message
-            </Button>
-          </Box>
-        </Grid>
-        <Divider
-          orientation="vertical"
-          variant="middle"
-          flexItem
-          style={{
-            borderRight: "solid #1d3557",
-            borderRightWidth: 1,
-            height: "80vh",
-          }}
-        />
-        <Grid item xs={12} md={7.9}>
-          <Typography component="h2" variant="h5" color="#1d3557">
-            Previous Chats
-          </Typography>
-        </Grid>
-      </Grid>
-    </>
-  );
+            <Box textAlign="center">
+              <Button
+                variant="contained"
+                sx={{ mt:4, align: "center" }}
+                onClick={handleSendMessage}
+              >
+Send Message              </Button>
+<Button
+                variant="contained"
+                sx={{ mt:4, ml:3, align: "center" }}
+                onClick={() => {
+                  navigate("/chats");
+                }}              >
+                Previous Chats              </Button>
+            </Box>
+          </Container>
+        </Box>
+      </>
+    );
 }
