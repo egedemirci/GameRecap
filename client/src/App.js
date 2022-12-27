@@ -34,7 +34,7 @@ import SupportPage from "./routes/user/SupportPage";
 import ChatPage from "./components/Chats";
 import ChatWindow from "./components/chatWindow";
 import Chat from "./components/chatWindow";
- 
+
 class App extends Component {
   render() {
     const theme = createTheme({
@@ -90,8 +90,7 @@ class App extends Component {
                     <Route path="/profile" element={<UserProfile />} />
                     <Route path="/adminpage" element={<AdminPage />} />
                     <Route path="/chats" element={<ChatPage />} />
-                    <Route path="/chats/:id" element={<Chat/>} />
-
+                    <Route path="/chats/:id" element={<Chat />} />
                     <Route path="/userpage" element={<UserPage />} />
                     <Route
                       path="/categorypage"

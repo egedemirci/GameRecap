@@ -1,43 +1,58 @@
 import { UsersContext } from "../context/userContext";
 import { useContext, useEffect, useState } from "react";
 import TextField from "@mui/material/TextField";
-import Autocomplete from "@mui/material/Autocomplete";
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
+import InputLabel from "@mui/material/InputLabel";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-
-import { Divider,Container } from "@mui/material";
+import Container from "@mui/material/Container";
 import { useNavigate } from "react-router-dom";
-const top100Films = [
-  { label: "The Shawshank Redemption", year: 1994 },
-  { label: "The Godfather", year: 1972 },
-  { label: "The Godfather: Part II", year: 1974 },
-  { label: "The Dark Knight", year: 2008 },
-  { label: "12 Angry Men", year: 1957 },
-  { label: "Schindler's List", year: 1993 },
-  { label: "Pulp Fiction", year: 1994 },
-];
+import { db } from "../firebase/db";
+import {
+  doc,
+  onSnapshot,
+  collection,
+  setDoc,
+  getDocs,
+  updateDoc,
+  getDoc,
+  addDoc,
+} from "firebase/firestore";
 
 export default function SupportPageComponent() {
+  const [subject, setSubject] = useState("Subject1");
   const { user } = useContext(UsersContext);
-  const [date, setDate] = useState(new Date());
-  const [chatroom, setChatroom] = useState(null);
-  const role = user.role;
   const navigate = useNavigate();
+  const role = user.role;
 
-  useEffect(() => {
-    // Fetch messages from Firebase
-    if (role === "admin") {
-      // Fetch all messages from Firebase
-    } else {
-      // Fetch messages from Firebase for this user
-    }
-  }, [role]);
+  useEffect(() => {}, []);
 
   const handleSendMessage = async (e) => {
     e.preventDefault();
-    // Firebase logic goes here
+    const data = new FormData(e.currentTarget);
+    try {
+      console.log("Trying...");
+      await addDoc(collection(db, "tickets"), {
+        ticketer_id: user.user_id,
+        ticketer_name: data.get("name"),
+        createdAt: new Date(),
+        subject: subject,
+        messages: [
+          {
+            content: data.get("message"),
+            sender_id: user.user_id,
+            timestamp: Date(),
+            isAdmin: false,
+          },
+        ],
+      });
+      console.log("Done");
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const content =
@@ -57,85 +72,100 @@ export default function SupportPageComponent() {
         </Grid>
       </>
     );
-    return (
-      <>
-        <Box display="flex" flexDirection="column">
+  return (
+    <>
+      <Box
+        component="form"
+        onSubmit={handleSendMessage}
+        display="flex"
+        flexDirection="column"
+      >
+        <Typography
+          font
+          fontWeight="600"
+          color="#1d3557"
+          variant="h4"
+          component="h1"
+          align="center"
+          gutterBottom
+          sx={{ mt: 3 }}
+        >
+          Support Page
+        </Typography>
+        <Container maxWidth="md" component="main">
           <Typography
-
+            variant="h6"
             font
-            fontWeight="600"
-            color = "#1d3557"
-            
-            variant="h4"
-            component="h1"
-            align="center"
-            gutterBottom
-            sx={{ mt: 3}}
-          >
-              Support Page
-          </Typography>
-          <Container maxWidth="md" component="main">
-            <Typography variant="h6"             font
             fontWeight="500"
-            color = "#457b9d" component="h2" gutterBottom>
-              User Name
-            </Typography>
-            <TextField
-              fullWidth
-              label="Your Name"
-              required
-              variant="outlined"
-            />
-            <Typography variant="h6" font fontWeight = "500" color = "#457b9d" component="h2" gutterBottom sx={{ mt:1 }}>
-              Select Subject
-            </Typography>
-            <Autocomplete
-              disablePortal
-              required
-              options={top100Films}
-              renderInput={(params) => (
-                <TextField {...params} required label="Subject" />
-              )}
-            />
-            <Typography variant="h6" font fontWeight = "500" color = "#457b9d" component="h2" gutterBottom sx={{ mt: 1 }}>
-              Message
-            </Typography>
-<TextField
-fullWidth
-              label="Your Message"
-              variant="outlined"
-              required
-              multiline
-              rows={4}
-            />
-                      <Typography variant="h6" font fontWeight = "500" color = "#457b9d"  component="h2" gutterBottom sx={{ mt: 1 }}>
-              Date
-            </Typography>
-            <TextField
+            color="#457b9d"
+            component="h2"
+            gutterBottom
+          >
+            User Name
+          </Typography>
+          <TextField fullWidth name="name" required variant="outlined" />
+          <Typography
+            variant="h6"
+            font
+            fontWeight="500"
+            color="#457b9d"
+            component="h2"
+            gutterBottom
+            sx={{ mt: 1 }}
+          >
+            Select Subject
+          </Typography>
+          <Select
             fullWidth
-              value={date}
-              required
-              onChange={(e) => setDate(e.target.value)}
-              id="date"
-              type="date"
-            />
-            <Box textAlign="center">
-              <Button
-                variant="contained"
-                sx={{ mt:4, align: "center" }}
-                onClick={handleSendMessage}
-              >
-Send Message              </Button>
-<Button
-                variant="contained"
-                sx={{ mt:4, ml:3, align: "center" }}
-                onClick={() => {
-                  navigate("/chats");
-                }}              >
-                Previous Chats              </Button>
-            </Box>
-          </Container>
-        </Box>
-      </>
-    );
+            required
+            value={subject}
+            label="Subject"
+            id="demo-simple-select-label"
+            onChange={(e) => setSubject(e.target.value)}
+          >
+            <MenuItem value={"Subject1"}>Subject1</MenuItem>
+            <MenuItem value={"Subject2"}>Subject2</MenuItem>
+            <MenuItem value={"Subject3"}>Subject3</MenuItem>
+          </Select>
+          <Typography
+            variant="h6"
+            font
+            fontWeight="500"
+            color="#457b9d"
+            component="h2"
+            gutterBottom
+            sx={{ mt: 1 }}
+          >
+            Message
+          </Typography>
+          <TextField
+            fullWidth
+            name="message"
+            variant="outlined"
+            required
+            multiline
+            rows={4}
+          />
+          <Box textAlign="center" mb={4}>
+            <Button
+              variant="contained"
+              type="submit"
+              sx={{ mt: 4, align: "center" }}
+            >
+              Send Message{" "}
+            </Button>
+            <Button
+              variant="contained"
+              sx={{ mt: 4, ml: 3, align: "center" }}
+              onClick={() => {
+                navigate("/chats");
+              }}
+            >
+              Previous Chats{" "}
+            </Button>
+          </Box>
+        </Container>
+      </Box>
+    </>
+  );
 }
