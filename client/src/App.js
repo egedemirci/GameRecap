@@ -32,6 +32,8 @@ import PlaylistAdminPage from "./routes/playlist/PlaylistAdminPage";
 import ReviewsPage from "./routes/review/ReviewsPage";
 import SupportPage from "./routes/user/SupportPage";
 import ChatPage from "./components/Chats";
+import ChatWindow from "./components/chatWindow";
+import Chat from "./components/chatWindow";
  
 class App extends Component {
   render() {
@@ -88,6 +90,8 @@ class App extends Component {
                     <Route path="/profile" element={<UserProfile />} />
                     <Route path="/adminpage" element={<AdminPage />} />
                     <Route path="/chats" element={<ChatPage />} />
+                    <Route path="/chats/:id" element={<Chat/>} />
+
                     <Route path="/userpage" element={<UserPage />} />
                     <Route
                       path="/categorypage"
