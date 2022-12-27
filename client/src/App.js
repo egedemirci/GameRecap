@@ -30,6 +30,7 @@ import CreatePlaylistPage from "./routes/playlist/CreatePlaylistPage";
 import PublishingStudioPage from "./routes/pubstudio/PublishingStudioPage";
 import PlaylistAdminPage from "./routes/playlist/PlaylistAdminPage";
 import ReviewsPage from "./routes/review/ReviewsPage";
+import SupportPage from "./routes/user/SupportPage";
 
 class App extends Component {
   render() {
@@ -75,6 +76,7 @@ class App extends Component {
                   <Route path="/login" element={<LoginPage />} />
                   {/* Logged In Routes */}
                   <Route element={<CheckLogin />}>
+                    <Route path="/support" element={<SupportPage />} />
                     <Route path="/games">
                       <Route index element={<GamesPage />} />
                       <Route path=":id" element={<IndividualGameComponent />} />
