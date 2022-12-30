@@ -43,15 +43,20 @@ function ResponsiveAppBar() {
           </Typography>
           <Box sx={{ display: { xs: "none", sm: "block" } }}>
             {user !== "null" ? (
-              <Button
-                color="inherit"
-                href="/login"
-                onClick={() => {
-                  localStorage.setItem("user", null);
-                }}
-              >
-                LogOut
-              </Button>
+              <>
+                <Button color="inherit" href="/support">
+                  Support
+                </Button>
+                <Button
+                  color="inherit"
+                  href="/login"
+                  onClick={() => {
+                    localStorage.setItem("user", null);
+                  }}
+                >
+                  LogOut
+                </Button>
+              </>
             ) : (
               <Button color="inherit" href="/login">
                 Login
