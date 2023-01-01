@@ -55,104 +55,114 @@ const Chat = () => {
     console.log(date);
     return date.toLocaleString();
   }
+  const myStyle = {
+    background: "#f1faee",
+    fontSize: "24px",
+    backgroundSize: "cover",
+    height: "130vh",
+  };
 
   return (
     <>
-      <ResponsiveAppBar />
-      <Typography
-        variant="h4"
-        align="center"
-        fontWeight="600"
-        sx={{ mt: 4, mb: 4 }}
-      >
-        Chat Room about {chatRoom.subject}
-      </Typography>
-      <div
-        style={{
-          width: "100%",
-          height: "70vh",
-          overflowY: "auto",
-          display: "flex",
-          flexDirection: "column",
-        }}
-      >
-        {messages.map((message) => (
-          <div
-            style={{
-              display: "flex",
-              justifyContent:
-                user.user_id === message.sender_id
-                  ? "flex-end"
-                  : user.role === "admin" && message.isAdmin === true
-                  ? "flex-end"
-                  : "flex-start",
-            }}
-          >
-            <Card
+      <div style={myStyle}>
+        <ResponsiveAppBar />
+        <Typography
+          variant="h4"
+          align="center"
+          fontWeight="600"
+          sx={{ mt: 4, mb: 4 }}
+        >
+          Chat Room about {chatRoom.subject}
+        </Typography>
+        <div
+          style={{
+            width: "100%",
+            height: "70vh",
+            overflowY: "auto",
+            display: "flex",
+            flexDirection: "column",
+          }}
+        >
+          {messages.map((message) => (
+            <div
               style={{
-                borderRadius: 20,
-                backgroundColor:
-                  user.user_id === message.sender_id ? "#a8dadc" : "#003049",
-                margin: "30px 30px 10px 30px", // add margin to top
-                border:
-                  user.user_id === message.sender_id ? "#1d3557" : "#CADFE2",
-                width: "40%",
-                padding: 2,
-                fontSize: "0.9rem",
+                display: "flex",
+                justifyContent:
+                  user.user_id === message.sender_id
+                    ? "flex-end"
+                    : user.role === "admin" && message.isAdmin === true
+                    ? "flex-end"
+                    : "flex-start",
               }}
             >
-              <CardContent
+              <Card
                 style={{
-                  color:
+                  borderRadius: 20,
+                  backgroundColor:
+                    user.user_id === message.sender_id ? "#a8dadc" : "#003049",
+                  margin: "30px 30px 10px 30px", // add margin to top
+                  border:
                     user.user_id === message.sender_id ? "#1d3557" : "#CADFE2",
+                  width: "40%",
+                  padding: 2,
+                  fontSize: "0.9rem",
                 }}
               >
-                <p
+                <CardContent
                   style={{
-                    fontWeight: "bold",
                     color:
                       user.user_id === message.sender_id
                         ? "#1d3557"
                         : "#CADFE2",
                   }}
                 >
-                  {message.isAdmin
-                    ? "Admin says:"
-                    : `${chatRoom.ticketer_name} says:`}
-                </p>
-                <p>{message.content}</p>
-                <p>{changeTimestamp(message.timestamp)}</p>
-              </CardContent>
-            </Card>
-          </div>
-        ))}
+                  <p
+                    style={{
+                      fontWeight: "bold",
+                      color:
+                        user.user_id === message.sender_id
+                          ? "#1d3557"
+                          : "#CADFE2",
+                    }}
+                  >
+                    {message.isAdmin
+                      ? "Admin says:"
+                      : `${chatRoom.ticketer_name} says:`}
+                  </p>
+                  <p>{message.content}</p>
+                  <p>{changeTimestamp(message.timestamp)}</p>
+                </CardContent>
+              </Card>
+            </div>
+          ))}
+        </div>
+        <center>
+          <TextField
+            mt={80}
+            style={{ width: "100vh" }}
+            rows={5}
+            multiline
+            variant={"outlined"}
+            value={value}
+            onChange={(e) => setValue(e.target.value)}
+          />
+        </center>
+        <center>
+          <Button
+            variant="contained"
+            sx={{ mt: 4, mb: 4, align: "center" }}
+            onClick={sendMessage}
+          >
+            Send Message{" "}
+          </Button>
+        </center>
+        <Grid
+          container
+          direction={"column"}
+          alignItems={"flex-end"}
+          style={{ width: "80%" }}
+        ></Grid>
       </div>
-      <center>
-        <TextField
-          mt={80}
-          style={{ width: "100vh" }}
-          rows={5}
-          multiline
-          variant={"outlined"}
-          value={value}
-          onChange={(e) => setValue(e.target.value)}
-        />
-      </center>
-      <center>
-        <Button
-          variant="contained"
-          sx={{ mt: 4, mb: 4, align: "center" }}
-          onClick={sendMessage}
-        >
-          Send Message{" "}
-        </Button>
-      </center>
-      <Grid
-        container
-        direction={"column"}
-        alignItems={"flex-end"}
-        style={{ width: "80%" }}
-      ></Grid>
     </>
   );
 };
