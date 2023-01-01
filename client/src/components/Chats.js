@@ -132,7 +132,12 @@ export const ChatPage = () => {
             >
               Previous Tickets
             </Typography>
-            <Paper sx={{ mt: 2 }} component={Box} width={700} height={450}>
+            <Paper
+              sx={{ mt: 2, mb: 2 }}
+              component={Box}
+              width={700}
+              height={450}
+            >
               <DataGrid
                 rows={chats}
                 columns={columns}
@@ -149,17 +154,19 @@ export const ChatPage = () => {
             </Paper>
           </center>
           <center>
-            <Button
-              sx={{ mt: 2, mb: 2 }}
-              variant="contained"
-              color="success"
-              onClick={() => {
-                navigate("/support");
-              }}
-              style={{ justifyContent: "center" }}
-            >
-              Support Page
-            </Button>
+            {user.role === "user" ? (
+              <Button
+                sx={{ mb: 2 }}
+                variant="contained"
+                color="success"
+                onClick={() => {
+                  navigate("/support");
+                }}
+                style={{ justifyContent: "center" }}
+              >
+                Support Page
+              </Button>
+            ) : null}
           </center>
         </Container>
       </ThemeProvider>

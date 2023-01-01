@@ -50,6 +50,12 @@ const Chat = () => {
     return () => unsub();
   }, [id]);
 
+  function changeTimestamp(timestamp) {
+    const date = new Date(timestamp);
+    console.log(date);
+    return date.toLocaleString();
+  }
+
   return (
     <>
       <ResponsiveAppBar />
@@ -91,7 +97,7 @@ const Chat = () => {
                 border:
                   user.user_id === message.sender_id ? "#1d3557" : "#CADFE2",
                 width: "40%",
-                padding: 5,
+                padding: 2,
                 fontSize: "0.9rem",
               }}
             >
@@ -110,9 +116,12 @@ const Chat = () => {
                         : "#CADFE2",
                   }}
                 >
-                  {message.isAdmin ? "Admin says:" : "User says:"}
+                  {message.isAdmin
+                    ? "Admin says:"
+                    : `${chatRoom.ticketer_name} says:`}
                 </p>
                 <p>{message.content}</p>
+                <p>{changeTimestamp(message.timestamp)}</p>
               </CardContent>
             </Card>
           </div>
@@ -120,7 +129,7 @@ const Chat = () => {
       </div>
       <center>
         <TextField
-          mt={20}
+          mt={80}
           style={{ width: "100vh" }}
           rows={5}
           multiline

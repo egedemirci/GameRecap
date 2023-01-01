@@ -44,7 +44,10 @@ function ResponsiveAppBar() {
           <Box sx={{ display: { xs: "none", sm: "block" } }}>
             {user !== "null" ? (
               <>
-                <Button color="inherit" href="/support">
+                <Button
+                  color="inherit"
+                  href={user.role === "admin" ? "/chats" : "/support"}
+                >
                   Support
                 </Button>
                 <Button
@@ -69,59 +72,3 @@ function ResponsiveAppBar() {
   );
 }
 export default ResponsiveAppBar;
-
-{
-  /*<AppBar position="static">
-      <Container maxWidth="xl">
-        <Toolbar disableGutters>
-          <img
-            src="https://i.hizliresim.com/kti4lvy.png"
-            height="60"
-            width="60"
-            alt="logo"
-          />
-          <Typography
-            variant="h8"
-            noWrap
-            component="a"
-            href="/"
-            sx={{
-              ml: 2,
-              display: { xs: "none", md: "flex" },
-              fontFamily: "monospace",
-              fontWeight: 700,
-              letterSpacing: ".3rem",
-              color: "#1d3557",
-              textDecoration: "none",
-              flexGrow: 1,
-            }}
-          >
-            GAMERECAP
-          </Typography>
-          <Button>Hello</Button>
-        </Toolbar>
-      </Container>
-    </AppBar>
-
-
-    <Box sx={{ display: { xs: "none", sm: "block" } }}>
-    {
- 
-    user.role === "admin" ? (
-      <Button
-        color="inherit"
-        href="/adminpage"
-        onClick={() => {
-          
-          Navigate("/adminpage");
-          
-        }}
-      >
-        Admin Pages
-      </Button>
-    ) : (
-      <></>
-    )}
-    </Box>
-    */
-}
