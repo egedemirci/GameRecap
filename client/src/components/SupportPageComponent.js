@@ -123,9 +123,9 @@ export default function SupportPageComponent() {
             id="demo-simple-select-label"
             onChange={(e) => setSubject(e.target.value)}
           >
-            <MenuItem value={"Subject1"}>Subject1</MenuItem>
-            <MenuItem value={"Subject2"}>Subject2</MenuItem>
-            <MenuItem value={"Subject3"}>Subject3</MenuItem>
+            <MenuItem value={"General Support"}>General Support</MenuItem>
+            <MenuItem value={"Bug Report"}>Bug Report</MenuItem>
+            <MenuItem value={"Recommendations"}>Recommendations</MenuItem>
           </Select>
           <Typography
             variant="h6"
