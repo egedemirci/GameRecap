@@ -154,19 +154,17 @@ export const ChatPage = () => {
             </Paper>
           </center>
           <center>
-            {user.role === "user" ? (
-              <Button
-                sx={{ mb: 2 }}
-                variant="contained"
-                color="success"
-                onClick={() => {
-                  navigate("/support");
-                }}
-                style={{ justifyContent: "center" }}
-              >
-                Support Page
-              </Button>
-            ) : null}
+            <Button
+              sx={{ mb: 2 }}
+              variant="contained"
+              color="success"
+              onClick={() => {
+                navigate("/support");
+              }}
+              style={{ justifyContent: "center" }}
+            >
+              Support Page
+            </Button>
           </center>
         </Container>
       </ThemeProvider>

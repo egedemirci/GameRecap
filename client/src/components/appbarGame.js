@@ -44,10 +44,7 @@ function ResponsiveAppBar() {
           <Box sx={{ display: { xs: "none", sm: "block" } }}>
             {user !== "null" ? (
               <>
-                <Button
-                  color="inherit"
-                  href={user.role === "admin" ? "/chats" : "/support"}
-                >
+                <Button color="inherit" href="/support">
                   Support
                 </Button>
                 <Button
